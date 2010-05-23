@@ -33,6 +33,7 @@ import org.alcibiade.eternity.editor.solver.path.PathProvider;
 import org.alcibiade.eternity.editor.solver.pipeline.PipelineSolver;
 import org.alcibiade.eternity.editor.solver.swap.AStarSolverMkI;
 import org.alcibiade.eternity.editor.solver.swap.DumbSolver;
+import org.alcibiade.eternity.editor.solver.swap.DumbSolverNew;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkI;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkII;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkIII;
@@ -47,6 +48,7 @@ public class SolverFactory {
 	public static final String LABEL_ITPATHMKII = "Iterative Path MkII";
 	public static final String LABEL_ITPATHMKIII = "Iterative Path MkIII";
 	public static final String LABEL_SWAPDUMB = "Swap Dumb";
+	public static final String LABEL_SWAPDUMBNEW = "Swap Dumb New";
 	public static final String LABEL_SWAPWMKI = "Swap Weighted MkI";
 	public static final String LABEL_SWAPWMKII = "Swap Weighted MkII";
 	public static final String LABEL_SWAPWMKIII = "Swap Weighted MkIII";
@@ -64,6 +66,7 @@ public class SolverFactory {
 		// solvers.add(LABEL_ITPATHMKII);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
+		solvers.add(LABEL_SWAPDUMBNEW);
 		solvers.add(LABEL_SWAPWMKI);
 		solvers.add(LABEL_SWAPWMKII);
 		solvers.add(LABEL_SWAPWMKIII);
@@ -91,6 +94,8 @@ public class SolverFactory {
 			solver = new IterativePathSolverMkIII(pieces, solution, clusterManager, path);
 		} else if (LABEL_SWAPDUMB.equalsIgnoreCase(type)) {
 			solver = new DumbSolver(pieces, solution, clusterManager);
+		} else if (LABEL_SWAPDUMBNEW.equalsIgnoreCase(type)) {
+			solver = new DumbSolverNew(pieces, solution, clusterManager);
 		} else if (LABEL_SWAPWMKI.equalsIgnoreCase(type)) {
 			solver = new WeightedRandomMkI(pieces, solution, clusterManager);
 		} else if (LABEL_SWAPWMKII.equalsIgnoreCase(type)) {

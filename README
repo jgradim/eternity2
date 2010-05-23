@@ -1,1 +1,7 @@
 http://sourceforge.net/projects/eternityii/
+
+Project is built with Apache Maven:
+
+$ mvn clean install -DskipTests=true
+
+FIXME: we need to skip tests in order to add our own solvers otherwise tests will fail to run
