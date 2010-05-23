@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model
+END
+QuadObserver.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svnroot/eternityii/!svn/ver/69/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/QuadObserver.java
+END
+AbstractQuadGrid.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/244/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/AbstractQuadGrid.java
+END
+QuadsFormatException.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svnroot/eternityii/!svn/ver/69/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/QuadsFormatException.java
+END
+GridModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svnroot/eternityii/!svn/ver/244/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/GridModel.java
+END
+GridScoreRecorder.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svnroot/eternityii/!svn/ver/157/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/GridScoreRecorder.java
+END
+QuadModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/QuadModel.java
+END
+PatternColor.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/PatternColor.java
+END
+PatternStats.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svnroot/eternityii/!svn/ver/240/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/PatternStats.java
+END
+GridObserver.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svnroot/eternityii/!svn/ver/157/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/GridObserver.java
+END
+Pattern.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/Pattern.java
+END
+PatternShape.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svnroot/eternityii/!svn/ver/191/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/model/PatternShape.java
+END

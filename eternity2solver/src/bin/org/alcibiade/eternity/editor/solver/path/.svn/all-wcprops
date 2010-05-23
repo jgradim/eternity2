@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/eternityii/!svn/ver/236/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path
+END
+HumanPathMkII.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svnroot/eternityii/!svn/ver/236/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/HumanPathMkII.java
+END
+StaticPathProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svnroot/eternityii/!svn/ver/223/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/StaticPathProvider.java
+END
+BishopPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/BishopPath.java
+END
+CirclesPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/CirclesPath.java
+END
+AnglePath.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/AnglePath.java
+END
+SnailPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/SnailPath.java
+END
+PathFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svnroot/eternityii/!svn/ver/236/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/PathFactory.java
+END
+RAnglePath.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/RAnglePath.java
+END
+RSnailPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/RSnailPath.java
+END
+HumanPathMkI.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svnroot/eternityii/!svn/ver/236/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/HumanPathMkI.java
+END
+LinearPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/223/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/LinearPath.java
+END
+PathProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svnroot/eternityii/!svn/ver/223/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/PathProvider.java
+END
+UnknownPathException.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svnroot/eternityii/!svn/ver/62/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/UnknownPathException.java
+END
+RandomPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/219/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/solver/path/RandomPath.java
+END

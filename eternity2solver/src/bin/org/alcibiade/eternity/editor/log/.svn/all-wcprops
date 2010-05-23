@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/log
+END
+DocumentLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svnroot/eternityii/!svn/ver/56/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/log/DocumentLog.java
+END
+ConsoleLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/log/ConsoleLog.java
+END
+NullLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svnroot/eternityii/!svn/ver/56/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/log/NullLog.java
+END
+SolverLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svnroot/eternityii/!svn/ver/56/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/log/SolverLog.java
+END

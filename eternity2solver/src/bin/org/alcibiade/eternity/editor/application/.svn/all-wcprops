@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/eternityii/!svn/ver/259/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application
+END
+StatsApp.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svnroot/eternityii/!svn/ver/237/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/StatsApp.java
+END
+GraphApp.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svnroot/eternityii/!svn/ver/252/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/GraphApp.java
+END
+MaxSolvingSize.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/MaxSolvingSize.java
+END
+ConsoleApp.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svnroot/eternityii/!svn/ver/259/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/ConsoleApp.java
+END
+ConcurrentSolving.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/ConcurrentSolving.java
+END
+SwingApp.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svnroot/eternityii/!svn/ver/69/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/SwingApp.java
+END
+RandomTuner.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svnroot/eternityii/!svn/ver/206/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/application/RandomTuner.java
+END

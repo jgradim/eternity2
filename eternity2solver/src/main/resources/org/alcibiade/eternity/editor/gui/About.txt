@@ -1,0 +1,27 @@
+Eternity II Editor
+
+by Yannick Kirschhoffer <alcibiade@alcibiade.org>
+
+This program is published under the terms of the GNU General Public License version 3.
+See license.txt for details.
+
+
+** How to use this software ***
+
+On the main board, you can can edit the quads:
+
+Left click: Change the pattern, keep clicking until you find the right
+            one. 
+            
+Middle click: Lock or unlock the quad. A locked quad is used for clue
+              pieces for instance. They must be kept at this position
+              in the final result.
+              Note: When shuffling a grid, locked pieces won't be moved.
+              
+Mouse wheel: Rotate the piece clockwise or counterclockwise
+
+Arrow keys: While hovering over the quads, use the right and left arrow
+            keys on your keyboard to switch through the patterns.			
+
+You can also use the auto-fill method in the menu to create a complete
+puzzle with as many patterns as you like, and then use Grid / Shuffle.

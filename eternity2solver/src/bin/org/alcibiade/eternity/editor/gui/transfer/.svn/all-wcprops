@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer
+END
+QuadModelDataFlavor.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/QuadModelDataFlavor.java
+END
+PatternDataFlavor.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/PatternDataFlavor.java
+END
+TransferableQuadModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/TransferableQuadModel.java
+END
+DataFlavors.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/DataFlavors.java
+END
+TransferablePattern.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/TransferablePattern.java
+END
+AbstractTransferable.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svnroot/eternityii/!svn/ver/256/EternityEditor/trunk/src/main/java/org/alcibiade/eternity/editor/gui/transfer/AbstractTransferable.java
+END
