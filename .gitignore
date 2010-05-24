@@ -1,2 +1,5 @@
 src/*.class
 eternity2solver/target
+article/*.aux
+article/*.log
+article/*.pdf
