@@ -12,12 +12,12 @@ public class TabuleiroLosangos {
 	
 	int nLosangos;
 	
-	int[] cCores;
+	int[] cCores; // quantos losangos ha de cada padrao
 	ArrayList<Peca> listaPecas= new ArrayList<Peca>();
 	Tabuleiro tabuleiro;
-	int nLinhas;
-	int nColunasMin;
-	int nColunasMax;
+	int nLinhas;      // número de linhas
+	int nColunasMin;  // n colunas nas linhas com menos losangos
+	int nColunasMax;  // n colunas nas linhas com mais losangos
 	
 	TabuleiroLosangos(Peca[][] tabuleiro)
 	{
@@ -27,6 +27,7 @@ public class TabuleiroLosangos {
 		
 		this.tabuleiro.scramble();
 		
+		// "retirar" as peças para um monte = peças livres para usar
 		for(int i = 0; i < tabuleiro.length; i++)
 		{
 			for(int j = 0; j < tabuleiro[i].length; j++)
@@ -136,7 +137,7 @@ public class TabuleiroLosangos {
 		//System.out.println("Numero de losangos de cada cor (cor - numero): ");
 
 		int nCores = 0;
-		cCores = new int[100];
+		cCores = new int[100];  // array de contadores de padrões, indexado para o inteiro correspondente ao padrão
 		
 		//Hashtable<Integer, Integer> correspCores = new Hashtable<Integer, Integer>();
 		
@@ -146,7 +147,10 @@ public class TabuleiroLosangos {
 			correspCores.put(key, Cores.get(key));
 			nCores++;
 		}*/
+		
+		// inicialização dos contadores de padrões
 		for (int i = 0; i < tabuleiro.nLines; i++)
+		{
 			for (int j = 0; j < tabuleiro.nColumns; j++)
 			{
 				cCores[tabuleiro.pecas[i][j].getNorth()]++;
@@ -154,24 +158,25 @@ public class TabuleiroLosangos {
 				cCores[tabuleiro.pecas[i][j].getSouth()]++;
 				cCores[tabuleiro.pecas[i][j].getWest()]++;
 				nCores = Math.max(nCores,
-						Math.max(tabuleiro.pecas[i][j].getNorth(), Math.max(tabuleiro.pecas[i][j].getEast(),
-								Math.max(tabuleiro.pecas[i][j].getSouth(), tabuleiro.pecas[i][j].getWest()))));
+              						Math.max(tabuleiro.pecas[i][j].getNorth(), Math.max(tabuleiro.pecas[i][j].getEast(),
+							          	Math.max(tabuleiro.pecas[i][j].getSouth(), tabuleiro.pecas[i][j].getWest()))));
 			}
-		
-		nCores++;
-		for (int i = 0; i < nCores; i++)
-		{
-			cCores[i] /= 2;
-			nLosangos += cCores[i];
 		}
-		nLosangos -= cCores[0];
 		
-		System.out.println("Numero total de losangos: " + nLosangos);
-		System.out.println("Numero de losangos de cada cor (cor - numero): ");
-		for(int i = 0; i < nCores; i++)
-		{
-			System.out.println(i + " - " + cCores[i]);
-		}
+	  nCores++;
+	  for (int i = 0; i < nCores; i++)
+	  {
+		  cCores[i] /= 2;
+		  nLosangos += cCores[i];
+	  }
+	  nLosangos -= cCores[0]; // remover as bordas do tabuleiro, não contam para losangos
+	
+	  System.out.println("Numero total de losangos: " + nLosangos);
+	  System.out.println("Numero de losangos de cada cor (cor - numero): ");
+	  for(int i = 0; i < nCores; i++)
+	  {
+		  System.out.println(i + " - " + cCores[i]);
+	  }
 		
 		pecas = new Contador[nCores][nCores][nCores][nCores];
 		Contador cont;
@@ -196,7 +201,7 @@ public class TabuleiroLosangos {
 		{
 			for(int j = 0; j < losangos[i].length; j++)
 			{
-				losangos[i][j] = -1;
+				losangos[i][j] = -1;  // ainda nao tem cor
 			}
 		}
 	}
@@ -316,17 +321,20 @@ public class TabuleiroLosangos {
 		tabuleiro.pecas[Linha][Coluna] = null;
 	}
 	
+	// args: linha e coluna do losango que se vai colocar (NOTA: pode-se colocar 2 ou 1 losango/chamada da função solve)
 	public boolean solve(int lLosango, int cLosango)
 	{
 		iterations++;
-		int cDepth = (lLosango/2)*nColunasMax + (lLosango - (lLosango/2))*nColunasMin + cLosango;
+		int cDepth = (lLosango/2)*nColunasMax + (lLosango - (lLosango/2))*nColunasMin + cLosango; // dogma
 		if(cDepth > depth)
 		{
 			depth = cDepth;
 			System.out.println("Best Depth = " + depth + "/" + (nLosangos + tabuleiro.nLines));
 		}
+		
+		// se estás a usar o ultimo losango, so tens uma peça livre
 		if(lLosango == nLinhas && cLosango == nColunasMin)
-			return usaPeca(tabuleiro.nLines - 1, tabuleiro.nColumns - 1);
+			return usaPeca(tabuleiro.nLines - 1, tabuleiro.nColumns - 1); // devolve true se conseguir coloca-la
 		
 		int nCores = cCores.length;
 		
@@ -334,14 +342,14 @@ public class TabuleiroLosangos {
 		
 		for(int cor = 1; cor < nCores; cor++)
 		{
-			if(cCores[cor] > 0)
+			if(cCores[cor] > 0) // ainda ha losangos desta cor para colocar?
 			{
-				if(lLosango == nLinhas)
+				if(lLosango == nLinhas)   // BEGIN: ultima linha de losangos
 				{
 					losangos[lLosango-1][cLosango] = cor;
 					cCores[cor]--;
 					
-					if(usaPeca((lLosango-1)/2,cLosango))
+					if(usaPeca((lLosango-1)/2,cLosango)) // usaPeca refere-se sempre ao tabuleiro de peças quadradas, e não de losangos
 					{
 						if(solve(lLosango, cLosango+1))
 						{
@@ -353,11 +361,12 @@ public class TabuleiroLosangos {
 					}
 					
 					
-					losangos[lLosango-1][cLosango] = -1;
-					cCores[cor]++;
+					losangos[lLosango-1][cLosango] = -1; // refaz o que
+					cCores[cor]++;                       // tinha feito
 					
-				}
-				else if(cLosango == nColunasMin)
+				}   // END: ultima linha de losangos
+				
+				else if(cLosango == nColunasMin)       // BEGIN: ultima coluna de losangos NOTA: nColunasMin == nColunasMax - 1
 				{
 					losangos[lLosango][cLosango] = cor;
 					cCores[cor]--;
@@ -376,13 +385,14 @@ public class TabuleiroLosangos {
 					
 					losangos[lLosango][cLosango] = -1;
 					cCores[cor]++;
-				}
-				else
+				}                                      // END: ultima coluna de losangos
+				
+				else    // BEGIN: Situações normais a.k.a. colocar 2 losangos
 				{
 					losangos[lLosango][cLosango] = cor;
 					cCores[cor]--;
 					
-					for(int cor2 = 1; cor2 < nCores; cor2++)
+					for(int cor2 = 1; cor2 < nCores; cor2++) // experimentar todas as combinações de cores = permutar todas as cores entre os 2 losangos
 					{
 						if(cCores[cor2] > 0)
 						{
