@@ -3,7 +3,7 @@ TARGET=mpes
 all:
 	pdflatex $(TARGET).tex
 	pdflatex $(TARGET).tex
-	#bibtex $(TARGET).tex
+	bibtex $(TARGET)
 	pdflatex $(TARGET).tex
 
 clean:

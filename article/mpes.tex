@@ -6,6 +6,7 @@
 \documentclass{llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage[utf8]{inputenc}
 %
 \begin{document}
 %
@@ -25,18 +26,13 @@
 %
 \author{João Gradim \and Mário Carneiro}
 %
-\authorrunning{João Gradim et Mário Carneiro} % abbreviated author list (for running head)
+\authorrunning{João Gradim\inst{1} et Mário Carneiro\inst{1}} % abbreviated author list (for running head)
 %
 %%%% list of authors for the TOC (use if author list has to be modified)
 \tocauthor{João Gradim and Mário Carneiro}
 %
-\institute{Faculdade de Engenharia da Universidade do Porto, Porto, Portugal,\\
-\email{I.Ekeland@princeton.edu},\\ WWW home page:
-\texttt{http://users/\homedir iekeland/web/welcome.html}
-\and
-Universit\'{e} de Paris-Sud,
-Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
-F-91405 Orsay Cedex, France}
+\institute{Faculdade de Engenharia da Universidade do Porto,\\
+\email{ei05030@fe.up.pt}, \email{ei04051@fe.up.pt}}
 
 \maketitle              % typeset the title of the contribution
 
@@ -48,36 +44,5 @@ F-91405 Orsay Cedex, France}
 %
 % ---- Bibliography ----
 %
-\begin{thebibliography}{5}
-%
-\bibitem {clar:eke}
-Clarke, F., Ekeland, I.:
-Nonlinear oscillations and
-boundary-value problems for Hamiltonian systems.
-Arch. Rat. Mech. Anal. 78, 315--333 (1982)
-
-\bibitem {clar:eke:2}
-Clarke, F., Ekeland, I.:
-Solutions p\'{e}riodiques, du
-p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
-Note CRAS Paris 287, 1013--1015 (1978)
-
-\bibitem {mich:tar}
-Michalek, R., Tarantello, G.:
-Subharmonic solutions with prescribed minimal
-period for nonautonomous Hamiltonian systems.
-J. Diff. Eq. 72, 28--55 (1988)
-
-\bibitem {tar}
-Tarantello, G.:
-Subharmonic solutions for Hamiltonian
-systems via a $\bbbz_{p}$ pseudoindex theory.
-Annali di Matematica Pura (to appear)
-
-\bibitem {rab}
-Rabinowitz, P.:
-On subharmonic solutions of a Hamiltonian system.
-Comm. Pure Appl. Math. 33, 609--633 (1980)
-
-\end{thebibliography}
+\bibliography{mpes}
 \end{document}
