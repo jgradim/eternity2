@@ -3,3 +3,5 @@ eternity2solver/target
 article/*.aux
 article/*.log
 article/*.pdf
+article/*.bbl
+article/*.blg
