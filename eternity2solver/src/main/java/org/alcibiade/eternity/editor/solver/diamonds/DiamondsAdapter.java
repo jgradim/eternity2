@@ -5,6 +5,8 @@ import org.alcibiade.eternity.editor.solver.ClusterManager;
 import org.alcibiade.eternity.editor.solver.EternitySolver;
 import org.alcibiade.eternity.editor.solver.RandomFactory;
 
+import org.alcibiade.eternity.editor.model.QuadsFormatException;
+
 public class DiamondsAdapter extends EternitySolver {
 
   private TabuleiroLosangos diamondsBoard;
@@ -17,12 +19,20 @@ public class DiamondsAdapter extends EternitySolver {
 	protected long iterations = 0;
   
   public DiamondsAdapter(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager) {
+		
 		super(clusterManager);
 		this.problemGrid = grid;
-		this.solutionGrid = solutionGrid;
-		problemGrid.copyTo(solutionGrid);
+		this.solutionGrid = solutionGrid;		
 		
 		diamondsBoard = new TabuleiroLosangos(Boards.Tab12x12);
+		try {
+		  problemGrid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
+		  diamondsBoard.setGridModel(problemGrid);
+		} catch(QuadsFormatException e) {
+		  e.printStackTrace();
+		}
+		
+		problemGrid.copyTo(solutionGrid);
 		
 		/*
 		TabuleiroLosangos tab = new TabuleiroLosangos(Tab12x12);
@@ -38,6 +48,22 @@ public class DiamondsAdapter extends EternitySolver {
 			System.out.println("Elapsed time = " + (fim-inicio)/1000.0 + "seconds.");
 		}
 		*/
+	}
+	
+	@Override
+	public void run() {
+	  notifyStart();
+	  clusterManager.showStartMessage();
+	  
+	  boolean solved = clusterManager.submitSolution(solutionGrid);
+	  
+	  
+	  
+	  if (solved) {
+			clusterManager.showStats(iterations);
+		}
+	  
+	  notifyEnd(solved);
 	}
   
   @Override

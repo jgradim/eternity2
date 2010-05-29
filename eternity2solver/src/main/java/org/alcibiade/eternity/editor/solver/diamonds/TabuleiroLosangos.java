@@ -1,8 +1,6 @@
 package org.alcibiade.eternity.editor.solver.diamonds;
 
-//import org.alcibiade.eternity.editor.solver.diamonds.Tabuleiro;
-//import org.alcibiade.eternity.editor.solver.diamonds.Peca;
-//import org.alcibiade.eternity.editor.solver.diamonds.Contador;
+import org.alcibiade.eternity.editor.model.GridModel;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,6 +22,8 @@ public class TabuleiroLosangos {
 	int nLinhas;      // número de linhas
 	int nColunasMin;  // n colunas nas linhas com menos losangos
 	int nColunasMax;  // n colunas nas linhas com mais losangos
+	
+	GridModel grid; // Eternity II Editor board format
 	
 	TabuleiroLosangos(Peca[][] tabuleiro)
 	{
@@ -60,99 +60,13 @@ public class TabuleiroLosangos {
 		inicializaTab(tabuleiro);
 	}
 	
+	public void setGridModel(GridModel grid) { this.grid = grid; }
+	
 	private void inicializaTab(Peca[][] tab)
-	{
-		//int tabLinhas = tab.length;
-		//int tabColunas = tab[0].length;
-		
-		//ArrayList<Integer> triangulos = new ArrayList<Integer>();
-		
-		/*for(int i = 0; i < tabLinhas; i++)
-		{
-			for(int j = 0; j < tabColunas; j++)
-			{
-				if(tab[i][j].getNorth() != 0)
-					triangulos.add(tab[i][j].getNorth());
-				if(tab[i][j].getSouth() != 0)
-					triangulos.add(tab[i][j].getSouth());
-				if(tab[i][j].getEast() != 0)
-					triangulos.add(tab[i][j].getEast());
-				if(tab[i][j].getWest() != 0)
-					triangulos.add(tab[i][j].getWest());
-				
-				tabuleiro.pecas[i][j].setCoordinates(-1, -1);
-				tabuleiro.pecas[i][j] = null; //limpa o tabuleiro
-
-				
-			}
-		}
-		
-		int tempCor = 0;
-		int tempLinha = 0;
-		int tempColuna = 0;
-
-		while(!triangulos.isEmpty())
-		{
-			tempCor = triangulos.get(0);
-			triangulos.remove(0);
-			
-			for(int i = 0; i < triangulos.size(); i++)
-			{
-				if(tempCor == triangulos.get(i))
-				{
-					triangulos.remove(i);
-					losangos[tempLinha][tempColuna] = tempCor;
-
-					tempColuna++;
-					
-					if((tempLinha%2 == 0 && tempColuna == nColunasMin) || (tempLinha%2 == 1 && tempColuna == nColunasMax))
-					{
-						tempColuna = 0;
-						tempLinha++;
-					}
-					break;
-				}
-			}
-		}*/
-		
+	{		
 		nLosangos = 0;
-		//Hashtable<Integer,Integer> Cores = new Hashtable<Integer,Integer>();
-		//int temp;
-		
-		
-		/*for(int i = 0; i < losangos.length; i++)
-		{
-			for(int j = 0; j < losangos[i].length; j++)
-			{
-				nQuadrados++;
-				if(!Cores.containsKey(losangos[i][j]))
-				{
-					Cores.put(losangos[i][j], 1);
-				}
-				else
-				{
-					temp = Cores.get(losangos[i][j]);
-					temp++;
-					Cores.remove(losangos[i][j]);
-					Cores.put(losangos[i][j], temp);
-				}
-			}
-		}*/
-		
-		//System.out.println("Numero total de losangos: " + nLosangos);
-		//System.out.println("Numero de losangos de cada cor (cor - numero): ");
-
 		int nCores = 0;
 		cCores = new int[100];  // array de contadores de padrões, indexado para o inteiro correspondente ao padrão
-		
-		//Hashtable<Integer, Integer> correspCores = new Hashtable<Integer, Integer>();
-		
-		/*for(int key : Cores.keySet())
-		{
-			//System.out.println(key + " - " + Cores.get(key));
-			correspCores.put(key, Cores.get(key));
-			nCores++;
-		}*/
 		
 		// inicialização dos contadores de padrões
 		for (int i = 0; i < tabuleiro.nLines; i++)
@@ -335,7 +249,7 @@ public class TabuleiroLosangos {
 		if(cDepth > depth)
 		{
 			depth = cDepth;
-			System.out.println("Best Depth = " + depth + "/" + (nLosangos + tabuleiro.nLines));
+			//System.out.println("Best Depth = " + depth + "/" + (nLosangos + tabuleiro.nLines));
 		}
 		
 		// se estás a usar o ultimo losango, so tens uma peça livre
@@ -343,8 +257,6 @@ public class TabuleiroLosangos {
 			return usaPeca(tabuleiro.nLines - 1, tabuleiro.nColumns - 1); // devolve true se conseguir coloca-la
 		
 		int nCores = cCores.length;
-		
-		//System.out.println("Solve for (" + lLosango + "," + cLosango + ")");
 		
 		for(int cor = 1; cor < nCores; cor++)
 		{
