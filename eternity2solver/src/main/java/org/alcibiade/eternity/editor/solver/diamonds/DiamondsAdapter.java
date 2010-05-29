@@ -6,6 +6,8 @@ import org.alcibiade.eternity.editor.solver.EternitySolver;
 import org.alcibiade.eternity.editor.solver.RandomFactory;
 
 public class DiamondsAdapter extends EternitySolver {
+
+  private TabuleiroLosangos diamondsBoard;
   
   private GridModel problemGrid;
 	private GridModel solutionGrid;
@@ -19,6 +21,8 @@ public class DiamondsAdapter extends EternitySolver {
 		this.problemGrid = grid;
 		this.solutionGrid = solutionGrid;
 		problemGrid.copyTo(solutionGrid);
+		
+		diamondsBoard = new TabuleiroLosangos(Boards.Tab12x12);
 		
 		/*
 		TabuleiroLosangos tab = new TabuleiroLosangos(Tab12x12);

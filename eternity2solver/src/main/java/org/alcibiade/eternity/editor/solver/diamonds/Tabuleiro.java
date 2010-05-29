@@ -130,5 +130,20 @@ public class Tabuleiro {
 		}
 		System.out.println();
 	}
+	
+	public String dumpToString() {
+	  String board = "";
+	  for(int i = 0; i < nLines; i++)
+		{
+			for(int j = 0; j < nColumns; j++)
+			{
+				board += pecas[i][j].getNorth() + " ";
+				board += pecas[i][j].getEast() + " ";
+				board += pecas[i][j].getSouth() + " ";
+				board += pecas[i][j].getWest() + " ";
+			}
+		}
+		return board;
+	}
 
 }
