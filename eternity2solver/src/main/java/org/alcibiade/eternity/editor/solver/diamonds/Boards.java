@@ -1,6 +1,6 @@
 package org.alcibiade.eternity.editor.solver.diamonds;
 
-public class Main {
+public class Boards {
 	
 	static Peca[][] Tab16x16= {
 			{new Peca(5, 0, 8, 8), new Peca(0, 19, 9, 1), new Peca(9, 3, 18, 1), new Peca(19, 2, 2, 18), new Peca(9, 21, 3, 19), new Peca(10, 20, 15, 4), new Peca(11, 23, 16, 14), new Peca(17, 16, 5, 17), new Peca(1, 22, 17, 7), new Peca(1, 7, 19, 0), new Peca(0, 10, 22, 8), new Peca(19, 6, 20, 6), new Peca(20, 5, 0, 20), new Peca(21, 10, 11, 4), new Peca(19, 13, 8, 23), new Peca(18, 20, 10, 14) },
@@ -144,27 +144,4 @@ public class Main {
 
 	static Peca[][] Tab2x2 = {{new Peca(0,1,2,0), new Peca(0,0,3,1)}, {new Peca(2,4,0,0), new Peca(3,0,0,4)}};
 	static Peca[][] Tab2x2_ = {{new Peca(0,1,2,0), new Peca(0,0,2,1)}, {new Peca(2,4,0,0), new Peca(2,0,0,4)}};
-
-	public static void main(String args[])
-	{
-		TabuleiroLosangos tab = new TabuleiroLosangos(Tab12x12);
-		
-		long inicio = System.currentTimeMillis();
-		
-		
-		if (tab.solve(1, 0))
-		{
-			long fim = System.currentTimeMillis();
-			tab.tabuleiro.dump();
-			System.out.println("Iterations: " + tab.iterations);
-			System.out.println("Elapsed time = " + (fim-inicio)/1000.0 + "seconds.");
-		}
-		
-		
-		
-		
-		
-		tab.tabuleiro.dumpToClipboard();
-	}
-
 }

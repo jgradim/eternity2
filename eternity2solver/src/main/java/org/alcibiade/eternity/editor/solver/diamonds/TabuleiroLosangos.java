@@ -1,11 +1,8 @@
 package org.alcibiade.eternity.editor.solver.diamonds;
 
-import org.alcibiade.eternity.editor.solver.diamonds.Tabuleiro;
-import org.alcibiade.eternity.editor.solver.diamonds.Peca;
-import org.alcibiade.eternity.editor.solver.diamonds.Contador;
-
-import java.util.ArrayList;
-import java.util.Hashtable;
+//import org.alcibiade.eternity.editor.solver.diamonds.Tabuleiro;
+//import org.alcibiade.eternity.editor.solver.diamonds.Peca;
+//import org.alcibiade.eternity.editor.solver.diamonds.Contador;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
