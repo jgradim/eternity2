@@ -1,6 +1,8 @@
 package org.alcibiade.eternity.editor.solver.diamonds;
 
 import org.alcibiade.eternity.editor.model.GridModel;
+import org.alcibiade.eternity.editor.model.QuadsFormatException;
+import org.alcibiade.eternity.editor.solver.ClusterManager;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,10 +26,10 @@ public class TabuleiroLosangos {
 	int nColunasMax;  // n colunas nas linhas com mais losangos
 	
 	GridModel grid; // Eternity II Editor board format
+	ClusterManager clusterManager;
 	
 	TabuleiroLosangos(Peca[][] tabuleiro)
 	{
-		
 		this.tabuleiro = new Tabuleiro(tabuleiro.length, tabuleiro[0].length);
 		this.tabuleiro.setPecas(tabuleiro);
 		
@@ -61,6 +63,7 @@ public class TabuleiroLosangos {
 	}
 	
 	public void setGridModel(GridModel grid) { this.grid = grid; }
+	public void setClusterManager(ClusterManager clusterManager) { this.clusterManager = clusterManager; }
 	
 	private void inicializaTab(Peca[][] tab)
 	{		
@@ -245,6 +248,16 @@ public class TabuleiroLosangos {
 	public boolean solve(int lLosango, int cLosango)
 	{
 		iterations++;
+		
+		//-------------
+		try {	
+  		grid.fromQuadString(this.tabuleiro.dumpToString()); // update grid
+	  	clusterManager.submitSolution(grid);      // show solution
+		} catch(QuadsFormatException e) {
+		  e.printStackTrace();
+		}
+		//-------------
+		
 		int cDepth = (lLosango/2)*nColunasMax + (lLosango - (lLosango/2))*nColunasMin + cLosango; // dogma
 		if(cDepth > depth)
 		{

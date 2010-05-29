@@ -27,7 +27,8 @@ public class DiamondsAdapter extends EternitySolver {
 		diamondsBoard = new TabuleiroLosangos(Boards.Tab12x12);
 		try {
 		  problemGrid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
-		  diamondsBoard.setGridModel(problemGrid);
+		  diamondsBoard.setGridModel(this.problemGrid);
+		  diamondsBoard.setClusterManager(this.clusterManager);
 		} catch(QuadsFormatException e) {
 		  e.printStackTrace();
 		}
