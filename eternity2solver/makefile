@@ -1,5 +1,7 @@
 all:
-	mvn clean install -DskipTests
+	mvn install -DskipTests
 clean:
 	mvn clean
 	clear
+rebuild:
+	mvn clean install -DskipTests
