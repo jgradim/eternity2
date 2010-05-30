@@ -7,6 +7,7 @@
 %
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 %
 \begin{document}
 %
@@ -37,18 +38,56 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
+eu vou comer
+comer
+comer
+laranjas e bananas
 \end{abstract}
 %
 \section{Introduction}
 
-This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
+%This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
+
+The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four colour patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighbouring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered. 
+
+Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimentions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span. 
+
+We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we've got.
+
+We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs andd the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
 
 \section{Problem Description}
 
-\begin{itemize}
-	\item Eternity II puzzle description
-	\item How the diamonds approach is different from a standard, to-piece approach, and why it may yield better results
-\end{itemize}
+\subsection{Eternity II puzzle description}
+
+The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16  grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ 557$ possible configurations.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=35mm]{images/shuffled.png}
+	\caption{Simplified puzzle with 7 by 7 tiles, with 6 colours}
+	\label{fig:shuffled_example}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=35mm]{images/solved.png}
+	\caption{Solution to the above puzzle}
+	\label{fig:solved_example}
+\end{figure}
+
+Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece.
+
+Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges. The original problem has the additional restriction that only five of those colours 
+
+
+\subsection{Normal approaches to solving the problem}
+
+
+\subsection{The "diamond" approach}
+
+How the diamonds approach is different from a standard, to-piece approach, and why it may yield better results
+
 
 \section{New approaches}
 
