@@ -11,22 +11,28 @@ public class DiamondsAdapter extends EternitySolver {
 
   private TabuleiroLosangos diamondsBoard;
   
-  private GridModel grid;
+  private GridModel problemGrid;
+  private GridModel solutionGrid;
 
 	private long iterationsLimit = -1;
 
 	protected long iterations = 0;
   
-  public DiamondsAdapter(GridModel grid, ClusterManager clusterManager) {
+  public DiamondsAdapter(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager) {
 		
 		super(clusterManager);
-		this.grid = grid;
+		this.problemGrid = grid;
+	  this.solutionGrid = solutionGrid;
 		
 		diamondsBoard = new TabuleiroLosangos(Boards.Tab5x5);
 		try {
-		  grid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
-		  diamondsBoard.setGridModel(this.grid);
+		
+		  problemGrid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
+		  diamondsBoard.setGridModel(this.solutionGrid);
 		  diamondsBoard.setClusterManager(this.clusterManager);
+		  
+		  problemGrid.copyTo(solutionGrid);
+		  
 		} catch(QuadsFormatException e) {
 		  e.printStackTrace();
 		}

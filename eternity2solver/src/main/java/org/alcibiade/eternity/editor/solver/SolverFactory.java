@@ -124,7 +124,7 @@ public class SolverFactory {
 		// ----- Begin Diamonds solvers
 		//
 		else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
-		  solver = new DiamondsAdapter(pieces, clusterManager);
+		  solver = new DiamondsAdapter(pieces, solution, clusterManager);
 		}
 		//
 		// ----- End Diamonds solvers
