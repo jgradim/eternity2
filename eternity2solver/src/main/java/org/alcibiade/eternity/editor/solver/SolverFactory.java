@@ -41,7 +41,7 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkIV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVI;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
-import org.alcibiade.eternity.editor.solver.Diamonds.DiamondsSolver;
+import org.alcibiade.eternity.editor.solver.diamonds.DiamondsSolver;
 
 public class SolverFactory {
 

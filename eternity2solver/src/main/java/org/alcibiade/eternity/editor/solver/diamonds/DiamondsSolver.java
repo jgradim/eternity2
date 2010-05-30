@@ -34,12 +34,15 @@ public class DiamondsSolver extends EternitySolver {
 
 	protected long iterations = 0;
 
-	public SwappingSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager) {
+	public DiamondsSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager) {
 		super(clusterManager);
 		this.problemGrid = grid;
 		this.solutionGrid = solutionGrid;
 		problemGrid.copyTo(solutionGrid);
 	}
+	
+	@Override
+	public String getSolverName() { return ""; }
 
 	@Override
 	public long getIterations() {
@@ -74,12 +77,13 @@ public class DiamondsSolver extends EternitySolver {
 
 		if (solved) {
 			clusterManager.showStats(iterations);
-		}*/
+		}
 
-		notifyEnd(solved);
+		notifyEnd(solved);*/
 	}
 
 	private void solve(int line, int column) {
 	  iterations++;
+	  clusterManager.submitSolution(solutionGrid);
 	}
 }
