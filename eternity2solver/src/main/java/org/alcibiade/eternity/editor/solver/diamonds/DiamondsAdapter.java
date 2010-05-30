@@ -11,29 +11,25 @@ public class DiamondsAdapter extends EternitySolver {
 
   private TabuleiroLosangos diamondsBoard;
   
-  private GridModel problemGrid;
-	private GridModel solutionGrid;
+  private GridModel grid;
 
 	private long iterationsLimit = -1;
 
 	protected long iterations = 0;
   
-  public DiamondsAdapter(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager) {
+  public DiamondsAdapter(GridModel grid, ClusterManager clusterManager) {
 		
 		super(clusterManager);
-		this.problemGrid = grid;
-		this.solutionGrid = solutionGrid;		
+		this.grid = grid;
 		
 		diamondsBoard = new TabuleiroLosangos(Boards.Tab12x12);
 		try {
-		  problemGrid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
-		  diamondsBoard.setGridModel(this.problemGrid);
+		  grid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
+		  diamondsBoard.setGridModel(this.grid);
 		  diamondsBoard.setClusterManager(this.clusterManager);
 		} catch(QuadsFormatException e) {
 		  e.printStackTrace();
 		}
-		
-		problemGrid.copyTo(solutionGrid);
 		
 		/*
 		TabuleiroLosangos tab = new TabuleiroLosangos(Tab12x12);
@@ -56,15 +52,17 @@ public class DiamondsAdapter extends EternitySolver {
 	  notifyStart();
 	  clusterManager.showStartMessage();
 	  
-	  boolean solved = clusterManager.submitSolution(solutionGrid);
+	  //boolean solved = clusterManager.submitSolution(grid);
 	  
+	  //boolean solved = diamondsBoard.solve(1, 0);
 	  
-	  
-	  if (solved) {
-			clusterManager.showStats(iterations);
+	  if (diamondsBoard.solve(1, 0)) {
+			clusterManager.showStats(diamondsBoard.iterations);
+			
+			try { diamondsBoard.grid.fromQuadString(diamondsBoard.tabuleiro.dumpToString()); } catch(Exception e) { }
+			clusterManager.submitSolution(diamondsBoard.grid);
+	    notifyEnd(true);
 		}
-	  
-	  notifyEnd(solved);
 	}
   
   @Override

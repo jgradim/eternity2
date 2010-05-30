@@ -137,10 +137,15 @@ public class Tabuleiro {
 		{
 			for(int j = 0; j < nColumns; j++)
 			{
-				board += pecas[i][j].getNorth() + " ";
-				board += pecas[i][j].getEast() + " ";
-				board += pecas[i][j].getSouth() + " ";
-				board += pecas[i][j].getWest() + " ";
+			  try { board += pecas[i][j].getNorth() + " "; } catch (NullPointerException e) { board += "0 "; }
+				try { board += pecas[i][j].getEast() + " "; } catch (NullPointerException e) { board += "0 "; }
+				try { board += pecas[i][j].getSouth() + " "; } catch (NullPointerException e) { board += "0 "; }
+				try { board += pecas[i][j].getWest() + " "; } catch (NullPointerException e) { board += "0 "; }
+				
+				//board += pecas[i][j].getNorth() + " ";
+				//board += pecas[i][j].getEast() + " ";
+				//board += pecas[i][j].getSouth() + " ";
+				//board += pecas[i][j].getWest() + " ";
 			}
 		}
 		return board;

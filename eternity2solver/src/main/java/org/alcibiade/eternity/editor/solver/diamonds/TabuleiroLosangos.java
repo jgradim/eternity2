@@ -14,7 +14,7 @@ public class TabuleiroLosangos {
 	Contador[][][][] pecas;
 	// N E S W = number
 	
-	long iterations = 0;
+	public long iterations = 0;
 	
 	int nLosangos;
 	
@@ -25,8 +25,8 @@ public class TabuleiroLosangos {
 	int nColunasMin;  // n colunas nas linhas com menos losangos
 	int nColunasMax;  // n colunas nas linhas com mais losangos
 	
-	GridModel grid; // Eternity II Editor board format
-	ClusterManager clusterManager;
+	public GridModel grid; // Eternity II Editor board format
+	public ClusterManager clusterManager;
 	
 	TabuleiroLosangos(Peca[][] tabuleiro)
 	{
@@ -244,19 +244,20 @@ public class TabuleiroLosangos {
 		tabuleiro.pecas[Linha][Coluna] = null;
 	}
 	
+	public void submitSolution() {
+	  try {
+	    grid.fromQuadString(this.tabuleiro.dumpToString());
+	    clusterManager.submitSolution(grid);
+	  } catch(QuadsFormatException e) {
+	    //e.printStackTrace();
+	    System.out.println("Invalid Board");
+	  }
+	}
+	
 	// args: linha e coluna do losango que se vai colocar (NOTA: pode-se colocar 2 ou 1 losango/chamada da função solve)
 	public boolean solve(int lLosango, int cLosango)
 	{
 		iterations++;
-		
-		//-------------
-		try {	
-  		grid.fromQuadString(this.tabuleiro.dumpToString()); // update grid
-	  	clusterManager.submitSolution(grid);      // show solution
-		} catch(QuadsFormatException e) {
-		  e.printStackTrace();
-		}
-		//-------------
 		
 		int cDepth = (lLosango/2)*nColunasMax + (lLosango - (lLosango/2))*nColunasMin + cLosango; // dogma
 		if(cDepth > depth)

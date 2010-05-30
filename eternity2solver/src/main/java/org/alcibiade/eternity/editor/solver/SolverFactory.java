@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.alcibiade.eternity.editor.model.GridModel;
+import org.alcibiade.eternity.editor.solver.diamonds.DiamondsAdapter;
 import org.alcibiade.eternity.editor.solver.backtracking.BlockSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkII;
@@ -44,6 +45,7 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
 
 public class SolverFactory {
 
+  public static final String LABEL_DIAMONDS_ITERATIVE = "Diamonds Iterative";
 	public static final String LABEL_ITPATHMKI = "Iterative Path MkI";
 	public static final String LABEL_ITPATHMKII = "Iterative Path MkII";
 	public static final String LABEL_ITPATHMKIII = "Iterative Path MkIII";
@@ -64,6 +66,7 @@ public class SolverFactory {
 		List<String> solvers = new ArrayList<String>();
 		// solvers.add(LABEL_ITPATHMKI);
 		// solvers.add(LABEL_ITPATHMKII);
+		solvers.add(LABEL_DIAMONDS_ITERATIVE);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
 		solvers.add(LABEL_SWAPDUMBNEW);
@@ -116,6 +119,11 @@ public class SolverFactory {
 			solver = new AStarSolverMkI(pieces, solution, clusterManager);
 		} else if (LABEL_PIPELINE.equalsIgnoreCase(type)) {
 			solver = new PipelineSolver(pieces, solution, clusterManager);
+		//
+		// ----- Diamonds solvers
+		//
+		} else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
+		  solver = new DiamondsAdapter(pieces, clusterManager);
 		} else {
 			throw new UnknownSolverException("Unknown solver type: " + type);
 		}
