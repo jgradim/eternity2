@@ -22,7 +22,7 @@ public class DiamondsAdapter extends EternitySolver {
 		super(clusterManager);
 		this.grid = grid;
 		
-		diamondsBoard = new TabuleiroLosangos(Boards.Tab12x12);
+		diamondsBoard = new TabuleiroLosangos(Boards.Tab5x5);
 		try {
 		  grid.fromQuadString(diamondsBoard.tabuleiro.dumpToString());
 		  diamondsBoard.setGridModel(this.grid);

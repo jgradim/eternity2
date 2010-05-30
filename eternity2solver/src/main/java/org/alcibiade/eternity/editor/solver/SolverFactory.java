@@ -119,12 +119,17 @@ public class SolverFactory {
 			solver = new AStarSolverMkI(pieces, solution, clusterManager);
 		} else if (LABEL_PIPELINE.equalsIgnoreCase(type)) {
 			solver = new PipelineSolver(pieces, solution, clusterManager);
+		}
 		//
-		// ----- Diamonds solvers
+		// ----- Begin Diamonds solvers
 		//
-		} else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
+		else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
 		  solver = new DiamondsAdapter(pieces, clusterManager);
-		} else {
+		}
+		//
+		// ----- End Diamonds solvers
+		//
+		else {
 			throw new UnknownSolverException("Unknown solver type: " + type);
 		}
 

@@ -42,6 +42,8 @@ public class TabuleiroLosangos {
 			{
 				listaPecas.add(new Peca(tabuleiro[i][j].getNorth(), tabuleiro[i][j].getEast(), tabuleiro[i][j].getSouth(), tabuleiro[i][j].getWest()));
 				listaPecas.get(listaPecas.size() - 1).setCoordinates(i, j);
+				//tabuleiro[i][j] = null;
+				this.tabuleiro.pecas[i][j] = null;
 			}
 		}
 		
@@ -76,13 +78,13 @@ public class TabuleiroLosangos {
 		{
 			for (int j = 0; j < tabuleiro.nColumns; j++)
 			{
-				cCores[tabuleiro.pecas[i][j].getNorth()]++;
-				cCores[tabuleiro.pecas[i][j].getEast()]++;
-				cCores[tabuleiro.pecas[i][j].getSouth()]++;
-				cCores[tabuleiro.pecas[i][j].getWest()]++;
+				cCores[tab[i][j].getNorth()]++;
+				cCores[tab[i][j].getEast()]++;
+				cCores[tab[i][j].getSouth()]++;
+				cCores[tab[i][j].getWest()]++;
 				nCores = Math.max(nCores,
-              						Math.max(tabuleiro.pecas[i][j].getNorth(), Math.max(tabuleiro.pecas[i][j].getEast(),
-							          	Math.max(tabuleiro.pecas[i][j].getSouth(), tabuleiro.pecas[i][j].getWest()))));
+              						Math.max(tab[i][j].getNorth(), Math.max(tab[i][j].getEast(),
+							          	Math.max(tab[i][j].getSouth(), tab[i][j].getWest()))));
 			}
 		}
 		
@@ -176,8 +178,7 @@ public class TabuleiroLosangos {
 				return true;
 			}
 		}
-			
-			
+
 		//Top border
 		else if(Linha == 0)
 		{
@@ -269,7 +270,7 @@ public class TabuleiroLosangos {
 		// se estás a usar o ultimo losango, so tens uma peça livre
 		if(lLosango == nLinhas && cLosango == nColunasMin)
 			return usaPeca(tabuleiro.nLines - 1, tabuleiro.nColumns - 1); // devolve true se conseguir coloca-la
-		
+			
 		int nCores = cCores.length;
 		
 		for(int cor = 1; cor < nCores; cor++)
@@ -283,6 +284,7 @@ public class TabuleiroLosangos {
 					
 					if(usaPeca((lLosango-1)/2,cLosango)) // usaPeca refere-se sempre ao tabuleiro de peças quadradas, e não de losangos
 					{
+					submitSolution();
 						if(solve(lLosango, cLosango+1))
 						{
 							//System.out.println("Colocada Peca em (" + (lLosango-1)/2 + "," + cLosango + ")");
@@ -290,6 +292,7 @@ public class TabuleiroLosangos {
 						}
 						
 						libertaPeca((lLosango-1)/2,cLosango);
+						submitSolution();
 					}
 					
 					
@@ -305,6 +308,7 @@ public class TabuleiroLosangos {
 					
 					if(usaPeca((lLosango-1)/2,cLosango))
 					{
+					submitSolution();
 						if(solve(lLosango+2, 0))
 						{
 							//System.out.println("Colocada Peca em (" + (lLosango-1)/2 + "," + cLosango + ")");
@@ -312,6 +316,7 @@ public class TabuleiroLosangos {
 						}
 						
 						libertaPeca((lLosango-1)/2,cLosango);
+						submitSolution();
 					}
 					
 					
@@ -333,6 +338,7 @@ public class TabuleiroLosangos {
 							
 							if(usaPeca((lLosango-1)/2,cLosango))
 							{
+							submitSolution();
 								if(solve(lLosango, cLosango+1))
 								{
 									//System.out.println("Colocada Peca em (" + (lLosango-1)/2 + "," + cLosango + ")");
@@ -340,6 +346,7 @@ public class TabuleiroLosangos {
 								}
 								
 								libertaPeca((lLosango-1)/2,cLosango);
+								submitSolution();
 							}
 							
 							
