@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.alcibiade.eternity.editor.model.GridModel;
-import org.alcibiade.eternity.editor.solver.diamonds.DiamondsAdapter;
 import org.alcibiade.eternity.editor.solver.backtracking.BlockSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkII;
@@ -42,10 +41,11 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkIV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVI;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
+import org.alcibiade.eternity.editor.solver.Diamonds.DiamondsSolver;
 
 public class SolverFactory {
 
-  public static final String LABEL_DIAMONDS_ITERATIVE = "Diamonds Iterative";
+  public static final String LABEL_DIAMONDS = "Diamonds";
 	public static final String LABEL_ITPATHMKI = "Iterative Path MkI";
 	public static final String LABEL_ITPATHMKII = "Iterative Path MkII";
 	public static final String LABEL_ITPATHMKIII = "Iterative Path MkIII";
@@ -66,7 +66,6 @@ public class SolverFactory {
 		List<String> solvers = new ArrayList<String>();
 		// solvers.add(LABEL_ITPATHMKI);
 		// solvers.add(LABEL_ITPATHMKII);
-		solvers.add(LABEL_DIAMONDS_ITERATIVE);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
 		solvers.add(LABEL_SWAPDUMBNEW);
@@ -77,6 +76,7 @@ public class SolverFactory {
 		solvers.add(LABEL_SWAPWMKV);
 		solvers.add(LABEL_SWAPWMKVI);
 		// solvers.add(LABEL_SWAPWMKVII);
+		solvers.add(LABEL_DIAMONDS);
 		return solvers;
 	}
 
@@ -119,17 +119,9 @@ public class SolverFactory {
 			solver = new AStarSolverMkI(pieces, solution, clusterManager);
 		} else if (LABEL_PIPELINE.equalsIgnoreCase(type)) {
 			solver = new PipelineSolver(pieces, solution, clusterManager);
-		}
-		//
-		// ----- Begin Diamonds solvers
-		//
-		else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
-		  solver = new DiamondsAdapter(pieces, solution, clusterManager);
-		}
-		//
-		// ----- End Diamonds solvers
-		//
-		else {
+		}	else if (LABEL_DIAMONDS.equalsIgnoreCase(type)) {
+		  solver = new DiamondsSolver(pieces, solution, clusterManager);
+		} else {
 			throw new UnknownSolverException("Unknown solver type: " + type);
 		}
 
