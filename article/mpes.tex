@@ -38,10 +38,7 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-eu vou comer
-comer
-comer
-laranjas e bananas
+Eternity II is an NP-complete edge-matching puzzle whose solution has not yet been discovered. In this article, we will describe our attempt to improve solutions that solve reduced versions of this puzzle.
 \end{abstract}
 %
 \section{Introduction}
@@ -60,7 +57,7 @@ We will also introduce a new element to their work. The Eternity II editor is a 
 
 \subsection{Eternity II puzzle description}
 
-The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16  grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ 557$ possible configurations.
+The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16  grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ {557}$ possible configurations.
 
 \begin{figure}[h]
 	\centering
@@ -76,41 +73,54 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 	\label{fig:solved_example}
 \end{figure}
 
-Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece.
-
-Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges. The original problem has the additional restriction that only five of those colours 
+Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges. 
 
 
 \subsection{Normal approaches to solving the problem}
 
+We have found that the most common approaches that solve these kinds of problems can fall into one of two types: swap and iterative. Swap solutions always start with a complete board, and then use the rotate and swap operations in order to improve the board's state. Iterative approaches place pieces progressively, according to a certain criteria and can backtrack to any previous state if they determine that no good solution will be found from that point onward.
+
+\subsubsection{The swap approach}
+
+As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simmulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
+
+Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process. (Explain why?)
+
+\subsubsection{The iterative approach}
+
+Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
+(Describe here most common patterns that can be used.)
+
 
 \subsection{The "diamond" approach}
 
-How the diamonds approach is different from a standard, to-piece approach, and why it may yield better results
+(What is the diamond approach? Is it a swap or iterative? (it can be both))
+(How the diamonds approach is different from a standard, to-piece approach, and why it may yield better results)
 
 
 \section{New approaches}
 
-Methodologies and approaches taken when trying new methods to improve solving times of simplified Eternity II puzzles
+(Methodologies and approaches taken when trying new methods to improve solving times of simplified Eternity II puzzles)
 
 \subsection{Eternity II Editor}
 
-Why are we using Eternity II Editor and how we linked the previously developed solution with it
+(Why are we using Eternity II Editor and how we linked the previously developed solution with it)
 
 \subsection{Swap methods}
 
-Try out swap methods for solving boards, using different algorithms to decide which piece or pieces to swap: Hill Climbing, Simulated Annealing, Tabu Search, etc.
+(Try out swap methods for solving boards, using different algorithms to decide which piece or pieces to swap: Hill Climbing, Simulated Annealing, Tabu Search, etc.)
 
 \subsection{Iterative placement patterns}
 
-In case the swap methods above prove to be inneficient or fail to solve the problems, try different iterative patterns for the placement of diamonds on the board (picking up on the previously developed solution and changing the order of the diamonds placed on the board)
+(In case the swap methods above prove to be inneficient or fail to solve the problems, try different iterative patterns for the placement of diamonds on the board (picking up on the previously developed solution and changing the order of the diamonds placed on the board))
 
 \section{Results}
 
-Experimental results obtained from the application of the new methodologies to the diamonds board approach
+(Experimental results obtained from the application of the new methodologies to the diamonds board approach)
 
 \section{Conclusions}
 
+(Conclusions go here)
 %
 % ---- Bibliography ----
 %
