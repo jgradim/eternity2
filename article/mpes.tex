@@ -108,7 +108,11 @@ Iterative solutions try to place the pieces progressively, usually following som
 
 \subsection{Genetic Algorithms}
 
-\subsubsection{Implmentation}\label{sec:implementation}
+\subsubsection{Fitness function}\label{sec:fitness-function}
+
+The fitness function used to evaluate the quality of the boards is given by $\frac{n-matching-edges / total-matching-edges}$
+
+\subsubsection{Implementation}\label{sec:implementation}
 
 Starting out with \textit{n} random permutations of the same board, the fittest half of the population is selected for breeding, using an ?elitist? selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
 
