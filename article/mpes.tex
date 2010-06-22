@@ -45,13 +45,13 @@ Eternity II is an NP-complete edge-matching puzzle whose solution has not yet be
 
 %This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
 
-The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four colour patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighbouring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered.
+The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four color patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered.
 
-Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimentions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
+Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimensions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
 
-We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we've got.
+We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we'vie got.
 
-We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs andd the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
+We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs and the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
 
 \section{Problem Description}
 
@@ -62,7 +62,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=35mm]{images/shuffled.png}
-	\caption{Simplified puzzle with 7 by 7 tiles, with 6 colours}
+	\caption{Simplified puzzle with 7 by 7 tiles, with 6 colors}
 	\label{fig:shuffled_example}
 \end{figure}
 
@@ -73,7 +73,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 	\label{fig:solved_example}
 \end{figure}
 
-Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges.
+Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighboring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a gray edge. There are 22 colors, not counting these gray edges.
 
 
 \subsection{Normal approaches to solving the problem}
@@ -82,7 +82,7 @@ We have found that the most common approaches that solve these kinds of problems
 
 \subsubsection{The swap approach}
 
-As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simmulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
+As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
 
 Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process. (Explain why?)
 
@@ -106,6 +106,11 @@ Iterative solutions try to place the pieces progressively, usually following som
 (Why are we using Eternity II Editor and how we linked the previously developed solution with it)
 
 \subsection{Genetic Algorithms}
+
+Genetic algorithms (GA) are search algorithms that work by combining two (or more) \textit{parent} states in order to maximize the amount of information passed on to the next search step, instead of modifying a single state. These kind of algorithms have been proven useful in solving many kinds of problems, including board games problems, such as the \textit{n queens} problem\cite{eastridge}.
+
+% FIXME: tá péssimo
+\subsubsection{Chromosome} The chromosome to be used in both the evaluation by the fitness function and the breeding methods is the board itself
 
 \subsubsection{Fitness function}\label{sec:fitness-function}
 
@@ -138,7 +143,7 @@ Starting out with \textit{n} random permutations of the same board, the fittest 
 
 \subsection{Iterative placement patterns}
 
-(In case the swap methods above prove to be inneficient or fail to solve the problems, try different iterative patterns for the placement of diamonds on the board (picking up on the previously developed solution and changing the order of the diamonds placed on the board))
+(In case the swap methods above prove to be inefficient or fail to solve the problems, try different iterative patterns for the placement of diamonds on the board (picking up on the previously developed solution and changing the order of the diamonds placed on the board))
 
 \section{Results}
 
@@ -150,6 +155,7 @@ Starting out with \textit{n} random permutations of the same board, the fittest 
 %
 % ---- Bibliography ----
 %
+\bibliographystyle{plain}
 \bibliography{mpes}
 \end{document}
 
