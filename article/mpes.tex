@@ -45,9 +45,9 @@ Eternity II is an NP-complete edge-matching puzzle whose solution has not yet be
 
 %This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
 
-The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four colour patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighbouring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered. 
+The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four colour patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighbouring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered.
 
-Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimentions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span. 
+Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimentions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
 
 We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we've got.
 
@@ -73,7 +73,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 	\label{fig:solved_example}
 \end{figure}
 
-Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges. 
+Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighbouring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 colors, not counting these grey edges.
 
 
 \subsection{Normal approaches to solving the problem}
@@ -106,6 +106,19 @@ Iterative solutions try to place the pieces progressively, usually following som
 
 (Why are we using Eternity II Editor and how we linked the previously developed solution with it)
 
+\subsection{Genetic Algorithms}
+
+\subsubsection{Implmentation}\label{sec:implementation}
+
+Starting out with \textit{n} random permutations of the same board, the fittest half of the population is selected for breeding, using an ?elitist? selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
+
+\begin{itemize}
+	\item If both parents have compatible features, use both features on both descendants in order to create fitters boards
+	\item If both parents have incompatible features, select the highest scoring feature from each parent and use it as a starting point for each of the descendants
+	\item The rest of the genetic code (pieces) not originated from the feature selection is then placed on the descendant boards using a simple (no backtracking) linear constructive method
+	\item Mutations are then performed on a random set of pieces by rotating them in order to try and improve the overall fitness of the board
+\end{itemize}
+
 \subsection{Swap methods}
 
 (Try out swap methods for solving boards, using different algorithms to decide which piece or pieces to swap: Hill Climbing, Simulated Annealing, Tabu Search, etc.)
@@ -126,3 +139,4 @@ Iterative solutions try to place the pieces progressively, usually following som
 %
 \bibliography{mpes}
 \end{document}
+
