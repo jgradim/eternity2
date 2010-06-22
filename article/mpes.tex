@@ -91,7 +91,6 @@ Evidently, the starting position of the pieces in the puzzle will also play an i
 Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
 (Describe here most common patterns that can be used.)
 
-
 \subsection{The "diamond" approach}
 
 (What is the diamond approach? Is it a swap or iterative? (it can be both))
@@ -110,14 +109,24 @@ Iterative solutions try to place the pieces progressively, usually following som
 
 \subsubsection{Fitness function}\label{sec:fitness-function}
 
-The fitness function used to evaluate the quality of the boards is given by $\frac{n-matching-edges / total-matching-edges}$
+The fitness function used to evaluate the quality of the boards is given by:
+
+\begin{figure}[h]
+	\begin{equation}
+		fitness = \frac{n\_matching\_edges}{total\_matching\_edges}
+	\end{equation}
+	\caption{Fitness function for evaluating boards}
+	\label{fig:eq:fitness_function}
+\end{figure}
+
+where \textit{n\_matching\_edges} represents the number of matching edges between all pieces of the board for the current state, and \textit{total\_matching\_edges} the number of matching edges for an $n*n$ board.
 
 \subsubsection{Implementation}\label{sec:implementation}
 
 Starting out with \textit{n} random permutations of the same board, the fittest half of the population is selected for breeding, using an ?elitist? selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
 
 \begin{itemize}
-	\item If both parents have compatible features, use both features on both descendants in order to create fitters boards
+	\item If both parents have compatible features, use both features on both descendants in order to create fitter boards
 	\item If both parents have incompatible features, select the highest scoring feature from each parent and use it as a starting point for each of the descendants
 	\item The rest of the genetic code (pieces) not originated from the feature selection is then placed on the descendant boards using a simple (no backtracking) linear constructive method
 	\item Mutations are then performed on a random set of pieces by rotating them in order to try and improve the overall fitness of the board
