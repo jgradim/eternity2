@@ -45,7 +45,7 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
 
 public class SolverFactory {
 
-  public static final String LABEL_DIAMONDS_ITERATIVE = "Diamonds Iterative";
+	public static final String LABEL_DIAMONDS_ITERATIVE = "Diamonds Iterative";
 	public static final String LABEL_ITPATHMKI = "Iterative Path MkI";
 	public static final String LABEL_ITPATHMKII = "Iterative Path MkII";
 	public static final String LABEL_ITPATHMKIII = "Iterative Path MkIII";
@@ -124,7 +124,7 @@ public class SolverFactory {
 		// ----- Begin Diamonds solvers
 		//
 		else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
-		  solver = new DiamondsAdapter(pieces, solution, clusterManager);
+			solver = new DiamondsAdapter(pieces, solution, clusterManager);
 		}
 		//
 		// ----- End Diamonds solvers

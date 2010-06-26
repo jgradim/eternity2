@@ -1,15 +1,15 @@
 /* This file is part of Eternity II Editor.
- * 
+ *
  * Eternity II Editor is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Eternity II Editor is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Eternity II Editor.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -692,4 +692,59 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			}
 		}
 	}
+
+	//
+	public ArrayList<ArrayList<QuadModel>> getFeatures(){
+		ArrayList<ArrayList<QuadModel>> features = new ArrayList();
+		return getFeatures(0, features);
+	}
+
+	//
+	public ArrayList<ArrayList<QuadModel>> getFeatures(int index, ArrayList<ArrayList<QuadModel>> features) {
+
+		if(index == getPositions() - 1){
+			return features;
+		}
+
+		// create new feature set?
+		if(features.isEmpty()) {
+			features.add(new ArrayList<QuadModel>());
+		}
+
+		// recursively call for all neighbours
+		QuadModel current = getQuad(index);
+		int startNewFeature = 0;
+		for(int dir = QuadModel.DIR_NORTH; dir < QuadModel.DIR_WEST; dir++){
+
+			QuadModel neighbor = getNeighbor(index, dir);
+
+			ArrayList<QuadModel> currentFeature = features.get(features.size() - 1);
+
+			// add to current set if neighbor exists, is not in feature set and matches current Quad
+			if(neighbor != null && !arrayListContains(currentFeature, neighbor) && (current.getPattern(dir) == neighbor.getOppositePattern(dir))){
+				currentFeature.add(neighbor);
+				int neighborIndex = computeNeighborIndex(index, dir);
+				return getFeatures(neighborIndex, features);
+			} else {
+				startNewFeature++;
+			}
+		}
+
+		//
+		if(startNewFeature == 4){
+			features.add(new ArrayList<QuadModel>());
+		}
+		return getFeatures(index, features);
+	}
+
+	// FIXME: ugly, not OO
+	public boolean arrayListContains(ArrayList<QuadModel> al, QuadModel obj) {
+		for(QuadModel q : al){
+			if(q.equalsIgnoreRotation(obj)){
+				return true;
+			}
+		}
+		return false;
+	}
 }
+
