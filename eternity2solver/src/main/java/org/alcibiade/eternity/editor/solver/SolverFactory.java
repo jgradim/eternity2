@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.solver.diamonds.DiamondsAdapter;
+import org.alcibiade.eternity.editor.solver.genetic.DumbGeneticSolver;
 import org.alcibiade.eternity.editor.solver.backtracking.BlockSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkII;
@@ -42,6 +43,7 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkIV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkV;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVI;
 import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
+;
 
 public class SolverFactory {
 
@@ -61,11 +63,13 @@ public class SolverFactory {
 	public static final String LABEL_BLOCKMKI = "Block MkI";
 	public static final String LABEL_ASTARMKI = "A* MkI";
 	public static final String LABEL_PIPELINE = "Pipeline";
+	public static final String LABEL_DUMBGENETIC = "Genetic (Dumb)";
 
 	public static List<String> getAvailableSolvers() {
 		List<String> solvers = new ArrayList<String>();
 		// solvers.add(LABEL_ITPATHMKI);
 		// solvers.add(LABEL_ITPATHMKII);
+		solvers.add(LABEL_DUMBGENETIC);
 		solvers.add(LABEL_DIAMONDS_ITERATIVE);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
@@ -77,6 +81,7 @@ public class SolverFactory {
 		solvers.add(LABEL_SWAPWMKV);
 		solvers.add(LABEL_SWAPWMKVI);
 		// solvers.add(LABEL_SWAPWMKVII);
+		
 		return solvers;
 	}
 
@@ -129,6 +134,17 @@ public class SolverFactory {
 		//
 		// ----- End Diamonds solvers
 		//
+		
+		//
+		// ----- Genetic Stuff
+		//
+		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
+			//population = 10
+			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 50);
+		}
+		//
+		// ----- EndGenetic Stuff
+		//		
 		else {
 			throw new UnknownSolverException("Unknown solver type: " + type);
 		}
