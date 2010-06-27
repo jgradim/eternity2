@@ -26,6 +26,12 @@ public class DiamondsAdapter extends EternitySolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		System.out.println(this.problemGrid.getFeatures().size());
+
+		for(GridModel g : this.problemGrid.getFeatures()){
+			System.out.println(g.toQuadString());
+			System.out.println("----");
+		}
+
 		notifyEnd(true);
 	}
   

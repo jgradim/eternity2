@@ -693,58 +693,60 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		}
 	}
 
-	//
-	public ArrayList<ArrayList<QuadModel>> getFeatures(){
-		ArrayList<ArrayList<QuadModel>> features = new ArrayList();
-		return getFeatures(0, features);
+	// iterative approach
+	public ArrayList<GridModel> getFeatures() {
+
+		Set<Integer> visited = new TreeSet<Integer>();
+		ArrayList<GridModel> features = new ArrayList<GridModel>();
+
+		for(int i = 0; i < this.getSize(); i++) {
+
+			if(visited.contains(i)) continue;
+
+			GridModel feature = new GridModel(this.getSize());
+			getFeatures(i, feature, visited);
+			features.add(feature);
+		}
+		
+		return features;
 	}
 
-	//
-	public ArrayList<ArrayList<QuadModel>> getFeatures(int index, ArrayList<ArrayList<QuadModel>> features) {
+	private void getFeatures(int index, GridModel feature, Set<Integer> visited) {
 
-		if(index == getPositions() - 1){
-			return features;
-		}
+	}
 
-		// create new feature set?
-		if(features.isEmpty()) {
-			features.add(new ArrayList<QuadModel>());
-		}
+	/*void getFeatures(int index, ArrayList<GridModel> features, Set<Integer> visited) {
 
-		// recursively call for all neighbours
 		QuadModel current = getQuad(index);
+		GridModel currentFeature = features.get(features.size() - 1);
+
 		int startNewFeature = 0;
-		for(int dir = QuadModel.DIR_NORTH; dir < QuadModel.DIR_WEST; dir++){
-
+		//for(int dir = QuadModel.DIR_NORTH; dir <= QuadModel.DIR_WEST; dir++) {
+		for(int dir = 0; dir < 4; dir++) {
 			QuadModel neighbor = getNeighbor(index, dir);
+			int neighborIndex = computeNeighborIndex(index, dir);
 
-			ArrayList<QuadModel> currentFeature = features.get(features.size() - 1);
+			// is the current neighbor part of the feature?
+			if(neighbor != null &&
+			   currentFeature.getQuad(neighborIndex).isClear() &&
+			   current.getPattern(dir).getCode() == neighbor.getOppositePattern(dir).getCode() &&
+			   !visited.contains(neighborIndex)) {
+				
+				System.out.printf("%d\t%d\n", index, neighborIndex);
 
-			// add to current set if neighbor exists, is not in feature set and matches current Quad
-			if(neighbor != null && !arrayListContains(currentFeature, neighbor) && (current.getPattern(dir) == neighbor.getOppositePattern(dir))){
-				currentFeature.add(neighbor);
-				int neighborIndex = computeNeighborIndex(index, dir);
-				return getFeatures(neighborIndex, features);
+				visited.add(index);
+				neighbor.copyTo(currentFeature.getQuad(neighborIndex));
+
+				getFeatures(neighborIndex, features, visited);
 			} else {
 				startNewFeature++;
 			}
 		}
-
-		//
-		if(startNewFeature == 4){
-			features.add(new ArrayList<QuadModel>());
+		
+		if(startNewFeature == 4) {
+			features.add(new GridModel(this.getSize()));
 		}
-		return getFeatures(index, features);
-	}
-
-	// FIXME: ugly, not OO
-	public boolean arrayListContains(ArrayList<QuadModel> al, QuadModel obj) {
-		for(QuadModel q : al){
-			if(q.equalsIgnoreRotation(obj)){
-				return true;
-			}
-		}
-		return false;
-	}
+	}*/
+	
 }
 
