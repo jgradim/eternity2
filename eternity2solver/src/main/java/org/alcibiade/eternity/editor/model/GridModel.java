@@ -700,7 +700,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		ArrayList<GridModel> features = new ArrayList<GridModel>();
 
 		for(int i = 0; i < this.getPositions(); i++) {
-			if(!visited.contains(i)){
+			if(!visited.contains(i)) {
 				GridModel feature = new GridModel(this.getSize());
 				getFeatures(i, feature, visited);
 				System.out.printf("%d: %s\n", i, visited.toString());

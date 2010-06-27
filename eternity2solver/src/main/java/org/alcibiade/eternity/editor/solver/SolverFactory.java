@@ -47,7 +47,6 @@ import org.alcibiade.eternity.editor.solver.swap.WeightedRandomMkVII;
 
 public class SolverFactory {
 
-	public static final String LABEL_DIAMONDS_ITERATIVE = "Diamonds Iterative";
 	public static final String LABEL_ITPATHMKI = "Iterative Path MkI";
 	public static final String LABEL_ITPATHMKII = "Iterative Path MkII";
 	public static final String LABEL_ITPATHMKIII = "Iterative Path MkIII";
@@ -70,7 +69,6 @@ public class SolverFactory {
 		// solvers.add(LABEL_ITPATHMKI);
 		// solvers.add(LABEL_ITPATHMKII);
 		solvers.add(LABEL_DUMBGENETIC);
-		solvers.add(LABEL_DIAMONDS_ITERATIVE);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
 		solvers.add(LABEL_SWAPDUMBNEW);
@@ -125,26 +123,13 @@ public class SolverFactory {
 		} else if (LABEL_PIPELINE.equalsIgnoreCase(type)) {
 			solver = new PipelineSolver(pieces, solution, clusterManager);
 		}
-		//
-		// ----- Begin Diamonds solvers
-		//
-		else if (LABEL_DIAMONDS_ITERATIVE.equalsIgnoreCase(type)) {
-			solver = new DiamondsAdapter(pieces, solution, clusterManager);
-		}
-		//
-		// ----- End Diamonds solvers
-		//
 		
-		//
 		// ----- Genetic Stuff
-		//
 		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
 			//population = 10
 			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 50);
 		}
-		//
-		// ----- EndGenetic Stuff
-		//		
+		// ----- End Genetic Stuff
 		else {
 			throw new UnknownSolverException("Unknown solver type: " + type);
 		}
