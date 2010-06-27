@@ -1,5 +1,6 @@
 package org.alcibiade.eternity.editor.solver.diamonds;
 
+import java.util.ArrayList;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
 import org.alcibiade.eternity.editor.solver.EternitySolver;
@@ -25,13 +26,14 @@ public class DiamondsAdapter extends EternitySolver {
 	public void run() {
 		notifyStart();
 		clusterManager.showStartMessage();
-		System.out.println(this.problemGrid.getFeatures().size());
 
-		for(GridModel g : this.problemGrid.getFeatures()){
-			System.out.println(g.toQuadString());
+		ArrayList<GridModel> features = this.problemGrid.getFeatures();
+		for(GridModel g : features) {
+			System.out.print(g.toQuadString());
 			System.out.println("----");
 		}
-
+		
+		clusterManager.showStats(1);
 		notifyEnd(true);
 	}
   

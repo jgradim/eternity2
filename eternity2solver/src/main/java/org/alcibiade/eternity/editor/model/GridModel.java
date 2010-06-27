@@ -699,20 +699,40 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		Set<Integer> visited = new TreeSet<Integer>();
 		ArrayList<GridModel> features = new ArrayList<GridModel>();
 
-		for(int i = 0; i < this.getSize(); i++) {
-
-			if(visited.contains(i)) continue;
-
-			GridModel feature = new GridModel(this.getSize());
-			getFeatures(i, feature, visited);
-			features.add(feature);
+		for(int i = 0; i < this.getPositions(); i++) {
+			if(!visited.contains(i)){
+				GridModel feature = new GridModel(this.getSize());
+				getFeatures(i, feature, visited);
+				System.out.printf("%d: %s\n", i, visited.toString());
+				features.add(feature);
+			}
 		}
-		
 		return features;
 	}
 
 	private void getFeatures(int index, GridModel feature, Set<Integer> visited) {
 
+		QuadModel current = this.getQuad(index);
+
+		// TODO: replace with feature.setQuad(...)
+		current.copyTo(feature.getQuad(index));
+
+		for(int dir = 0; dir < 4; dir++) {
+
+			QuadModel neighbor = this.getNeighbor(index, dir);
+			int neighborIndex = this.computeNeighborIndex(index, dir);
+
+			if((neighbor != null)) {
+				if(feature.getQuad(neighborIndex).isClear()) {
+					if(!visited.contains(neighborIndex)) {
+						if(current.getPattern(dir) == neighbor.getOppositePattern(dir)) {
+							getFeatures(neighborIndex, feature, visited);
+						}
+					}
+				}
+			}
+		}
+		visited.add(index);
 	}
 
 	/*void getFeatures(int index, ArrayList<GridModel> features, Set<Integer> visited) {
