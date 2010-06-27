@@ -140,7 +140,7 @@ public class SolverFactory {
 		//
 		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
 			//population = 10
-			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 10);
+			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 50);
 		}
 		//
 		// ----- EndGenetic Stuff

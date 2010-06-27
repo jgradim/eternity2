@@ -43,9 +43,9 @@ public abstract class GeneticSolver extends EternitySolver {
 			somegrid.shuffle();
 			population.add(somegrid);
 			
-			System.out.println("---");
-			System.out.println(somegrid.toQuadString());
-			System.out.println("---");			
+//			System.out.println("---");
+//			System.out.println(somegrid.toQuadString());
+//			System.out.println("---");			
 			
 		}
 	
@@ -70,9 +70,9 @@ public abstract class GeneticSolver extends EternitySolver {
 	}
 	
 	/**
-	 * removes from the population and returns the most fit individual. 
+	 * returns the most fit individual
 	 */
-	public GridModel getMostFitIndividual() {
+	public GridModel takeMostFitIndividual() {
 		
 		assert this.population.size() > 0;
 		
@@ -80,7 +80,8 @@ public abstract class GeneticSolver extends EternitySolver {
 		GridModel bestIndividual = null;
 		float bestFitness = 0;
 		
-		do {
+		while (it.hasNext()) {
+		
 			GridModel thisIndividual = (GridModel)it.next();
 			float thisFitness = fitness(thisIndividual);
 			
@@ -88,9 +89,8 @@ public abstract class GeneticSolver extends EternitySolver {
 				bestIndividual = thisIndividual;
 				bestFitness = thisFitness;
 			}
-		} while (it.hasNext());
+		};
 		
-		/* this should never return null anyway. */
 		this.population.remove(bestIndividual);
 		return bestIndividual;
 	}

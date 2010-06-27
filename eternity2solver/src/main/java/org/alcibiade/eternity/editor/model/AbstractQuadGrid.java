@@ -56,6 +56,14 @@ public abstract class AbstractQuadGrid implements Iterable<QuadModel>, Serializa
 		return gridQuads;
 	}
 
+	public void setQuads(List<QuadModel> gridQuads) {
+		this.gridQuads = gridQuads;
+	}
+	
+	public void setQuad(int position, QuadModel quad) {
+		this.gridQuads.set(position, quad);
+	}
+	
 	public void setSize(int width, int height) {
 		sizeX = width;
 		sizeY = height;
