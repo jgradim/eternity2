@@ -704,7 +704,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(!this.getQuad(i).isClear())
 				count++;
 		return count;
-	}
+	} // TESTED, OK
 
 	public int countQuadOccurences(QuadModel q) {
 		int count = 0;
@@ -714,7 +714,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 				count++;
 
 		return count;
-	}
+	} // TESTED, OK
 
 	public TreeSet<Integer> getFilledPositions() {
 		TreeSet<Integer> positions = new TreeSet<Integer>();
@@ -722,7 +722,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(!this.getQuad(i).isClear())
 				positions.add(i);
 		return positions;
-	}
+	} // TESTED, OK
 
 	// given 2 incomplete GridModels, checks if there are no duplicate pieces in
 	// both boards
@@ -775,9 +775,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return remaining;
 	}
 
-	// 
+	// returns 2 features if found 2 compatible features. Else, returns the strongest feature from "featuresA"
 	public static ArrayList<GridModel> getCompatibleFeatures(GridModel original, ArrayList<GridModel> featuresA, ArrayList<GridModel> featuresB) {
-		GridModel fa = null, fb = null;
+		GridModel fa = null;
 		ArrayList<GridModel> compatible = new ArrayList<GridModel>();
 
 		// select best feature from a
@@ -786,14 +786,17 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(g.countFilledQuads() > fa.countFilledQuads()) g.copyTo(fa);
 		}
 
+		compatible.add(fa);
+
 		// try to get a compatible feature from b
-		for(GridModel tmp : featuresB) {
+		for(GridModel fb : featuresB) {
 
 			// are the positions compatible? (i.e., not overlapping?)
 			TreeSet<Integer> overlapping = fa.getFilledPositions();
 			overlapping.retainAll(fb.getFilledPositions());
 			if(overlapping.size() == 0 && GridModel.allPiecesValid(original, fa, fb)) {
-				
+				compatible.add(fb);
+				break;
 			}
 		}
 
@@ -810,7 +813,6 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(!visited.contains(i)) {
 				GridModel feature = new GridModel(this.getSize());
 				getFeatures(i, feature, visited);
-				System.out.printf("%d: %s\n", i, visited.toString());
 				features.add(feature);
 			}
 		}
