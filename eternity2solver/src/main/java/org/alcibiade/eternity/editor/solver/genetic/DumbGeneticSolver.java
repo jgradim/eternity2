@@ -26,25 +26,25 @@ public class DumbGeneticSolver extends GeneticSolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		
-		boolean finished = false;
+		/*boolean finished = false;
 		
 		do {
 			//System.out.printf("Iteration %d\n", iterations++);
-			/* Get the two best individuals */		
+			// Get the two best individuals
 			GridModel individualA = getMostFitIndividual();
 			population.remove(individualA);
 			GridModel individualB = getMostFitIndividual();
 			population.add(individualA);
 
-			/* Remove the two worst individuals */
+			// Remove the two worst individuals
 			GridModel individualZ = getLeastFitIndividual();
 			population.remove(individualZ);
 			GridModel individualY = getLeastFitIndividual();
 			population.remove(individualY);
 			
 			
-			/* Show stuff on the g u i */
-			/* Submit fittest for evaluation */
+			// Show stuff on the g u i
+			// Submit fittest for evaluation
 			//individualB.copyTo(problemGrid);
 			individualA.copyTo(solutionGrid);
 			clusterManager.submitSolution(individualA);
@@ -54,7 +54,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 				population.addAll(children);
 			}
 			
-		} while (!finished);
+		} while (!finished);*/
+
+		for(GridModel g : this.problemGrid.getFeatures()) {
+			System.out.print(g.toQuadString());
+			System.out.println("\n-----\n");
+		}
 		
 		notifyEnd(true);
 	}
