@@ -736,6 +736,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		// differ, the features are incompatible
 		for(int i = 0; allValid && i < incomplete.getSize(); i++) {
 			QuadModel q = incomplete.getQuad(i);
+
 			if(q.isClear()) continue;
 
 			if(original.countQuadOccurences(q) < incomplete.countQuadOccurences(q))
@@ -744,6 +745,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return allValid;
 	}
 
+	// joins two incomplete boards. Assumes "a" and "b" have no overlapping pieces
 	public static GridModel joinGrids(GridModel a, GridModel b) {
 		GridModel join = a.clone();
 		for(int i = 0; i < b.getPositions(); i++) {
@@ -753,11 +755,23 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return join;
 	}
 
-	// given a complete board and an incomplete board, return the pieces of the complete
+	// given an incomplete board, return the pieces of the complete
 	// board that can be used to complete the incomplete board
 	// FIXME: stub
 	public GridModel remainingPieces(GridModel incomplete) {
-		GridModel remaining = new GridModel(this.getSize());
+		GridModel remaining = this.clone();
+
+		for(int i = 0; i < incomplete.getPositions(); i++) {
+			QuadModel qi = incomplete.getQuad(i);
+
+			if(qi.isClear()) continue;
+
+			for(int j = 0; j < this.getPositions(); j++) {
+				QuadModel qr = this.getQuad(j);
+				if(qr.equalsIgnoreRotation(qi))
+					qr.clear();
+			}
+		}
 		return remaining;
 	}
 
