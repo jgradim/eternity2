@@ -72,7 +72,7 @@ public abstract class GeneticSolver extends EternitySolver {
 	/**
 	 * returns the most fit individual
 	 */
-	public GridModel takeMostFitIndividual() {
+	public GridModel getMostFitIndividual() {
 		
 		assert this.population.size() > 0;
 		
@@ -91,9 +91,35 @@ public abstract class GeneticSolver extends EternitySolver {
 			}
 		};
 		
-		this.population.remove(bestIndividual);
+		//this.population.remove(bestIndividual);
 		return bestIndividual;
 	}
+	
+	/*
+	 * Get least fit individual
+	 */
+	public GridModel getLeastFitIndividual() {
+		
+		assert this.population.size() > 0;
+		
+		Iterator it = this.population.iterator();
+		GridModel worstIndividual = null;
+		float worstFitness = Integer.MAX_VALUE;
+		
+		while (it.hasNext()) {
+		
+			GridModel thisIndividual = (GridModel)it.next();
+			float thisFitness = fitness(thisIndividual);
+			
+			if (thisFitness < worstFitness) {
+				worstIndividual = thisIndividual;
+				worstFitness = thisFitness;
+			}
+		};
+		
+		//this.population.remove(bestIndividual);
+		return worstIndividual;
+	}	
 	
 	public long getIterations() {
 		return iterations;

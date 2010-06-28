@@ -61,7 +61,8 @@ public abstract class AbstractQuadGrid implements Iterable<QuadModel>, Serializa
 	}
 	
 	public void setQuad(int position, QuadModel quad) {
-		this.gridQuads.set(position, quad);
+		//this.gridQuads.set(position, quad); this does not copy the object
+		quad.copyTo(gridQuads.get(position));
 	}
 	
 	public void setSize(int width, int height) {
