@@ -693,6 +693,99 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		}
 	}
 
+	/*
+	 * GENETIC ALGORITHMS
+	 */
+
+	//
+	public int countFilledQuads() {
+		int count = 0;
+		for(int i = 0; i < this.getPositions(); i++)
+			if(!this.getQuad(i).isClear())
+				count++;
+		return count;
+	}
+
+	public int countQuadOccurences(QuadModel q) {
+		int count = 0;
+
+		for(int i = 0; i < this.getPositions(); i++)
+			if(q.equalsIgnoreRotation(this.getQuad(i)))
+				count++;
+
+		return count;
+	}
+
+	public TreeSet<Integer> getFilledPositions() {
+		TreeSet<Integer> positions = new TreeSet<Integer>();
+		for(int i = 0; i < this.getPositions(); i++)
+			if(!this.getQuad(i).isClear())
+				positions.add(i);
+		return positions;
+	}
+
+	// given 2 incomplete GridModels, checks if there are no duplicate pieces in
+	// both boards
+	// Assumes piece positions from "a" and "b" do not overlap
+	public static boolean allPiecesValid(GridModel original, GridModel a, GridModel b) {
+		boolean allValid = true;
+
+		GridModel incomplete = GridModel.joinGrids(a, b);
+		
+		// if the occurences of the pieces in both "original" and "incomplete"
+		// differ, the features are incompatible
+		for(int i = 0; allValid && i < incomplete.getSize(); i++) {
+			QuadModel q = incomplete.getQuad(i);
+			if(q.isClear()) continue;
+
+			if(original.countQuadOccurences(q) < incomplete.countQuadOccurences(q))
+				allValid = false;
+		}
+		return allValid;
+	}
+
+	public static GridModel joinGrids(GridModel a, GridModel b) {
+		GridModel join = a.clone();
+		for(int i = 0; i < b.getPositions(); i++) {
+			if(b.getQuad(i).isClear()) continue;
+			join.setQuad(i, b.getQuad(i));
+		}
+		return join;
+	}
+
+	// given a complete board and an incomplete board, return the pieces of the complete
+	// board that can be used to complete the incomplete board
+	// FIXME: stub
+	public GridModel remainingPieces(GridModel incomplete) {
+		GridModel remaining = new GridModel(this.getSize());
+		return remaining;
+	}
+
+	// 
+	public static ArrayList<GridModel> getCompatibleFeatures(GridModel original, ArrayList<GridModel> featuresA, ArrayList<GridModel> featuresB) {
+		GridModel fa = null, fb = null;
+		ArrayList<GridModel> compatible = new ArrayList<GridModel>();
+
+		// select best feature from a
+		for(GridModel g : featuresA) {
+			if(fa == null) g.copyTo(fa);
+			if(g.countFilledQuads() > fa.countFilledQuads()) g.copyTo(fa);
+		}
+
+		// try to get a compatible feature from b
+		for(GridModel tmp : featuresB) {
+
+			// are the positions compatible? (i.e., not overlapping?)
+			TreeSet<Integer> overlapping = fa.getFilledPositions();
+			overlapping.retainAll(fb.getFilledPositions());
+			if(overlapping.size() == 0 && GridModel.allPiecesValid(original, fa, fb)) {
+				
+			}
+		}
+
+		return compatible;
+	}
+
 	// iterative approach
 	public ArrayList<GridModel> getFeatures() {
 
@@ -714,8 +807,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 
 		QuadModel current = this.getQuad(index);
 
-		// TODO: replace with feature.setQuad(...)
-		current.copyTo(feature.getQuad(index));
+		feature.setQuad(index, current);
 
 		for(int dir = 0; dir < 4; dir++) {
 
@@ -734,39 +826,6 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		}
 		visited.add(index);
 	}
-
-	/*void getFeatures(int index, ArrayList<GridModel> features, Set<Integer> visited) {
-
-		QuadModel current = getQuad(index);
-		GridModel currentFeature = features.get(features.size() - 1);
-
-		int startNewFeature = 0;
-		//for(int dir = QuadModel.DIR_NORTH; dir <= QuadModel.DIR_WEST; dir++) {
-		for(int dir = 0; dir < 4; dir++) {
-			QuadModel neighbor = getNeighbor(index, dir);
-			int neighborIndex = computeNeighborIndex(index, dir);
-
-			// is the current neighbor part of the feature?
-			if(neighbor != null &&
-			   currentFeature.getQuad(neighborIndex).isClear() &&
-			   current.getPattern(dir).getCode() == neighbor.getOppositePattern(dir).getCode() &&
-			   !visited.contains(neighborIndex)) {
-				
-				System.out.printf("%d\t%d\n", index, neighborIndex);
-
-				visited.add(index);
-				neighbor.copyTo(currentFeature.getQuad(neighborIndex));
-
-				getFeatures(neighborIndex, features, visited);
-			} else {
-				startNewFeature++;
-			}
-		}
-		
-		if(startNewFeature == 4) {
-			features.add(new GridModel(this.getSize()));
-		}
-	}*/
 	
 }
 
