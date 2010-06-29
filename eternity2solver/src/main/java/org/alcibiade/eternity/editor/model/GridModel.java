@@ -697,7 +697,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	 * GENETIC ALGORITHMS
 	 */
 
-	//
+	/*
+	 *	Counts the number of non-empty quads on this grid
+	 */
 	public int countFilledQuads() {
 		int count = 0;
 		for(int i = 0; i < this.getPositions(); i++)
@@ -706,6 +708,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return count;
 	} // TESTED, OK
 
+	/*
+	 *	Counts the number of quads equivalent to the given quad on this grid
+	 */
 	public int countQuadOccurences(QuadModel q) {
 		int count = 0;
 
@@ -716,6 +721,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return count;
 	} // TESTED, OK
 
+	/*
+	 *	Returns a Set of the positions that are not empty on this grid
+	 */
 	public TreeSet<Integer> getFilledPositions() {
 		TreeSet<Integer> positions = new TreeSet<Integer>();
 		for(int i = 0; i < this.getPositions(); i++)
@@ -724,28 +732,32 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return positions;
 	} // TESTED, OK
 
-	// given 2 incomplete GridModels, checks if there are no duplicate pieces in
-	// both boards
-	// Assumes piece positions from "a" and "b" do not overlap
-	public static boolean allPiecesValid(GridModel original, GridModel a, GridModel b) {
+	/*
+	 * Given 2 incomplete GridModels, checks if there are no duplicate pieces in
+	 * both boards.
+	 * Assumes piece positions from "a" and "b" do not overlap.
+	 */
+	public boolean allPiecesValid(GridModel a, GridModel b) {
 		boolean allValid = true;
 
 		GridModel incomplete = GridModel.joinGrids(a, b);
 		
 		// if the occurences of the pieces in both "original" and "incomplete"
 		// differ, the features are incompatible
-		for(int i = 0; allValid && i < incomplete.getSize(); i++) {
+		for(int i = 0; allValid && i < incomplete.getPositions(); i++) {
 			QuadModel q = incomplete.getQuad(i);
 
 			if(q.isClear()) continue;
 
-			if(original.countQuadOccurences(q) < incomplete.countQuadOccurences(q))
+			if(this.countQuadOccurences(q) < incomplete.countQuadOccurences(q))
 				allValid = false;
 		}
 		return allValid;
 	}
 
-	// joins two incomplete boards. Assumes "a" and "b" have no overlapping pieces
+	/*
+	 * Joins two incomplete boards. Assumes "a" and "b" have no overlapping pieces
+	 */
 	public static GridModel joinGrids(GridModel a, GridModel b) {
 		GridModel join = a.clone();
 		for(int i = 0; i < b.getPositions(); i++) {
@@ -755,11 +767,11 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return join;
 	}
 
-	// given an incomplete board, return the pieces of the complete
-	// board that can be used to complete the incomplete board
-	// FIXME: stub
+	/* given an incomplete board, return the pieces of the complete
+	 * board that can be used to complete the incomplete board
+	 */
 	public GridModel remainingPieces(GridModel incomplete) {
-		GridModel remaining = this.clone();
+		GridModel remaining = this.clone().setReadOnly(false);
 
 		for(int i = 0; i < incomplete.getPositions(); i++) {
 			QuadModel qi = incomplete.getQuad(i);
@@ -775,10 +787,57 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return remaining;
 	}
 
-	// returns 2 features if found 2 compatible features. Else, returns the strongest feature from "featuresA"
-	public static ArrayList<GridModel> getCompatibleFeatures(GridModel original, ArrayList<GridModel> featuresA, ArrayList<GridModel> featuresB) {
+	private int getTestScore(QuadModel testQuad, int index) {
+		int score = 0;
+		
+		for (int dir = 0; dir < 4; i++) {
+			QuadModel neighbor = getNeighbor(index, dir);
+			if (testQuad.getPattern(dir) == neighbor.getOppositePattern(dir))
+				score++;
+		}
+		
+		return score;
+	}
+			
+	public void completeWith(GridModel remaining) {
+
+		QuadModel current, candidate, bestQuad;
+		int bestScore;
+		int score;
+		for(int i = 0; i < this.getPositions(); i++) {
+			current = this.getQuad(i);
+			if(!current.isClear()) continue;
+			
+			bestScore = -1;
+			bestQuad = null;
+			
+			// get best candidate piece from remaining
+			for(int c = 0; c < remaining.getPositions(); c++) {
+				candidate = remaining.getQuad(c);
+				if(candidate.isClear()) continue;
+				
+				for (int d = 0; d < 4; d++) {
+					candidate.rotateClockwise();
+					score = testScore(candidate, i);
+					
+					if (score > bestScore) {
+						bestScore = score;
+						bestQuad = candidate;
+					}
+					
+				}
+				// programação
+			}
+		}
+				
+	}
+
+	/*
+	 * Tries to return the best grid containing compatible features from A joined with B
+	 * If there is no compatible features in B, returns a grid with the best feature from A
+	 */
+	public GridModel getCompatibleFeatures(ArrayList<GridModel> featuresA, ArrayList<GridModel> featuresB) {
 		GridModel fa = null;
-		ArrayList<GridModel> compatible = new ArrayList<GridModel>();
 
 		// select best feature from a
 		for(GridModel g : featuresA) {
@@ -786,21 +845,18 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(g.countFilledQuads() > fa.countFilledQuads()) g.copyTo(fa);
 		}
 
-		compatible.add(fa);
-
 		// try to get a compatible feature from b
 		for(GridModel fb : featuresB) {
 
 			// are the positions compatible? (i.e., not overlapping?)
 			TreeSet<Integer> overlapping = fa.getFilledPositions();
 			overlapping.retainAll(fb.getFilledPositions());
-			if(overlapping.size() == 0 && GridModel.allPiecesValid(original, fa, fb)) {
-				compatible.add(fb);
-				break;
+			if(overlapping.size() == 0 && this.allPiecesValid(fa, fb)) {
+				return GridModel.joinGrids(fa,fb);
 			}
 		}
 
-		return compatible;
+		return fa;
 	}
 
 	// iterative approach

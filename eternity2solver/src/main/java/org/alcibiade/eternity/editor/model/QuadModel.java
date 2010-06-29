@@ -147,8 +147,8 @@ public class QuadModel implements Cloneable, Serializable {
 
 	//
 	public Pattern getOppositePattern(int direction) {
-		int[] oppositePatterns = {QuadModel.DIR_SOUTH, QuadModel.DIR_WEST, QuadModel.DIR_NORTH, QuadModel.DIR_EAST};
-		return patterns[oppositePatterns[direction]];
+		int oppD = (direction + 2) % 4;
+		return patterns[oppD];
 	}
 
 	public void setPattern(int direction, Pattern pattern) {

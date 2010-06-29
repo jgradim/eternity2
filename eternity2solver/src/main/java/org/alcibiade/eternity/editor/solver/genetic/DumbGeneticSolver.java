@@ -8,6 +8,7 @@ package org.alcibiade.eternity.editor.solver.genetic;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.ArrayList;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.model.QuadModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
@@ -22,11 +23,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 		super(grid, solutionGrid, clusterManager, populationSize);
 	}
 	
+	
 	public void run() {
 		notifyStart();
 		clusterManager.showStartMessage();
 		
-		/*boolean finished = false;
+		boolean finished = false;
 		
 		do {
 			//System.out.printf("Iteration %d\n", iterations++);
@@ -50,57 +52,73 @@ public class DumbGeneticSolver extends GeneticSolver {
 			clusterManager.submitSolution(individualA);
 			
 			if (clusterManager.isSolutionFound() == false) {
-				Set<GridModel> children = crossover(individualA, individualB);
+				ArrayList<GridModel> children = crossover(individualA, individualB);
 				population.addAll(children);
 			}
 			
-		} while (!finished);*/
-
-		for(GridModel g : this.problemGrid.getFeatures()) {
-			System.out.print(g.toQuadString());
-			System.out.println("\n-----\n");
-		}
+		} while (!finished);
 		
 		notifyEnd(true);
 	}
 	
 
-	private HashSet<GridModel> crossover(GridModel parentA, GridModel parentB) {
-		HashSet<GridModel> childrenSet = new HashSet<GridModel>();
-
-		GridModel childA = parentA.clone();
-		GridModel childB = parentB.clone();		
+	private ArrayList<GridModel> crossover(GridModel parentA, GridModel parentB) {
+		ArrayList<GridModel> aFeatures = parentA.getFeatures();
+		ArrayList<GridModel> bFeatures = parentB.getFeatures();
 		
-		int totalElements = childA.getQuads().size();
+		//child A inherits the best feature from A with the best compatible feature (if it exists) from B
+		GridModel childA = originalGrid.getCompatibleFeatures(aFeatures, bFeatures);
+		//vice versa
+		GridModel childB = originalGrid.getCompatibleFeatures(bFeatures, AFeatures);
 		
-		Random generator = new Random();
+		// remaining pieces for childA and childB
+		GridModel remainingA = originalGrid.remainingPieces(childA);
+		GridModel remainingB = originalGrid.remainingPieces(childB);
 		
-		int cutPoint = generator.nextInt(totalElements);
-		
-		for (int i = 0; i < cutPoint; i++) {
-			childA.setQuad(i, parentA.getQuad(i));
-			childB.setQuad(i, parentB.getQuad(i));		
-		}
-		
-		for (int i = cutPoint; i < totalElements; i++) {			
-			childA.setQuad(i, parentB.getQuad(i));
-			childB.setQuad(i, parentA.getQuad(i));		
-		}
-		
-		int dice = generator.nextInt(100);
-		
-		if (dice > 95) {
-			mutate(childA);
-			mutate(childB);
-		} else if (dice > 80) {
-			mutate(childA);
-		}
-		
-		childrenSet.add(childA);
-		childrenSet.add(childB);
-		
-		return childrenSet;
+		//Fill the rest of child A with the remaning pieces of the original board
+		childA.completeWith(remainingA);
+		childB.completeWith(remainingB);
 	}
+
+	/*
+	 * Dumbass Crossover
+	 */
+//	private HashSet<GridModel> crossover(GridModel parentA, GridModel parentB) {
+//		HashSet<GridModel> childrenSet = new HashSet<GridModel>();
+
+//		GridModel childA = parentA.clone();
+//		GridModel childB = parentB.clone();		
+//		
+//		int totalElements = childA.getQuads().size();
+//		
+//		Random generator = new Random();
+//		
+//		int cutPoint = generator.nextInt(totalElements);
+//		
+//		for (int i = 0; i < cutPoint; i++) {
+//			childA.setQuad(i, parentA.getQuad(i));
+//			childB.setQuad(i, parentB.getQuad(i));		
+//		}
+//		
+//		for (int i = cutPoint; i < totalElements; i++) {			
+//			childA.setQuad(i, parentB.getQuad(i));
+//			childB.setQuad(i, parentA.getQuad(i));		
+//		}
+//		
+//		int dice = generator.nextInt(100);
+//		
+//		if (dice > 95) {
+//			mutate(childA);
+//			mutate(childB);
+//		} else if (dice > 80) {
+//			mutate(childA);
+//		}
+//		
+//		childrenSet.add(childA);
+//		childrenSet.add(childB);
+//		
+//		return childrenSet;
+//	}
 	
 	public void mutate(GridModel individual) {
 		Random generator = new Random();
