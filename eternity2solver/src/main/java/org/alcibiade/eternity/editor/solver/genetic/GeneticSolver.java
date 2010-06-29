@@ -5,8 +5,7 @@
 
 package org.alcibiade.eternity.editor.solver.genetic;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 import java.util.Iterator;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
@@ -16,18 +15,20 @@ public abstract class GeneticSolver extends EternitySolver {
 
 	protected GridModel problemGrid;
 	protected GridModel solutionGrid;
-	protected Set<GridModel> population;
+	protected final GridModel originalGrid;
+	protected ArrayList<GridModel> population;
 	protected long iterations;
 	
 	public GeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
 		super(clusterManager);	
 		
 		this.problemGrid = grid;
+		this.originalGrid = grid.clone().setReadOnly(true);
 		this.solutionGrid = solutionGrid;
 		///System.out.println(grid.toQuadString());
 		
 		//hashset ok but GridModel does not implement comparabel or equals.
-		this.population = new HashSet<GridModel>();
+		this.population = new ArrayList<GridModel>();
 		
 		populate(populationSize, grid);
 	}
