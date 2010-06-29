@@ -23,7 +23,8 @@ public abstract class GeneticSolver extends EternitySolver {
 		super(clusterManager);	
 		
 		this.problemGrid = grid;
-		this.originalGrid = grid.clone().setReadOnly(true);
+		this.originalGrid = grid.clone();
+		originalGrid.setReadOnly(true);
 		this.solutionGrid = solutionGrid;
 		///System.out.println(grid.toQuadString());
 		

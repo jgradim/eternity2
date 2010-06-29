@@ -5,14 +5,11 @@
 
 package org.alcibiade.eternity.editor.solver.genetic;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.ArrayList;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.model.QuadModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
-import org.alcibiade.eternity.editor.solver.genetic.GeneticSolver;
 
 public class DumbGeneticSolver extends GeneticSolver {
 
@@ -23,7 +20,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		super(grid, solutionGrid, clusterManager, populationSize);
 	}
 	
-	
+	@Override
 	public void run() {
 		notifyStart();
 		clusterManager.showStartMessage();
@@ -49,14 +46,16 @@ public class DumbGeneticSolver extends GeneticSolver {
 			// Submit fittest for evaluation
 			//individualB.copyTo(problemGrid);
 			individualA.copyTo(solutionGrid);
-			clusterManager.submitSolution(individualA);
+			finished = clusterManager.submitSolution(individualA);
 			
 			if (clusterManager.isSolutionFound() == false) {
 				ArrayList<GridModel> children = crossover(individualA, individualB);
 				population.addAll(children);
+			} else {
+				finished = true;
 			}
 			
-		} while (!finished);
+		} while(!finished);
 		
 		notifyEnd(true);
 	}
@@ -69,7 +68,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		//child A inherits the best feature from A with the best compatible feature (if it exists) from B
 		GridModel childA = originalGrid.getCompatibleFeatures(aFeatures, bFeatures);
 		//vice versa
-		GridModel childB = originalGrid.getCompatibleFeatures(bFeatures, AFeatures);
+		GridModel childB = originalGrid.getCompatibleFeatures(bFeatures, aFeatures);
 		
 		// remaining pieces for childA and childB
 		GridModel remainingA = originalGrid.remainingPieces(childA);
@@ -78,6 +77,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 		//Fill the rest of child A with the remaning pieces of the original board
 		childA.completeWith(remainingA);
 		childB.completeWith(remainingB);
+
+		ArrayList<GridModel> children = new ArrayList<GridModel>();
+		children.add(childA);
+		children.add(childB);
+
+		return children;
 	}
 
 	/*
@@ -128,6 +133,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		gene.rotateClockwise();
 	}
 
+	@Override
 	public String getSolverName() {
 		return "Dumb Genetic Solver";
 	}

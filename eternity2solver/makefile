@@ -1,7 +1,7 @@
 all:
 	mvn install -DskipTests
 	clear
-	java -jar target/EternityEditor-1.6-SNAPSHOT.jar
+	java -jar -ea target/EternityEditor-1.6-SNAPSHOT.jar
 clean:
 	mvn clean
 	clear

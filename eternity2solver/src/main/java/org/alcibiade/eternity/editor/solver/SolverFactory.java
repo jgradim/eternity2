@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.alcibiade.eternity.editor.model.GridModel;
-import org.alcibiade.eternity.editor.solver.diamonds.DiamondsAdapter;
 import org.alcibiade.eternity.editor.solver.genetic.DumbGeneticSolver;
 import org.alcibiade.eternity.editor.solver.backtracking.BlockSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkI;
@@ -127,7 +126,7 @@ public class SolverFactory {
 		// ----- Genetic Stuff
 		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
 			//population = 10
-			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 50);
+			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 10);
 		}
 		// ----- End Genetic Stuff
 		else {

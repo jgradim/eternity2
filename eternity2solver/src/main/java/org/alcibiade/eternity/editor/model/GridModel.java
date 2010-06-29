@@ -771,15 +771,17 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	 * board that can be used to complete the incomplete board
 	 */
 	public GridModel remainingPieces(GridModel incomplete) {
-		GridModel remaining = this.clone().setReadOnly(false);
+		GridModel remaining = this.clone();
+		remaining.setReadOnly(false);
 
 		for(int i = 0; i < incomplete.getPositions(); i++) {
 			QuadModel qi = incomplete.getQuad(i);
 
 			if(qi.isClear()) continue;
 
-			for(int j = 0; j < this.getPositions(); j++) {
-				QuadModel qr = this.getQuad(j);
+			for(int j = 0; j < remaining.getPositions(); j++) {
+				QuadModel qr = remaining.getQuad(j);
+
 				if(qr.equalsIgnoreRotation(qi))
 					qr.clear();
 			}
@@ -790,9 +792,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	private int getTestScore(QuadModel testQuad, int index) {
 		int score = 0;
 		
-		for (int dir = 0; dir < 4; i++) {
+		for (int dir = 0; dir < 4; dir++) {
 			QuadModel neighbor = getNeighbor(index, dir);
-			if (testQuad.getPattern(dir) == neighbor.getOppositePattern(dir))
+			if (neighbor != null && testQuad.getPattern(dir) == neighbor.getOppositePattern(dir))
 				score++;
 		}
 		
@@ -818,7 +820,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 				
 				for (int d = 0; d < 4; d++) {
 					candidate.rotateClockwise();
-					score = testScore(candidate, i);
+					score = getTestScore(candidate, i);
 					
 					if (score > bestScore) {
 						bestScore = score;
@@ -826,10 +828,9 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 					}
 					
 				}
-				// programação
 			}
+			this.setQuad(i, bestQuad);
 		}
-				
 	}
 
 	/*
@@ -841,7 +842,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 
 		// select best feature from a
 		for(GridModel g : featuresA) {
-			if(fa == null) g.copyTo(fa);
+			if(fa == null) fa = g.clone();
 			if(g.countFilledQuads() > fa.countFilledQuads()) g.copyTo(fa);
 		}
 
