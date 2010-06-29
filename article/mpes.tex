@@ -40,7 +40,7 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Eternity II is an NP-complete edge-matching puzzle whose solution has not yet been discovered. In this article, we will describe our attempt to improve solutions that solve reduced versions of this puzzle.
+Eternity II is an NP-complete edge-matching puzzle whose solution has not yet been discovered. In this article, we will describe how it is possible to tackle this problem by using genetic algorithms.
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
@@ -49,11 +49,13 @@ Eternity II is an NP-complete edge-matching puzzle whose solution has not yet be
 
 The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four color patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered.
 
-Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimensions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
+Our work attempted to use
 
-We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we'vie got.
+%Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimensions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
 
-We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs and the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
+%We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we've got.
+
+%We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs and the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
 
 \section{Problem Description}\label{sec:problem_description}
 
@@ -75,8 +77,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 	\label{fig:solved_example}
 \end{figure}
 
-Each piece has its edges marked with different shape and colour combinations, henceforth called colors. Each must precisely match the neighboring piece's edge when the puzzle is solved. Since the pieces are symmetrical, each can be placed in four different positions achieved by rotating the piece. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a gray edge. There are 22 colors, not counting these gray edges.
-
+Each piece has its edges marked with different shape and colour combinations, henceforth called patterns. Each must precisely match the neighboring piece's edge when the puzzle is solved. These pieces can also be placed in four different positions, by rotating them 90º, 180º or 270º. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 different patterns in the original puzzle (excluding the grey edges).
 
 \subsection{Normal approaches to solving the problem}\label{sec:normal_approaches}
 
@@ -93,7 +94,7 @@ Evidently, the starting position of the pieces in the puzzle will also play an i
 Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
 (Describe here most common patterns that can be used.)
 
-\section{Genetic Algorithms}\label{sec:genetic_algorithms}
+\section{Solution with Genetic Algorithms}\label{sec:genetic_algorithms}
 
 (Methodologies and approaches taken when trying new methods to improve solving times of simplified Eternity II puzzles)
 
