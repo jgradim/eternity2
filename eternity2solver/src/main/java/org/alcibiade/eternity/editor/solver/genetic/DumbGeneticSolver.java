@@ -22,12 +22,14 @@ public class DumbGeneticSolver extends GeneticSolver {
 	
 	@Override
 	public void run() {
+
 		notifyStart();
 		clusterManager.showStartMessage();
-		
-		boolean finished = false;
-		
-		do {
+
+		boolean solved = clusterManager.submitSolution(solutionGrid);
+
+		while (!solved && !interrupted/* && (iterationsLimit == -1 || iterations < iterationsLimit)*/) {
+
 			//System.out.printf("Iteration %d\n", iterations++);
 			// Get the two best individuals
 			GridModel individualA = getMostFitIndividual();
@@ -40,22 +42,40 @@ public class DumbGeneticSolver extends GeneticSolver {
 			population.remove(individualZ);
 			GridModel individualY = getLeastFitIndividual();
 			population.remove(individualY);
-			
-			
+
 			// Show stuff on the g u i
 			// Submit fittest for evaluation
 			//individualB.copyTo(problemGrid);
 			individualA.copyTo(solutionGrid);
-			finished = clusterManager.submitSolution(individualA);
-			
-			if (clusterManager.isSolutionFound() == false) {
+			solved = clusterManager.submitSolution(individualA);
+
+			if (!solved) {
 				ArrayList<GridModel> children = crossover(individualA, individualB);
 				population.addAll(children);
-			} else {
-				finished = true;
 			}
-			
-		} while(!finished);
+
+			if (slowmotion) {
+				try {
+					Thread.sleep(SLOWMOTION_DELAY);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if (solved) {
+			clusterManager.showStats(iterations);
+		}
+
+		notifyEnd(solved);
+
+
+		notifyStart();
+		clusterManager.showStartMessage();
+		
+		boolean finished = false;
+		
+		
 		
 		notifyEnd(true);
 	}

@@ -815,7 +815,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			
 			// get best candidate piece from remaining
 			for(int c = 0; c < remaining.getPositions(); c++) {
-				candidate = remaining.getQuad(c);
+				candidate = remaining.getQuad(c).clone();
 				if(candidate.isClear()) continue;
 				
 				for (int d = 0; d < 4; d++) {
