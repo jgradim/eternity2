@@ -91,7 +91,7 @@ public abstract class GeneticSolver extends EternitySolver {
 				bestIndividual = thisIndividual;
 				bestFitness = thisFitness;
 			}
-		};
+		}
 		
 		//this.population.remove(bestIndividual);
 		return bestIndividual;
@@ -117,12 +117,13 @@ public abstract class GeneticSolver extends EternitySolver {
 				worstIndividual = thisIndividual;
 				worstFitness = thisFitness;
 			}
-		};
+		}
 		
 		//this.population.remove(bestIndividual);
 		return worstIndividual;
 	}	
-	
+
+	@Override
 	public long getIterations() {
 		return iterations;
 	}

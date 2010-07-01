@@ -13,12 +13,16 @@ import org.alcibiade.eternity.editor.solver.ClusterManager;
 
 public class DumbGeneticSolver extends GeneticSolver {
 
+	private Random generator;
+	private int mutations;		// number of mutations, defaults to gridModel.size() - 1
 	
-	public DumbGeneticSolver(GridModel grid, GridModel solutionGrid,
-		ClusterManager clusterManager, int populationSize) {
-		
+	public DumbGeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
 		super(grid, solutionGrid, clusterManager, populationSize);
+		this.generator = new Random();
+		this.mutations = grid.getSize() - 1;
 	}
+
+	public void setMutations(int s) { mutations = s; };
 	
 	@Override
 	public void run() {
@@ -28,7 +32,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 
 		boolean solved = clusterManager.submitSolution(solutionGrid);
 
-		while (!solved && !interrupted/* && (iterationsLimit == -1 || iterations < iterationsLimit)*/) {
+		while (!solved && !interrupted) {
 
 			//System.out.printf("Iteration %d\n", iterations++);
 			// Get the two best individuals
@@ -68,16 +72,6 @@ public class DumbGeneticSolver extends GeneticSolver {
 		}
 
 		notifyEnd(solved);
-
-
-		notifyStart();
-		clusterManager.showStartMessage();
-		
-		boolean finished = false;
-		
-		
-		
-		notifyEnd(true);
 	}
 	
 
@@ -103,6 +97,13 @@ public class DumbGeneticSolver extends GeneticSolver {
 		children.add(childB);
 
 		return children;
+	}
+
+	public void mutate(GridModel individual) {
+		for(int i = 0; i < mutations; i++) {
+			int quadIndex = generator.nextInt(individual.getPositions());
+			individual.optimizeQuadRotation(quadIndex);
+		}
 	}
 
 	/*
@@ -144,14 +145,6 @@ public class DumbGeneticSolver extends GeneticSolver {
 //		
 //		return childrenSet;
 //	}
-	
-	public void mutate(GridModel individual) {
-		Random generator = new Random();
-		int quadIndex = generator.nextInt(individual.getPositions());
-		QuadModel gene = individual.getQuad(quadIndex);
-		
-		gene.rotateClockwise();
-	}
 
 	@Override
 	public String getSolverName() {
