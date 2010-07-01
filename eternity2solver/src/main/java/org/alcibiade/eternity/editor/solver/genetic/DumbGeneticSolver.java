@@ -7,56 +7,62 @@ package org.alcibiade.eternity.editor.solver.genetic;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
 import org.alcibiade.eternity.editor.model.GridModel;
-import org.alcibiade.eternity.editor.model.QuadModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
 
 public class DumbGeneticSolver extends GeneticSolver {
 
 	private Random generator;
 	private int mutations;		// number of mutations, defaults to gridModel.size() - 1
+	private GridModelComparator gridModelComparator;
 	
 	public DumbGeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
 		super(grid, solutionGrid, clusterManager, populationSize);
 		this.generator = new Random();
 		this.mutations = grid.getSize() - 1;
+		this.gridModelComparator = new GridModelComparator();
 	}
 
 	public void setMutations(int s) { mutations = s; };
-	
+
+	// solve
 	@Override
 	public void run() {
 
 		notifyStart();
 		clusterManager.showStartMessage();
+		GridModel solution = null;
+
+		for(int i = 0; i < population.size(); i++) {
+			System.out.print(GeneticSolver.fitness(population.get(i)));
+			System.out.print(" ");
+		}
+		System.out.println();
+		Collections.sort(population, gridModelComparator);
+		for(int i = 0; i < population.size(); i++) {
+			System.out.print(GeneticSolver.fitness(population.get(i)));
+			System.out.print(" ");
+		}
+		System.out.println();
 
 		boolean solved = clusterManager.submitSolution(solutionGrid);
 
-		while (!solved && !interrupted) {
+		/*while (!solved && !interrupted) {
+			
+			// select
+			ArrayList<GridModel> breeders = select();
+			GridModel bestGrid = breeders.get(0);
 
-			//System.out.printf("Iteration %d\n", iterations++);
-			// Get the two best individuals
-			GridModel individualA = getMostFitIndividual();
-			population.remove(individualA);
-			GridModel individualB = getMostFitIndividual();
-			population.add(individualA);
-
-			// Remove the two worst individuals
-			GridModel individualZ = getLeastFitIndividual();
-			population.remove(individualZ);
-			GridModel individualY = getLeastFitIndividual();
-			population.remove(individualY);
-
-			// Show stuff on the g u i
-			// Submit fittest for evaluation
-			//individualB.copyTo(problemGrid);
-			individualA.copyTo(solutionGrid);
-			solved = clusterManager.submitSolution(individualA);
-
-			if (!solved) {
-				ArrayList<GridModel> children = crossover(individualA, individualB);
-				population.addAll(children);
+			// check for correct board
+			solved = clusterManager.submitSolution(bestGrid);
+			if(solved) {
+				solution = bestGrid;
+				break;
 			}
+
+			// breed
+			this.population = breed(breeders);
 
 			if (slowmotion) {
 				try {
@@ -69,12 +75,32 @@ public class DumbGeneticSolver extends GeneticSolver {
 
 		if (solved) {
 			clusterManager.showStats(iterations);
-		}
+		}*/
 
 		notifyEnd(solved);
 	}
-	
 
+	// elitist selection function
+	// returns the fittest half of the population
+	private ArrayList<GridModel> select() {
+		ArrayList<GridModel> selection = (ArrayList<GridModel>)population.clone();
+		Collections.sort(selection, gridModelComparator);
+		selection = new ArrayList<GridModel>(selection.subList(0, selection.size()/2));
+		return selection;
+	}
+
+	private ArrayList<GridModel> breed(ArrayList<GridModel> breeders) {
+		ArrayList<GridModel> newPopulation = (ArrayList<GridModel>)breeders.clone();
+		int s = breeders.size();
+		for(int i = 0; i < s; i++) {
+			int ra = generator.nextInt(s);
+			int rb = generator.nextInt(s);
+			newPopulation.addAll(crossover(breeders.get(ra), breeders.get(rb)));
+		}
+		return newPopulation;
+	}
+
+	//
 	private ArrayList<GridModel> crossover(GridModel parentA, GridModel parentB) {
 		ArrayList<GridModel> aFeatures = parentA.getFeatures();
 		ArrayList<GridModel> bFeatures = parentB.getFeatures();
