@@ -39,13 +39,12 @@ public abstract class GeneticSolver extends EternitySolver {
 			somegrid.shuffle();
 			population.add(somegrid);
 		}
-	
 	}
 	
 	/**
 	 * returns the fitness of a grid (0..1)
 	 */
-	public float fitness(GridModel grid) {
+	public static float fitness(GridModel grid) {
 		
 		float connections = grid.countConnections();
 		float pairs = grid.countPairs();
@@ -108,6 +107,4 @@ public abstract class GeneticSolver extends EternitySolver {
 	public long getIterations() {
 		return iterations;
 	}
-	
-	
 }
