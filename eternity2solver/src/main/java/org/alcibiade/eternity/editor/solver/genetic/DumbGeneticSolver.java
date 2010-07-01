@@ -13,13 +13,13 @@ import org.alcibiade.eternity.editor.solver.ClusterManager;
 
 public class DumbGeneticSolver extends GeneticSolver {
 
-	private Random generator;
+	private Random randomGenerator;
 	private int mutations;		// number of mutations, defaults to gridModel.size() - 1
 	private GridModelComparator gridModelComparator;
 	
 	public DumbGeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
 		super(grid, solutionGrid, clusterManager, populationSize);
-		this.generator = new Random();
+		this.randomGenerator = new Random();
 		this.mutations = grid.getSize() - 1;
 		this.gridModelComparator = new GridModelComparator();
 	}
@@ -34,21 +34,9 @@ public class DumbGeneticSolver extends GeneticSolver {
 		clusterManager.showStartMessage();
 		GridModel solution = null;
 
-		for(int i = 0; i < population.size(); i++) {
-			System.out.print(GeneticSolver.fitness(population.get(i)));
-			System.out.print(" ");
-		}
-		System.out.println();
-		Collections.sort(population, gridModelComparator);
-		for(int i = 0; i < population.size(); i++) {
-			System.out.print(GeneticSolver.fitness(population.get(i)));
-			System.out.print(" ");
-		}
-		System.out.println();
-
 		boolean solved = clusterManager.submitSolution(solutionGrid);
 
-		/*while (!solved && !interrupted) {
+		while (!solved && !interrupted) {
 			
 			// select
 			ArrayList<GridModel> breeders = select();
@@ -71,11 +59,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 					e.printStackTrace();
 				}
 			}
+			iterations++;
 		}
 
 		if (solved) {
 			clusterManager.showStats(iterations);
-		}*/
+		}
 
 		notifyEnd(solved);
 	}
@@ -93,8 +82,8 @@ public class DumbGeneticSolver extends GeneticSolver {
 		ArrayList<GridModel> newPopulation = (ArrayList<GridModel>)breeders.clone();
 		int s = breeders.size();
 		for(int i = 0; i < s; i++) {
-			int ra = generator.nextInt(s);
-			int rb = generator.nextInt(s);
+			int ra = randomGenerator.nextInt(s);
+			int rb = randomGenerator.nextInt(s);
 			newPopulation.addAll(crossover(breeders.get(ra), breeders.get(rb)));
 		}
 		return newPopulation;
@@ -102,6 +91,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 
 	//
 	private ArrayList<GridModel> crossover(GridModel parentA, GridModel parentB) {
+		
 		ArrayList<GridModel> aFeatures = parentA.getFeatures();
 		ArrayList<GridModel> bFeatures = parentB.getFeatures();
 		
@@ -118,6 +108,10 @@ public class DumbGeneticSolver extends GeneticSolver {
 		childA.completeWith(remainingA);
 		childB.completeWith(remainingB);
 
+		// introduce mutations
+		mutate(childA);
+		mutate(childB);
+
 		ArrayList<GridModel> children = new ArrayList<GridModel>();
 		children.add(childA);
 		children.add(childB);
@@ -127,7 +121,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 
 	public void mutate(GridModel individual) {
 		for(int i = 0; i < mutations; i++) {
-			int quadIndex = generator.nextInt(individual.getPositions());
+
+			// probablity check, 50%
+			if(randomGenerator.nextInt(100) < 50) continue;
+
+			// mutate
+			int quadIndex = randomGenerator.nextInt(individual.getPositions());
 			individual.optimizeQuadRotation(quadIndex);
 		}
 	}
