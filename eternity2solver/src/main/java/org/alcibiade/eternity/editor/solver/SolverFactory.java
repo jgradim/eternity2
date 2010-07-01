@@ -125,8 +125,9 @@ public class SolverFactory {
 		
 		// ----- Genetic Stuff
 		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
-			//population = 10
-			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 10);
+			// population = 12
+			// population must be divisible by 4
+			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 12);
 		}
 		// ----- End Genetic Stuff
 		else {

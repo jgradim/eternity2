@@ -34,7 +34,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		clusterManager.showStartMessage();
 		GridModel solution = null;
 
-		boolean solved = clusterManager.submitSolution(solutionGrid);
+		boolean solved = false;//clusterManager.submitSolution(solutionGrid);
 
 		while (!solved && !interrupted) {
 			
@@ -48,6 +48,8 @@ public class DumbGeneticSolver extends GeneticSolver {
 				solution = bestGrid;
 				break;
 			}
+			// FIXME: should not be necessary
+			mutate(bestGrid);
 
 			// breed
 			this.population = breed(breeders);
@@ -59,10 +61,13 @@ public class DumbGeneticSolver extends GeneticSolver {
 					e.printStackTrace();
 				}
 			}
+
+			bestGrid.copyTo(solutionGrid);
 			iterations++;
 		}
 
 		if (solved) {
+			solution.copyTo(solutionGrid);
 			clusterManager.showStats(iterations);
 		}
 
@@ -81,7 +86,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 	private ArrayList<GridModel> breed(ArrayList<GridModel> breeders) {
 		ArrayList<GridModel> newPopulation = (ArrayList<GridModel>)breeders.clone();
 		int s = breeders.size();
-		for(int i = 0; i < s; i++) {
+		for(int i = 0; i < s/2; i++) {
 			int ra = randomGenerator.nextInt(s);
 			int rb = randomGenerator.nextInt(s);
 			newPopulation.addAll(crossover(breeders.get(ra), breeders.get(rb)));
@@ -123,11 +128,12 @@ public class DumbGeneticSolver extends GeneticSolver {
 		for(int i = 0; i < mutations; i++) {
 
 			// probablity check, 50%
-			if(randomGenerator.nextInt(100) < 50) continue;
+			//if(randomGenerator.nextInt(100) < 50) continue;
 
 			// mutate
 			int quadIndex = randomGenerator.nextInt(individual.getPositions());
-			individual.optimizeQuadRotation(quadIndex);
+			//individual.optimizeQuadRotation(quadIndex);
+			individual.getQuad(quadIndex).rotateClockwise();
 		}
 	}
 
