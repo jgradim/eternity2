@@ -6,7 +6,6 @@
 package org.alcibiade.eternity.editor.solver.genetic;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
 import org.alcibiade.eternity.editor.solver.EternitySolver;
@@ -52,56 +51,6 @@ public abstract class GeneticSolver extends EternitySolver {
 
 		return fitness;
 	}
-	
-	/**
-	 * returns the most fit individual
-	 */
-	public GridModel getMostFitIndividual() {
-		
-		assert this.population.size() > 0;
-		
-		Iterator it = this.population.iterator();
-		GridModel bestIndividual = null;
-		float bestFitness = 0;
-		
-		while (it.hasNext()) {
-		
-			GridModel thisIndividual = (GridModel)it.next();
-			float thisFitness = fitness(thisIndividual);
-			
-			if (thisFitness >= bestFitness) {
-				bestIndividual = thisIndividual;
-				bestFitness = thisFitness;
-			}
-		}
-		
-		return bestIndividual;
-	}
-	
-	/*
-	 * Get least fit individual
-	 */
-	public GridModel getLeastFitIndividual() {
-		
-		assert this.population.size() > 0;
-		
-		Iterator it = this.population.iterator();
-		GridModel worstIndividual = null;
-		float worstFitness = Integer.MAX_VALUE;
-		
-		while (it.hasNext()) {
-		
-			GridModel thisIndividual = (GridModel)it.next();
-			float thisFitness = fitness(thisIndividual);
-			
-			if (thisFitness < worstFitness) {
-				worstIndividual = thisIndividual;
-				worstFitness = thisFitness;
-			}
-		}
-		
-		return worstIndividual;
-	}	
 
 	@Override
 	public long getIterations() {
