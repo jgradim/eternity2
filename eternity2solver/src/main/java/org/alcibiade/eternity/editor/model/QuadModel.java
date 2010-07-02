@@ -325,6 +325,26 @@ public class QuadModel implements Cloneable, Serializable {
 		return matchDegrees(quad) >= degrees;
 	}
 
+	//
+	public boolean geneticEquals(QuadModel quad) {
+		QuadModel compare = this.clone();
+
+		// rotate until both north patterns match
+		for(int i = 0; i < 4; i++) {
+
+			// north patterns match, check other patterns
+			if(compare.getPattern(0) == quad.getPattern(0)) {
+				for(int dir = 0; dir < 4; dir++) {
+					if(compare.getPattern(dir) != quad.getPattern(dir))
+						return false;
+				}
+				return true;
+			}
+			compare.rotateClockwise();
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "Q[" + getPattern(0) + "," + getPattern(1) + "," + getPattern(2) + ","

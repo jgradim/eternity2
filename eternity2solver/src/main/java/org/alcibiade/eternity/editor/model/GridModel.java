@@ -777,13 +777,14 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		for(int i = 0; i < incomplete.getPositions(); i++) {
 			QuadModel qi = incomplete.getQuad(i);
 
-			if(qi.isClear()) continue;
+			if(!qi.isClear()) {
+				for(int j = 0; j < remaining.getPositions(); j++) {
+					QuadModel qr = remaining.getQuad(j);
 
-			for(int j = 0; j < remaining.getPositions(); j++) {
-				QuadModel qr = remaining.getQuad(j);
-
-				if(qr.equalsIgnoreRotation(qi))
-					qr.clear();
+					if(qr.geneticEquals(qi)) {
+						qr.clear();
+					}
+				}
 			}
 		}
 		return remaining;
@@ -802,6 +803,10 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	}
 			
 	public void completeWith(GridModel remaining) {
+
+		/*System.out.printf("incomplete pieces: %d\n", this.countFilledQuads());
+		System.out.printf(" remaining pieces: %d\n", remaining.countFilledQuads());
+		System.out.printf("     total pieces: %d\n", this.countFilledQuads()+remaining.countFilledQuads());*/
 
 		QuadModel current, candidate, bestQuad;
 		int bestScore;
