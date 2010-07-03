@@ -33,8 +33,9 @@ public class DumbGeneticSolver extends GeneticSolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		GridModel solution = null;
-
-		boolean solved = false;//clusterManager.submitSolution(solutionGrid);
+			
+		boolean solved = false;
+		//clusterManager.submitSolution(solutionGrid);
 
 		while (!solved && !interrupted) {
 			
@@ -43,7 +44,11 @@ public class DumbGeneticSolver extends GeneticSolver {
 			GridModel bestGrid = breeders.get(0);
 
 			// check for correct board
+			if (bestGrid.countPairs() > clusterManager.getBestScore())
+				bestGrid.copyTo(problemGrid);			
 			solved = clusterManager.submitSolution(bestGrid);
+
+			
 			if(solved) {
 				solution = bestGrid;
 				break;
@@ -63,6 +68,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 			}
 
 			bestGrid.copyTo(solutionGrid);
+			
 			iterations++;
 		}
 
@@ -71,7 +77,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 			clusterManager.showStats(iterations);
 		}
 
-		notifyEnd(solved);
+		notifyEnd(solved); 
 	}
 
 	// elitist selection function

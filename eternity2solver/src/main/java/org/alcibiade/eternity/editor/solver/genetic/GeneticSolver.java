@@ -43,12 +43,15 @@ public abstract class GeneticSolver extends EternitySolver {
 	/**
 	 * returns the fitness of a grid (0..1)
 	 */
+	 
 	public static float fitness(GridModel grid) {
 		
-		float connections = grid.countConnections();
-		float pairs = grid.countPairs();
+		float connections = grid.countConnections() + grid.borderlineConnections();
+		float pairs = grid.countPairs() + grid.borderlinePairs();
 		float fitness = pairs / connections;
+	
 
+		assert (fitness >= 0) && (fitness <= 1);
 		return fitness;
 	}
 
