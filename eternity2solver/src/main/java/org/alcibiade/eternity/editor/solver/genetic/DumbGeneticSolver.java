@@ -83,6 +83,29 @@ public class DumbGeneticSolver extends GeneticSolver {
 		return selection;
 	}
 
+	// roulette-wheel selection
+	private ArrayList<GridModel> rouletteWheelSelection() {
+		ArrayList<GridModel> selection = new ArrayList<GridModel>();
+		ArrayList<GridModel> pop_clone = (ArrayList<GridModel>)population.clone();
+
+		int f = 0;
+		for(GridModel g : population)
+			f += GeneticSolver.fitness(g);
+
+		while(selection.size() < population.size() / 2) {
+			for(int i = 0; i < pop_clone.size(); i++) {
+				float p = GeneticSolver.fitness(pop_clone.get(i)) / f;
+				if(p > randomGenerator.nextFloat()) {
+					selection.add(pop_clone.get(i));
+					pop_clone.remove(i);
+					break;
+				}
+			}
+		}
+
+		return selection;
+	}
+
 	private ArrayList<GridModel> breed(ArrayList<GridModel> breeders) {
 		ArrayList<GridModel> newPopulation = (ArrayList<GridModel>)breeders.clone();
 		int s = breeders.size();
