@@ -327,17 +327,14 @@ public class QuadModel implements Cloneable, Serializable {
 
 	//
 	public boolean geneticEquals(QuadModel quad) {
+
 		QuadModel compare = this.clone();
 
-		// rotate until both north patterns match
-		for(int i = 0; i < 4; i++) {
-
-			// north patterns match, check other patterns
-			if(compare.getPattern(0) == quad.getPattern(0)) {
-				for(int dir = 0; dir < 4; dir++) {
-					if(compare.getPattern(dir) != quad.getPattern(dir))
-						return false;
-				}
+		for(int d = 0; d < 4; d++) {
+			if(compare.getPattern(0) == quad.getPattern(0)
+			&& compare.getPattern(1) == quad.getPattern(1)
+			&& compare.getPattern(2) == quad.getPattern(2)
+			&& compare.getPattern(3) == quad.getPattern(3)) {
 				return true;
 			}
 			compare.rotateClockwise();

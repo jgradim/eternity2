@@ -783,10 +783,12 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 
 					if(qr.geneticEquals(qi)) {
 						qr.clear();
+						break;
 					}
 				}
 			}
 		}
+		
 		return remaining;
 	}
 
@@ -803,10 +805,6 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	}
 			
 	public void completeWith(GridModel remaining) {
-
-		/*System.out.printf("incomplete pieces: %d\n", this.countFilledQuads());
-		System.out.printf(" remaining pieces: %d\n", remaining.countFilledQuads());
-		System.out.printf("     total pieces: %d\n", this.countFilledQuads()+remaining.countFilledQuads());*/
 
 		QuadModel current, candidate, bestQuad;
 		int bestScore;
