@@ -809,6 +809,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		QuadModel current, candidate, bestQuad;
 		int bestScore;
 		int score;
+		int candidatePos = 0; // for clearing
 		for(int i = 0; i < this.getPositions(); i++) {
 			current = this.getQuad(i);
 			if(!current.isClear()) continue;
@@ -828,11 +829,13 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 					if (score > bestScore) {
 						bestScore = score;
 						bestQuad = candidate;
+						candidatePos = c;
 					}
 					
 				}
 			}
 			this.setQuad(i, bestQuad);
+			remaining.getQuad(candidatePos).clear();
 		}
 	}
 
@@ -855,6 +858,12 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			// are the positions compatible? (i.e., not overlapping?)
 			TreeSet<Integer> overlapping = fa.getFilledPositions();
 			overlapping.retainAll(fb.getFilledPositions());
+
+			/*System.out.println(fa.toQuadString());
+			System.out.println(fb.toQuadString());
+			System.out.println(overlapping.size());
+			System.out.println("\n-------------\n");*/
+
 			if(overlapping.size() == 0 && this.allPiecesValid(fa, fb)) {
 				return GridModel.joinGrids(fa,fb);
 			}
