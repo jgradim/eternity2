@@ -912,5 +912,65 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		visited.add(index);
 	}
 	
+	
+	/* for the fitness function */
+	
+	public int borderlineConnections() {
+		return 2*getWidth() + 2*getHeight();
+	}
+	
+	public int borderlinePairs() {
+		int pairs = 0;
+		
+		//Count horizontal pairs
+		for (int i = 0; i < getSize(); i++) {
+			
+			
+			if (getQuad(i, 0).getPattern(QuadModel.DIR_NORTH) == Pattern.getDefaultPattern())
+				pairs++;
+			
+			if (getQuad(i, getHeight()-1).getPattern(QuadModel.DIR_SOUTH) == Pattern.getDefaultPattern())
+				pairs++;
+	
+			if (getQuad(0, i).getPattern(QuadModel.DIR_WEST) == Pattern.getDefaultPattern())
+				pairs++;
+				
+			if (getQuad(getWidth()-1, i).getPattern(QuadModel.DIR_EAST) == Pattern.getDefaultPattern())
+				pairs++;					
+		}
+		
+				
+		return pairs;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
