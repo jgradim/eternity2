@@ -792,6 +792,10 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return remaining;
 	}
 
+	public int getTestScore(int index) {
+		return getTestScore(getQuad(index), index);
+	}
+
 	//
 	public int getTestScore(QuadModel testQuad, int index) {
 		int score = 0;
@@ -842,7 +846,6 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 						bestQuad = candidate;
 						candidatePos = c;
 					}
-					
 				}
 			}
 			this.setQuad(i, bestQuad);

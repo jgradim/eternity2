@@ -7,6 +7,7 @@ package org.alcibiade.eternity.editor.solver.genetic;
 
 import java.util.ArrayList;
 import org.alcibiade.eternity.editor.model.GridModel;
+import org.alcibiade.eternity.editor.model.QuadModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
 import org.alcibiade.eternity.editor.solver.EternitySolver;
 
@@ -71,6 +72,13 @@ public abstract class GeneticSolver extends EternitySolver {
 		assert (fitness >= 0) && (fitness <= 1);
 		return fitness;
 	}*/
+
+	public void enhanceSolution(GridModel grid) {
+		for(int i = 0; i < grid.getPositions(); i++) {
+			if(grid.getTestScore(i) < 4)
+				grid.optimizeQuadRotation(i);
+		}
+	}
 	
 	@Override
 	public long getIterations() {

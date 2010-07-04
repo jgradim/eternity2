@@ -33,20 +33,34 @@ public class ElitistGeneticSolver extends GeneticSolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		GridModel solution = null;
-		
+
 		boolean solved = false;
 		while (!solved && !interrupted) {
+
+			if (slowmotion) {
+				try {
+					Thread.sleep(SLOWMOTION_DELAY);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			// select
-			//ArrayList<GridModel> breeders = rouletteWheelSelection();
 			ArrayList<GridModel> breeders = elitistSelection();
 			GridModel bestGrid = breeders.get(0);
 
-			// check for correct board
-			if (bestGrid.countPairs() > clusterManager.getBestScore())
-				bestGrid.copyTo(problemGrid);			
-			solved = clusterManager.submitSolution(bestGrid);
+			// try to rotate pieces correctly once the solution reaches a certain threshold
+			if(bestGrid.countPairs() >= bestGrid.countConnections() - 4) {
+				enhanceSolution(bestGrid);
+			}
 
+			// update main grid to show best solution yet
+			if (bestGrid.countPairs() > clusterManager.getBestScore()) {
+				bestGrid.copyTo(problemGrid);
+			}
+
+			// check for correct board
+			solved = clusterManager.submitSolution(bestGrid);
 			
 			if(solved) {
 				solution = bestGrid;
@@ -58,17 +72,10 @@ public class ElitistGeneticSolver extends GeneticSolver {
 			// breed
 			this.population = breed(breeders);
 
-			if (slowmotion) {
-				try {
-					Thread.sleep(SLOWMOTION_DELAY);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
 			bestGrid.copyTo(solutionGrid);
 			
 			iterations++;
+			//System.out.printf("iterarion %d\n", iterations);
 		}
 
 		if (solved) {
@@ -76,7 +83,7 @@ public class ElitistGeneticSolver extends GeneticSolver {
 			clusterManager.showStats(iterations);
 		}
 
-		notifyEnd(solved); 
+		notifyEnd(solved);
 	}
 
 	// elitist selection function
@@ -140,6 +147,11 @@ public class ElitistGeneticSolver extends GeneticSolver {
 			//individual.optimizeQuadRotation(quadIndex);
 			individual.getQuad(quadIndex).rotateClockwise();
 		}
+		/*float r = randomGenerator.nextFloat();
+		if(r < GeneticSolver.fitness(individual)) {
+			//System.out.printf("enhanced, %f < %f\n", r, GeneticSolver.fitness(individual));
+			enhanceSolution(individual);
+		}*/
 	}
 
 	@Override
