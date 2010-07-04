@@ -706,7 +706,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(!this.getQuad(i).isClear())
 				count++;
 		return count;
-	} // TESTED, OK
+	}
 
 	/*
 	 *	Counts the number of quads equivalent to the given quad on this grid
@@ -719,7 +719,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 				count++;
 
 		return count;
-	} // TESTED, OK
+	}
 
 	/*
 	 *	Returns a Set of the positions that are not empty on this grid
@@ -730,7 +730,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 			if(!this.getQuad(i).isClear())
 				positions.add(i);
 		return positions;
-	} // TESTED, OK
+	}
 
 	/*
 	 * Given 2 incomplete GridModels, checks if there are no duplicate pieces in
@@ -792,16 +792,17 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		return remaining;
 	}
 
-	private int getTestScore(QuadModel testQuad, int index) {
+	//
+	public int getTestScore(QuadModel testQuad, int index) {
 		int score = 0;
-		
+
 		for (int dir = 0; dir < 4; dir++) {
 			QuadModel neighbor = getNeighbor(index, dir);
-			if (neighbor != null && testQuad.getPattern(dir) == neighbor.getOppositePattern(dir))
-				if(testQuad.getPattern(dir) == Pattern.getDefaultPattern() && this.isIndexOnBorder(index))
-					score++;
+			if (neighbor != null && testQuad.getPattern(dir) == neighbor.getOppositePattern(dir) && testQuad.getPattern(dir) != Pattern.getDefaultPattern())
+				score++;
+			if (neighbor == null && testQuad.getPattern(dir) == Pattern.getDefaultPattern())
+				score++;
 		}
-		
 		return score;
 	}
 
