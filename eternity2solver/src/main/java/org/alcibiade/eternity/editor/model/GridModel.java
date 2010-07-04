@@ -798,10 +798,20 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 		for (int dir = 0; dir < 4; dir++) {
 			QuadModel neighbor = getNeighbor(index, dir);
 			if (neighbor != null && testQuad.getPattern(dir) == neighbor.getOppositePattern(dir))
-				score++;
+				if(testQuad.getPattern(dir) == Pattern.getDefaultPattern() && this.isIndexOnBorder(index))
+					score++;
 		}
 		
 		return score;
+	}
+
+	//
+	public boolean isIndexOnBorder(int index) {
+		if(index < this.getSize() || (index >= (this.getSize()*this.getSize() - this.getSize())))
+			return true;
+		if(index % this.getSize() == 0 || (index+1) % this.getSize() == 0 )
+			return true;
+		return false;
 	}
 			
 	public void completeWith(GridModel remaining) {
