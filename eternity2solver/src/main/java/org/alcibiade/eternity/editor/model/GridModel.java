@@ -923,7 +923,7 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 	}
 	
 	
-	/* for the fitness function */
+	/* for the regular fitness function */
 	
 	public int borderlineConnections() {
 		return 2*getWidth() + 2*getHeight();
@@ -952,6 +952,69 @@ public class GridModel extends AbstractQuadGrid implements Cloneable {
 				
 		return pairs;
 	}
+	
+	/* for the weighted fitness function */
+	
+	public int borderConnections() {
+		return 2*getWidth() + 2*getHeight() - 2*4;
+	}
+	
+	public int borderPairs() {
+		int pairs = 0;
+		
+		//Count horizontal pairs
+		for (int i = 1; i < getSize()-1; i++) {
+			
+			
+			if (getQuad(i, 0).getPattern(QuadModel.DIR_NORTH) == Pattern.getDefaultPattern())
+				pairs++;
+			
+			if (getQuad(i, getHeight()-1).getPattern(QuadModel.DIR_SOUTH) == Pattern.getDefaultPattern())
+				pairs++;
+	
+			if (getQuad(0, i).getPattern(QuadModel.DIR_WEST) == Pattern.getDefaultPattern())
+				pairs++;
+				
+			if (getQuad(getWidth()-1, i).getPattern(QuadModel.DIR_EAST) == Pattern.getDefaultPattern())
+				pairs++;					
+		}
+		
+				
+		return pairs;
+	}
+	
+	
+	public int cornerConnections() {
+		return 8;
+	}
+	
+	public int cornerPairs() {
+		int pairs = 0;
+		int s = getSize()-1;
+		QuadModel topLeftQuad = getQuad(0,0);
+		QuadModel topRightQuad = getQuad(s,0);
+		QuadModel bottomLeftQuad = getQuad(0,s);
+		QuadModel bottomRightQuad = getQuad(s,s);						
+		
+		if ((topLeftQuad.getPattern(QuadModel.DIR_NORTH) == Pattern.getDefaultPattern())
+		&& (topLeftQuad.getPattern(QuadModel.DIR_WEST) == Pattern.getDefaultPattern()))
+			pairs += 2;
+		
+		if ((topRightQuad.getPattern(QuadModel.DIR_NORTH) == Pattern.getDefaultPattern())
+		&& (topRightQuad.getPattern(QuadModel.DIR_EAST) == Pattern.getDefaultPattern()))
+			pairs += 2;
+
+		if ((bottomLeftQuad.getPattern(QuadModel.DIR_SOUTH) == Pattern.getDefaultPattern())
+		&& (bottomLeftQuad.getPattern(QuadModel.DIR_WEST) == Pattern.getDefaultPattern()))
+			pairs += 2;
+
+		if ((bottomRightQuad.getPattern(QuadModel.DIR_SOUTH) == Pattern.getDefaultPattern())
+		&& (bottomRightQuad.getPattern(QuadModel.DIR_EAST) == Pattern.getDefaultPattern()))
+			pairs += 2;
+						
+		return pairs;
+	}	
+		
 	
 	
 	

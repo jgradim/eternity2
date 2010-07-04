@@ -33,10 +33,8 @@ public class DumbGeneticSolver extends GeneticSolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		GridModel solution = null;
-			
+		
 		boolean solved = false;
-		//clusterManager.submitSolution(solutionGrid);
-
 		while (!solved && !interrupted) {
 			
 			// select
