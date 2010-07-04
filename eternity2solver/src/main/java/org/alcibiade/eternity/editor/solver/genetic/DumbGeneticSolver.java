@@ -33,51 +33,55 @@ public class DumbGeneticSolver extends GeneticSolver {
 		notifyStart();
 		clusterManager.showStartMessage();
 		GridModel solution = null;
-			
-		boolean solved = false;
+		
+		fitness(problemGrid);
+		
+//		boolean solved = false;
+		
 		//clusterManager.submitSolution(solutionGrid);
 
-		while (!solved && !interrupted) {
-			
-			// select
-			ArrayList<GridModel> breeders = select();
-			GridModel bestGrid = breeders.get(0);
+//		while (!solved && !interrupted) {
+//			
+//			// select
+//			ArrayList<GridModel> breeders = select();
+//			GridModel bestGrid = breeders.get(0);
 
-			// check for correct board
-			if (bestGrid.countPairs() > clusterManager.getBestScore())
-				bestGrid.copyTo(problemGrid);			
-			solved = clusterManager.submitSolution(bestGrid);
+//			// check for correct board
+//			if (bestGrid.countPairs() > clusterManager.getBestScore())
+//				bestGrid.copyTo(problemGrid);			
+//			solved = clusterManager.submitSolution(bestGrid);
 
-			
-			if(solved) {
-				solution = bestGrid;
-				break;
-			}
-			// FIXME: should not be necessary
-			mutate(bestGrid);
+//			
+//			if(solved) {
+//				solution = bestGrid;
+//				break;
+//			}
+//			// FIXME: should not be necessary
+//			mutate(bestGrid);
 
-			// breed
-			this.population = breed(breeders);
+//			// breed
+//			this.population = breed(breeders);
 
-			if (slowmotion) {
-				try {
-					Thread.sleep(SLOWMOTION_DELAY);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+//			if (slowmotion) {
+//				try {
+//					Thread.sleep(SLOWMOTION_DELAY);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
 
-			bestGrid.copyTo(solutionGrid);
-			
-			iterations++;
-		}
+//			bestGrid.copyTo(solutionGrid);
+//			
+//			iterations++;
+//		}
 
-		if (solved) {
-			solution.copyTo(solutionGrid);
-			clusterManager.showStats(iterations);
-		}
+//		if (solved) {
+//			solution.copyTo(solutionGrid);
+//			clusterManager.showStats(iterations);
+//		}
 
-		notifyEnd(solved); 
+//		notifyEnd(solved); 
+		notifyEnd(true);
 	}
 
 	// elitist selection function

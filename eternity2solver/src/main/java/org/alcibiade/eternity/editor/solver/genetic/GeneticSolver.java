@@ -44,17 +44,40 @@ public abstract class GeneticSolver extends EternitySolver {
 	 * returns the fitness of a grid (0..1)
 	 */
 	 
+//	public static float fitness(GridModel grid) {
+//		
+//		float connections = grid.countConnections() + grid.borderlineConnections() ;
+//		float pairs = grid.countPairs() + grid.borderlinePairs();
+//		float fitness = pairs / connections;
+//	
+
+//		assert (fitness >= 0) && (fitness <= 1);
+//		return fitness;
+//	}
+
 	public static float fitness(GridModel grid) {
 		
-		float connections = grid.countConnections() + grid.borderlineConnections();
-		float pairs = grid.countPairs() + grid.borderlinePairs();
-		float fitness = pairs / connections;
+		float middleWeight = 0.4f;
+		float borderWeight = 0.3f;
+		float cornerWeight = 0.3f;
+		
+		float middle = grid.countPairs() / grid.countConnections();
+		float corner = grid.cornerPairs() / grid.cornerConnections();
+		float border = grid.borderPairs() / grid.borderConnections();
+	
+		System.out.printf("Middle: %d / %d\n", grid.countPairs(), grid.countConnections());
+		System.out.printf("Corner: %d / %d\n", grid.cornerPairs(), grid.cornerConnections());
+		System.out.printf("Border: %d / %d\n", grid.borderPairs(), grid.borderConnections());				
+			
+		float fitness = 
+			middleWeight * middle + 
+			borderWeight * border +
+			cornerWeight * corner;
 	
 
 		assert (fitness >= 0) && (fitness <= 1);
 		return fitness;
 	}
-
 	@Override
 	public long getIterations() {
 		return iterations;
