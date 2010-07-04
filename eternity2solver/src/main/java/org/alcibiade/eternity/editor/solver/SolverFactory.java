@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.alcibiade.eternity.editor.model.GridModel;
-import org.alcibiade.eternity.editor.solver.genetic.DumbGeneticSolver;
+import org.alcibiade.eternity.editor.solver.genetic.ElitistGeneticSolver;
 import org.alcibiade.eternity.editor.solver.backtracking.BlockSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkI;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkII;
 import org.alcibiade.eternity.editor.solver.backtracking.IterativePathSolverMkIII;
+import org.alcibiade.eternity.editor.solver.genetic.RouletteGeneticSolver;
 import org.alcibiade.eternity.editor.solver.path.LinearPath;
 import org.alcibiade.eternity.editor.solver.path.PathProvider;
 import org.alcibiade.eternity.editor.solver.pipeline.PipelineSolver;
@@ -61,13 +62,15 @@ public class SolverFactory {
 	public static final String LABEL_BLOCKMKI = "Block MkI";
 	public static final String LABEL_ASTARMKI = "A* MkI";
 	public static final String LABEL_PIPELINE = "Pipeline";
-	public static final String LABEL_DUMBGENETIC = "Genetic (Dumb)";
+	public static final String LABEL_GENETICELITIST = "Genetic Solver (Elitist Selection)";
+	public static final String LABEL_GENETICROULLETE = "Genetic Solver (Roullete Selection)";
 
 	public static List<String> getAvailableSolvers() {
 		List<String> solvers = new ArrayList<String>();
 		// solvers.add(LABEL_ITPATHMKI);
 		// solvers.add(LABEL_ITPATHMKII);
-		solvers.add(LABEL_DUMBGENETIC);
+		solvers.add(LABEL_GENETICELITIST);
+		solvers.add(LABEL_GENETICROULLETE);
 		solvers.add(LABEL_ITPATHMKIII);
 		solvers.add(LABEL_SWAPDUMB);
 		solvers.add(LABEL_SWAPDUMBNEW);
@@ -124,10 +127,11 @@ public class SolverFactory {
 		}
 		
 		// ----- Genetic Stuff
-		else if (LABEL_DUMBGENETIC.equalsIgnoreCase(type)) {
-			// population = 12
-			// population must be divisible by 4
-			solver = new DumbGeneticSolver(pieces, solution, clusterManager, 12);
+		else if (LABEL_GENETICELITIST.equalsIgnoreCase(type)) {
+			solver = new ElitistGeneticSolver(pieces, solution, clusterManager, 12); // population must be divisible by 4
+		}
+		else if (LABEL_GENETICROULLETE.equalsIgnoreCase(type)) {
+			solver = new RouletteGeneticSolver(pieces, solution, clusterManager, 12); // population must be divisible by 4
 		}
 		// ----- End Genetic Stuff
 		else {
@@ -142,3 +146,4 @@ public class SolverFactory {
 				|| LABEL_ITPATHMKIII.equals(type);
 	}
 }
+

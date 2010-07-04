@@ -11,13 +11,13 @@ import java.util.Collections;
 import org.alcibiade.eternity.editor.model.GridModel;
 import org.alcibiade.eternity.editor.solver.ClusterManager;
 
-public class DumbGeneticSolver extends GeneticSolver {
+public class ElitistGeneticSolver extends GeneticSolver {
 
 	private Random randomGenerator;
 	private int mutations;		// number of mutations, defaults to gridModel.size() - 1
 	private GridModelComparator gridModelComparator;
 	
-	public DumbGeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
+	public ElitistGeneticSolver(GridModel grid, GridModel solutionGrid, ClusterManager clusterManager, int populationSize) {
 		super(grid, solutionGrid, clusterManager, populationSize);
 		this.randomGenerator = new Random();
 		this.mutations = grid.getSize() - 1;
@@ -110,31 +110,6 @@ public class DumbGeneticSolver extends GeneticSolver {
 				}
 			}
 		}
-
-
-
-		/*float totalFitness = 0;
-		for(GridModel g : population)
-			totalFitness += GeneticSolver.fitness(g);
-
-		for(int i = 0; i < population.size(); i++) {
-			float probability = GeneticSolver.fitness(population.get(i)) / totalFitness;
-			wheel.add(probability);
-		}
-
-		System.out.printf("total fitness: %f\n", totalFitness);
-
-		while(selection.size() < population.size() / 2) {
-			float die = randomGenerator.nextFloat();
-			for (int i = 0; i < population.size(); i++) {
-				if (die <= wheel.get(i)) {
-					selection = population.get(i);
-					break;
-				}
-			}
-		}*/
-
-		//System.out.println("\n-------\n");
 		return selection;
 	}
 
@@ -192,49 +167,9 @@ public class DumbGeneticSolver extends GeneticSolver {
 		}
 	}
 
-	/*
-	 * Dumbass Crossover
-	 */
-//	private HashSet<GridModel> crossover(GridModel parentA, GridModel parentB) {
-//		HashSet<GridModel> childrenSet = new HashSet<GridModel>();
-
-//		GridModel childA = parentA.clone();
-//		GridModel childB = parentB.clone();		
-//		
-//		int totalElements = childA.getQuads().size();
-//		
-//		Random generator = new Random();
-//		
-//		int cutPoint = generator.nextInt(totalElements);
-//		
-//		for (int i = 0; i < cutPoint; i++) {
-//			childA.setQuad(i, parentA.getQuad(i));
-//			childB.setQuad(i, parentB.getQuad(i));		
-//		}
-//		
-//		for (int i = cutPoint; i < totalElements; i++) {			
-//			childA.setQuad(i, parentB.getQuad(i));
-//			childB.setQuad(i, parentA.getQuad(i));		
-//		}
-//		
-//		int dice = generator.nextInt(100);
-//		
-//		if (dice > 95) {
-//			mutate(childA);
-//			mutate(childB);
-//		} else if (dice > 80) {
-//			mutate(childA);
-//		}
-//		
-//		childrenSet.add(childA);
-//		childrenSet.add(childB);
-//		
-//		return childrenSet;
-//	}
-
 	@Override
 	public String getSolverName() {
-		return "Dumb Genetic Solver";
+		return "Elitist Selection Genetic Solver";
 	}
 }
 
