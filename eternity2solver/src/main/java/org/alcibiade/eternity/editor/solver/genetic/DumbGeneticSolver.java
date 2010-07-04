@@ -40,7 +40,8 @@ public class DumbGeneticSolver extends GeneticSolver {
 		while (!solved && !interrupted) {
 			
 			// select
-			ArrayList<GridModel> breeders = select();
+			//ArrayList<GridModel> breeders = rouletteWheelSelection();
+			ArrayList<GridModel> breeders = elitistSelection();
 			GridModel bestGrid = breeders.get(0);
 
 			// check for correct board
@@ -82,7 +83,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 
 	// elitist selection function
 	// returns the fittest half of the population
-	private ArrayList<GridModel> select() {
+	private ArrayList<GridModel> elitistSelection() {
 		ArrayList<GridModel> selection = (ArrayList<GridModel>)population.clone();
 		Collections.sort(selection, gridModelComparator);
 		selection = new ArrayList<GridModel>(selection.subList(0, selection.size()/2));
@@ -94,21 +95,48 @@ public class DumbGeneticSolver extends GeneticSolver {
 		ArrayList<GridModel> selection = new ArrayList<GridModel>();
 		ArrayList<GridModel> pop_clone = (ArrayList<GridModel>)population.clone();
 
-		int f = 0;
+		Collections.sort(pop_clone, gridModelComparator);
+		Collections.reverse(pop_clone);
+
+		float totalFitness = 0;
 		for(GridModel g : population)
-			f += GeneticSolver.fitness(g);
+			totalFitness += GeneticSolver.fitness(g);
 
 		while(selection.size() < population.size() / 2) {
-			for(int i = 0; i < pop_clone.size(); i++) {
-				float p = GeneticSolver.fitness(pop_clone.get(i)) / f;
-				if(p > randomGenerator.nextFloat()) {
+			float die = randomGenerator.nextFloat();
+			for (int i = 0; i < pop_clone.size(); i++) {
+				float p = GeneticSolver.fitness(pop_clone.get(i)) / totalFitness;
+				if(die <= p) {
 					selection.add(pop_clone.get(i));
-					pop_clone.remove(i);
 					break;
 				}
 			}
 		}
 
+
+
+		/*float totalFitness = 0;
+		for(GridModel g : population)
+			totalFitness += GeneticSolver.fitness(g);
+
+		for(int i = 0; i < population.size(); i++) {
+			float probability = GeneticSolver.fitness(population.get(i)) / totalFitness;
+			wheel.add(probability);
+		}
+
+		System.out.printf("total fitness: %f\n", totalFitness);
+
+		while(selection.size() < population.size() / 2) {
+			float die = randomGenerator.nextFloat();
+			for (int i = 0; i < population.size(); i++) {
+				if (die <= wheel.get(i)) {
+					selection = population.get(i);
+					break;
+				}
+			}
+		}*/
+
+		//System.out.println("\n-------\n");
 		return selection;
 	}
 
@@ -157,7 +185,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		for(int i = 0; i < mutations; i++) {
 
 			// probablity check, 50%
-			//if(randomGenerator.nextInt(100) < 50) continue;
+			if(randomGenerator.nextInt(100) < 50) continue;
 
 			// mutate
 			int quadIndex = randomGenerator.nextInt(individual.getPositions());
