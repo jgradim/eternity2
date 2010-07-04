@@ -34,62 +34,107 @@ public class DumbGeneticSolver extends GeneticSolver {
 		clusterManager.showStartMessage();
 		GridModel solution = null;
 		
-		fitness(problemGrid);
-		
-//		boolean solved = false;
-		
-		//clusterManager.submitSolution(solutionGrid);
+		boolean solved = false;
+		while (!solved && !interrupted) {
+			
+			// select
+			//ArrayList<GridModel> breeders = rouletteWheelSelection();
+			ArrayList<GridModel> breeders = elitistSelection();
+			GridModel bestGrid = breeders.get(0);
 
-//		while (!solved && !interrupted) {
-//			
-//			// select
-//			ArrayList<GridModel> breeders = select();
-//			GridModel bestGrid = breeders.get(0);
+			// check for correct board
+			if (bestGrid.countPairs() > clusterManager.getBestScore())
+				bestGrid.copyTo(problemGrid);			
+			solved = clusterManager.submitSolution(bestGrid);
 
-//			// check for correct board
-//			if (bestGrid.countPairs() > clusterManager.getBestScore())
-//				bestGrid.copyTo(problemGrid);			
-//			solved = clusterManager.submitSolution(bestGrid);
+			
+			if(solved) {
+				solution = bestGrid;
+				break;
+			}
+			// FIXME: should not be necessary
+			mutate(bestGrid);
 
-//			
-//			if(solved) {
-//				solution = bestGrid;
-//				break;
-//			}
-//			// FIXME: should not be necessary
-//			mutate(bestGrid);
+			// breed
+			this.population = breed(breeders);
 
-//			// breed
-//			this.population = breed(breeders);
+			if (slowmotion) {
+				try {
+					Thread.sleep(SLOWMOTION_DELAY);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 
-//			if (slowmotion) {
-//				try {
-//					Thread.sleep(SLOWMOTION_DELAY);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
+			bestGrid.copyTo(solutionGrid);
+			
+			iterations++;
+		}
 
-//			bestGrid.copyTo(solutionGrid);
-//			
-//			iterations++;
-//		}
+		if (solved) {
+			solution.copyTo(solutionGrid);
+			clusterManager.showStats(iterations);
+		}
 
-//		if (solved) {
-//			solution.copyTo(solutionGrid);
-//			clusterManager.showStats(iterations);
-//		}
-
-//		notifyEnd(solved); 
-		notifyEnd(true);
+		notifyEnd(solved); 
 	}
 
 	// elitist selection function
 	// returns the fittest half of the population
-	private ArrayList<GridModel> select() {
+	private ArrayList<GridModel> elitistSelection() {
 		ArrayList<GridModel> selection = (ArrayList<GridModel>)population.clone();
 		Collections.sort(selection, gridModelComparator);
 		selection = new ArrayList<GridModel>(selection.subList(0, selection.size()/2));
+		return selection;
+	}
+
+	// roulette-wheel selection
+	private ArrayList<GridModel> rouletteWheelSelection() {
+		ArrayList<GridModel> selection = new ArrayList<GridModel>();
+		ArrayList<GridModel> pop_clone = (ArrayList<GridModel>)population.clone();
+
+		Collections.sort(pop_clone, gridModelComparator);
+		Collections.reverse(pop_clone);
+
+		float totalFitness = 0;
+		for(GridModel g : population)
+			totalFitness += GeneticSolver.fitness(g);
+
+		while(selection.size() < population.size() / 2) {
+			float die = randomGenerator.nextFloat();
+			for (int i = 0; i < pop_clone.size(); i++) {
+				float p = GeneticSolver.fitness(pop_clone.get(i)) / totalFitness;
+				if(die <= p) {
+					selection.add(pop_clone.get(i));
+					break;
+				}
+			}
+		}
+
+
+
+		/*float totalFitness = 0;
+		for(GridModel g : population)
+			totalFitness += GeneticSolver.fitness(g);
+
+		for(int i = 0; i < population.size(); i++) {
+			float probability = GeneticSolver.fitness(population.get(i)) / totalFitness;
+			wheel.add(probability);
+		}
+
+		System.out.printf("total fitness: %f\n", totalFitness);
+
+		while(selection.size() < population.size() / 2) {
+			float die = randomGenerator.nextFloat();
+			for (int i = 0; i < population.size(); i++) {
+				if (die <= wheel.get(i)) {
+					selection = population.get(i);
+					break;
+				}
+			}
+		}*/
+
+		//System.out.println("\n-------\n");
 		return selection;
 	}
 
@@ -138,7 +183,7 @@ public class DumbGeneticSolver extends GeneticSolver {
 		for(int i = 0; i < mutations; i++) {
 
 			// probablity check, 50%
-			//if(randomGenerator.nextInt(100) < 50) continue;
+			if(randomGenerator.nextInt(100) < 50) continue;
 
 			// mutate
 			int quadIndex = randomGenerator.nextInt(individual.getPositions());
