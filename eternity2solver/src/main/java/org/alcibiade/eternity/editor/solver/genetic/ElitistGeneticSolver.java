@@ -88,31 +88,6 @@ public class ElitistGeneticSolver extends GeneticSolver {
 		return selection;
 	}
 
-	// roulette-wheel selection
-	private ArrayList<GridModel> rouletteWheelSelection() {
-		ArrayList<GridModel> selection = new ArrayList<GridModel>();
-		ArrayList<GridModel> pop_clone = (ArrayList<GridModel>)population.clone();
-
-		Collections.sort(pop_clone, gridModelComparator);
-		Collections.reverse(pop_clone);
-
-		float totalFitness = 0;
-		for(GridModel g : population)
-			totalFitness += GeneticSolver.fitness(g);
-
-		while(selection.size() < population.size() / 2) {
-			float die = randomGenerator.nextFloat();
-			for (int i = 0; i < pop_clone.size(); i++) {
-				float p = GeneticSolver.fitness(pop_clone.get(i)) / totalFitness;
-				if(die <= p) {
-					selection.add(pop_clone.get(i));
-					break;
-				}
-			}
-		}
-		return selection;
-	}
-
 	private ArrayList<GridModel> breed(ArrayList<GridModel> breeders) {
 		ArrayList<GridModel> newPopulation = (ArrayList<GridModel>)breeders.clone();
 		int s = breeders.size();
