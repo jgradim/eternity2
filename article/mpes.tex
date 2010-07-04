@@ -19,8 +19,8 @@
 
 \mainmatter              % start of the contributions
 %
-\title{Eternity II\\
-	\small{Genetic Algorithms Approach}
+\title{Solving Eternity II Redux\\
+	\small{An approach based on Genetic Algorithms}
 }
 %
 \titlerunning{Eternity II - Genetic Algorithms Approach}  % abbreviated title (for running head)
@@ -40,22 +40,30 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Eternity II is an NP-complete edge-matching puzzle whose solution has not yet been discovered. In this article, we will describe how it is possible to tackle this problem by using genetic algorithms.
+%TODO: o abstract escreve-se no fim.
+Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. This article, zwe will describe how it is possible to tackle this problem by using genetic algorithms.
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
 
 %This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
 
-The Eternity II puzzle is an edge-matching puzzle played with 256 pieces, each with four color patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was designed by Christophr Monckton in 2005 and its solution has not yet been discovered.
+The Eternity II puzzle is an edge-matching puzzle. It consists of a 16 by 16 grid that must be completed with the respective 256 pieces. Each piece has four coloured patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. 
 
-Our work attempted to use
+%TODO: inserir aqui imagens bonitas do puzzle
+
+A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle. 
+
+% TODO: cite http://www.prnewswire.co.uk/cgi/news/release?id=188486
+
+Our work was toward solving smaller versions of this puzzle - with less edge patterns and a board of smaller dimensions.
+
 
 %Our work will be in the direction of improving known methods ideal for solving smaller versions - with less pieces, less patterns and a board of smaller dimensions - of this puzzle. The reason for this is that no method has yet been found that can solve the original puzzle, at least in a feasible time span.
 
 %We will pick up on the work developed by Fábio Aguiar and Sara Carvalho in this same context. This article will document exactly where we began, what possible improvements could be applied to the previous work, as well the results we hope to achieve and the results we've got.
 
-%We will also introduce a new element to their work. The Eternity II editor is a Java-based application that allows the creation and edition of puzzle grids. Eternity II editor's features include a series of solver programs and the ability to see the program's attempt to solve the puzzle in real time. Most importantly, it features an application interface that will allow us to extend the application, using custom solving methods.
+We will also use an existing element to base our work upon: The \textit{Eternity II Editor} is an open-source Java-based application that allows the creation and edition of Eternity II puzzle grids. \textit{Eternity II Editor}'s features include a series of puzzle solving programs and the ability to see the program's attempt to solve the puzzle in real time. More importantly, it features a usable application interface that will allow us to extend the application with out own solving methods.
 
 \section{Problem Description}\label{sec:problem_description}
 
@@ -94,16 +102,26 @@ Evidently, the starting position of the pieces in the puzzle will also play an i
 Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
 (Describe here most common patterns that can be used.)
 
-\section{Solution with Genetic Algorithms}\label{sec:genetic_algorithms}
+\section{Approaching Eternity II with Genetic Algorithms}\label{sec:genetic_algorithms}
 
-(Methodologies and approaches taken when trying new methods to improve solving times of simplified Eternity II puzzles)
+\subsection{Introducing: The Genetic Algorithm}
+(Methodologies and approaches taken when trying new methods to improve solving times of The desired simplified Eternity II puzzles)
 
-Genetic algorithms (GA) are search algorithms that work by combining two (or more) \textit{parent} states in order to maximize the amount of information passed on to the next search step, instead of modifying a single state. These kind of algorithms have been proven useful in solving many kinds of problems, including board games problems, such as the \textit{n queens} problem\cite{eastridge}.
+A genetic algorithm (\textit{GA}, for short) is an uninformed search method that mimics the process of natural evolution. It is particularly useful in search and optimization problems. The genetic algorithm works by generating solutions using procedures inspired by natural evolution: Search begins on a set, called \textit{population} of initial states, called \textit{individuals or chromosomes}. The characteristics that make up each individual can therefore be thought of \textit{genetic material}. The quality of the solution each individual represents is measured by a problem-specific \textit{fitness} function. Evolution of the population (and consequently of the best solution) is achieved by \textit{selection} and \textit{reproduction} betwen individuals of the population, often in some respect to their fitness evaluation. This creates new individuals in the population whose genetic material comes from individuals in the previous generation.
+\textit{Mutations} in the individuals are often introduced betwen generations so that we can diverge from the set that contains all possible combinations of genetic material present in the initial population, which may or may not include the solution sought after.
+
+These kind of algorithms have been proven useful in solving many kinds of problems, including puzzle problems. A textbook example of an application of GA's is the \textit{n-queens} problem\cite{eastridge}.
 
 \subsection{Methodology}\label{sec:methodology}
 
 % FIXME: tá péssimo
-\subsubsection{Chromosome} The chromosome to be used in both the evaluation by the fitness function and the breeding methods is the board itself
+\subsubsection{Individuals and Population}
+Solving Eternity II with \textit{GA}'s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s', \texit{individiual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
+The initial state in our search problem is the unsolved board. It defines exactly the size and characteristics of the problem: The problem size and the set of pieces that will be present in all individuals of the population.
+Our initial population of $n$ individuals is built from random shuffling of the initial state $n$ times.
+
+
+
 
 \subsubsection{Fitness function}\label{sec:fitness-function}
 
@@ -117,7 +135,7 @@ The fitness function used to evaluate the quality of the boards is given by:
 	\label{fig:eq:fitness_function}
 \end{figure}
 
-where \textit{n\_matching\_edges} represents the number of matching edges between all pieces of the board for the current state, and \textit{total\_matching\_edges} the number of matching edges for an $n*n$ board. As such, \textit{fitness} will yield a value between $[0.0, 1.0]$, with higher values corresponding to fitter boards. A fitness of $1.0$ means a board is correctly solved.
+where \textit{n\_matching\_edges} represents the number of matching edges between all pieces of the board for the current state, and \textit{total\_matching\_edges} the number of matching edges for an $n*n$ board. As such, \textit{fitness} will yield a value between $[0.0, 1.0]$, with higher values corresponding to fitter boards. A fitness of exactly $1.0$ would only be attributed to a board that is correctly solved.
 
 \subsubsection{Breeding}\label{sec:breeding}
 
