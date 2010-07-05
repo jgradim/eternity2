@@ -74,7 +74,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=35mm]{images/shuffled.png}
-	\caption{Simplified puzzle with 7 by 7 tiles, with 6 colors}
+	\caption{Simplified puzzle with 7 by 7 tiles, with 6 patterns}
 	\label{fig:shuffled_example}
 \end{figure}
 
@@ -145,6 +145,8 @@ Starting out with \textit{n} random permutations of the same board, the fittest 
 	\item Mutations are then performed on a random set of pieces by rotating them in order to try and improve the overall fitness of the board
 \end{itemize}
 
+\subsubsection{Crossover}\label{sec:crossover}
+
 \subsubsection{Mutations}\label{sec:mutations}
 
 After each reproduction each new individual suffers a series of mutations (with a probability of 50\%). These mutations are piece-oriented, and are performed by selecting $n-1$ random pieces (where $n$ corresponds to the size of the board) and rotating them clockwise. This approach provides solid results, until the board score nears its maximum: when this situation arises, the solution becomes stagnant due to the fact that only one or two pieces need to be rotated to achieve a correct solution. To overcome this problem, when the board score reaches a certain threshold ($score >= maximum score - 4$), all board pieces are checked and rotated (if necessary), in order to maximize the number of connections, providing a correct solution in most observed cases.
@@ -158,6 +160,8 @@ After each reproduction each new individual suffers a series of mutations (with 
 (Why are we using Eternity II Editor and how we linked the previously developed solution with it)
 
 \section{Results}\label{sec:results}
+
+This implementation
 
 (Experimental results obtained from the application of the new methodologies to the diamonds board approach)
 
