@@ -7,4 +7,4 @@ all:
 	pdflatex $(TARGET).tex
 
 clean:
-	rm -f $(TARGET).aux $(TARGET).log $(TARGET).pdf
+	rm -f $(TARGET).aux $(TARGET).log $(TARGET).pdf $(TARGET).bbl $(TARGET).blg

@@ -41,18 +41,18 @@
 
 \begin{abstract}
 %TODO: o abstract escreve-se no fim.
-Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. This article, zwe will describe how it is possible to tackle this problem by using genetic algorithms.
+Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. This article, we will describe how it is possible to tackle this problem by using genetic algorithms.
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
 
 %This section will describe why we are picking up on the work previously developed by Fábio Aguiar and Sara Carvalho, and what methodologies we will try
 
-The Eternity II puzzle is an edge-matching puzzle. It consists of a 16 by 16 grid that must be completed with the respective 256 pieces. Each piece has four coloured patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed. 
+The Eternity II puzzle is an edge-matching puzzle. It consists of a 16 by 16 grid that must be completed with the respective 256 pieces. Each piece has four coloured patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed.
 
 %TODO: inserir aqui imagens bonitas do puzzle
 
-A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle. 
+A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle.
 
 % TODO: cite http://www.prnewswire.co.uk/cgi/news/release?id=188486
 
@@ -93,7 +93,7 @@ We have found that the most common approaches that solve these kinds of problems
 
 \subsubsection{The swap approach}\label{sec:swap_approach}
 
-As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
+As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will lead to a solved puzzle).
 
 Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process. (Explain why?)
 
@@ -116,12 +116,9 @@ These kind of algorithms have been proven useful in solving many kinds of proble
 
 % FIXME: tá péssimo
 \subsubsection{Individuals and Population}
-Solving Eternity II with \textit{GA}'s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s', \texit{individiual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
+Solving Eternity II with \textit{GA}'s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s', \textit{individual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
 The initial state in our search problem is the unsolved board. It defines exactly the size and characteristics of the problem: The problem size and the set of pieces that will be present in all individuals of the population.
 Our initial population of $n$ individuals is built from random shuffling of the initial state $n$ times.
-
-
-
 
 \subsubsection{Fitness function}\label{sec:fitness-function}
 
@@ -147,6 +144,10 @@ Starting out with \textit{n} random permutations of the same board, the fittest 
 	\item The rest of the genetic code (pieces) not originated from the feature selection is then placed on the descendant boards using a simple (no backtracking) linear constructive method
 	\item Mutations are then performed on a random set of pieces by rotating them in order to try and improve the overall fitness of the board
 \end{itemize}
+
+\subsubsection{Mutations}\label{sec:mutations}
+
+After each reproduction each new individual suffers a series of mutations (with a probability of 50\%). These mutations are piece-oriented, and are performed by selecting $n-1$ random pieces (where $n$ corresponds to the size of the board) and rotating them clockwise. This approach provides solid results, until the board score nears its maximum: when this situation arises, the solution becomes stagnant due to the fact that only one or two pieces need to be rotated to achieve a correct solution. To overcome this problem, when the board score reaches a certain threshold ($score >= maximum score - 4$), all board pieces are checked and rotated (if necessary), in order to maximize the number of connections, providing a correct solution in most observed cases.
 
 \subsection{Implementation}\label{sec:implementation}
 
