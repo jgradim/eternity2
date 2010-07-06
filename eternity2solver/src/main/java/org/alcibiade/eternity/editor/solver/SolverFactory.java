@@ -128,7 +128,7 @@ public class SolverFactory {
 		
 		// ----- Genetic Stuff
 		else if (LABEL_GENETICELITIST.equalsIgnoreCase(type)) {
-			solver = new ElitistGeneticSolver(pieces, solution, clusterManager, 12); // population must be divisible by 4
+			solver = new ElitistGeneticSolver(pieces, solution, clusterManager, 8); // population must be divisible by 4
 		}
 		else if (LABEL_GENETICROULLETE.equalsIgnoreCase(type)) {
 			solver = new RouletteGeneticSolver(pieces, solution, clusterManager, 12); // population must be divisible by 4
