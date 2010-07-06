@@ -70,16 +70,11 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=35mm]{images/shuffled.png}
+  \subfloat[Shuffled]{\includegraphics[width=45mm]{images/shuffled.png}}
+  \hspace{5mm}
+  \subfloat[Solved]{\includegraphics[width=45mm]{images/solved.png}}
   \caption{Simplified puzzle with 7 by 7 tiles, with 6 patterns}
-  \label{fig:shuffled_example}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=35mm]{images/solved.png}
-  \caption{Solution to the above puzzle}
-  \label{fig:solved_example}
+  \label{fig:7x7_example}
 \end{figure}
 
 Each piece has its edges marked with different shape and colour combinations, henceforth called patterns. Each must precisely match the neighboring piece's edge when the puzzle is solved. These pieces can also be placed in four different positions, by rotating them 90º, 180º or 270º. Pieces that will sit on a corner or borderline tile can be easily distinguished from all the other, as they have a grey edge. There are 22 different patterns in the original puzzle (excluding the grey edges).
@@ -99,15 +94,15 @@ Evidently, the starting position of the pieces in the puzzle will also play an i
 Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
 (Describe here most common patterns that can be used.)
 
-\section{Approaching Eternity II with Genetic Algorithms}\label{sec:genetic_algorithms}
+\section{Solving Eternity II with Genetic Algorithms}\label{sec:genetic_algorithms}
 
-\subsection{Introducing: The Genetic Algorithm}
+\subsection{Genetic Algorithms}
 
 %(Methodologies and approaches taken when trying new methods to improve solving times of The desired simplified Eternity II puzzles)
 
-A genetic algorithm is an uninformed search method that mimics the process of natural evolution. It is particularly useful in search and optimization problems.
+A genetic algorithm is an informed search method that mimics the process of natural evolution. It is particularly useful in search and optimization problems.
 
-The genetic algorithm works by generating solutions using procedures inspired by natural evolution: the search process begins with a set, called \textit{population} of initial states, called \textit{individuals or chromosomes}. The characteristics that make up each individual can therefore be thought of as \textit{genetic material}. The quality of the solution each individual represents is measured by a problem-specific \textit{fitness} function. Evolution of the population (and consequently of the best solution) is achieved by \textit{selection} and \textit{reproduction} between individuals of the population, often in some respect to their fitness evaluation. This creates new individuals in the population whose genetic material comes from individuals in the previous generation.
+The genetic algorithm works by generating solutions using procedures inspired by natural evolution: the search process begins with a set, called \textit{population} of initial states, called \textit{individuals or chromosomes}. The characteristics that make up each individual can therefore be thought of as \textit{genetic material}. The quality of the solution each individual represents is measured by a problem-specific \textit{fitness} function. Evolution of the population (and consequently of the best solution) is achieved by \textit{selection} and \textit{reproduction} between individuals of the population, often in some respect to their fitness evaluation. This creates new individuals in the population whose genetic material comes from individuals in the previous generation.\cite{peck_dhawan}
 
 \textit{Mutations} in the individuals are often introduced between generations so that we can diverge from the set that contains all possible combinations of genetic material present in the initial population, which may or may not include the solution or optimization sought after.
 
@@ -145,7 +140,7 @@ The number of matching grey edges (correctly placed on the borders) is also acco
 
 \subsubsection{Breeding}
 
-Starting out with $n$ random permutations of the same board, the fittest half of the population is selected for breeding, using an elitist selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
+Starting out with $n$ random permutations of the same board, the fittest half of the population is selected for breeding, using an elitist selection approach with stochastic breeding. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
 
 \begin{itemize}
   \item If both parents have compatible features, use both features on both descendants in order to create fitter boards
@@ -192,18 +187,28 @@ By testing different configurations of the population size it was determined the
 
 These results were obtained by solving the 7x7x6 board five consecutive times, using different values for the population size (eight, twelve and sixteen, respectively). It is clear that, in this implementation, a smaller number for the population leads to better results, not requiring as many iterations (and therefore less time) to reach a valid solution.
 
-\section{Conclusions}\label{sec:conclusions}
+\subsection{Fitness Evolution}\label{sec:fitness_evolution}
 
-(Conclusions go here)
-%
+\begin{figure}[H]
+  \centering
+  \subfloat[7x7]{\label{fig:fitness_evolution_7x7}\includegraphics[width=70mm]{images/fitness_evolution_7x7.png}}
+  \subfloat[10x10]{\label{fig:fitness_evolution_10x10}\includegraphics[width=70mm]{images/fitness_evolution_10x10.png}}
+  \hspace{40mm}
+  \subfloat[11x11]{\label{fig:fitness_evolution_11x11}\includegraphics[width=70mm]{images/fitness_evolution_11x11.png}}
+  \caption{Initial population tests with a board with 7 by 7 tiles, 6 patterns}
+  \label{fig:population_stats}
+\end{figure}
+
+\section{Conclusions and Future Work}\label{sec:conclusions}
+
+
 % ---- Bibliography ----
-%
 \bibliographystyle{plain}
 \bibliography{mpes}
 
 \newpage
 
-\section*{Appendix A: feature extraction}\label{sec:feature_extraction}
+\section*{Appendix A: feature extraction}\label{sec:app:feature_extraction}
 
 \begin{algorithm}
 \caption{feature extraction algorithm}
@@ -223,7 +228,7 @@ These results were obtained by solving the 7x7x6 board five consecutive times, u
       \STATE $newfeature \gets empty board$
       \STATE recursefeatures($i$, $feature$, $visited$)
       \STATE append $newfeature$ to $features$
-    \ENDIF\label{sec:implementation}
+    \ENDIF
   \ENDFOR
   \RETURN $features$
   \end{algorithmic}
