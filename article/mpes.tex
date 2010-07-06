@@ -8,6 +8,8 @@
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{algorithmic}
+\usepackage{algorithm}
 %
 \begin{document}
 %
@@ -89,11 +91,10 @@ Each piece has its edges marked with different shape and colour combinations, he
 
 \subsection{Normal approaches to solving the problem}\label{sec:normal_approaches}
 
-We have found that the most common approaches that solve these kinds of problems can fall into one of two types: swap and iterative. Swap solutions always start with a complete board, and then use the rotate and swap operations in order to improve the board's state. Iterative approaches place pieces progressively, according to a certain criteria and can backtrack to any previous state if they determine that no good solution will be found from that point onward.
+We have found that the most common approaches that solve these kinds of problems falls into one of two types: swap and iterative. Swap solutions always start with a complete board, and then use the rotate and swap operations in order to improve the board's state. Iterative approaches place pieces progressively, according to a certain criteria and can backtrack to any previous state if they determine that no good solution will be found from that point onward.
 
 \subsubsection{The swap approach}\label{sec:swap_approach}
-
-As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
+,,,,,,kwap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will mean a solved puzzle).
 
 Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process. (Explain why?)
 
@@ -107,17 +108,24 @@ Iterative solutions try to place the pieces progressively, usually following som
 \subsection{Introducing: The Genetic Algorithm}
 (Methodologies and approaches taken when trying new methods to improve solving times of The desired simplified Eternity II puzzles)
 
-A genetic algorithm (\textit{GA}, for short) is an uninformed search method that mimics the process of natural evolution. It is particularly useful in search and optimization problems. The genetic algorithm works by generating solutions using procedures inspired by natural evolution: Search begins on a set, called \textit{population} of initial states, called \textit{individuals or chromosomes}. The characteristics that make up each individual can therefore be thought of \textit{genetic material}. The quality of the solution each individual represents is measured by a problem-specific \textit{fitness} function. Evolution of the population (and consequently of the best solution) is achieved by \textit{selection} and \textit{reproduction} betwen individuals of the population, often in some respect to their fitness evaluation. This creates new individuals in the population whose genetic material comes from individuals in the previous generation.
-\textit{Mutations} in the individuals are often introduced betwen generations so that we can diverge from the set that contains all possible combinations of genetic material present in the initial population, which may or may not include the solution sought after.
+A genetic algorithm is an uninformed search method that mimics the process of natural evolution. It is particularly useful in search and optimization problems. The genetic algorithm works by generating solutions using procedures inspired by natural evolution: The search process begins with a set, called \textit{population} of initial states, called \textit{individuals or chromosomes}. The characteristics that make up each individual can therefore be thought of as \textit{genetic material}. The quality of the solution each individual represents is measured by a problem-specific \textit{fitness} function. Evolution of the population (and consequently of the best solution) is achieved by \textit{selection} and \textit{reproduction} betwen individuals of the population, often in some respect to their fitness evaluation. This creates new individuals in the population whose genetic material comes from individuals in the previous generation.
+\textit{Mutations} in the individuals are often introduced betwen generations so that we can diverge from the set that contains all possible combinations of genetic material present in the initial population, which may or may not include the solution or optimization sought after.
 
-These kind of algorithms have been proven useful in solving many kinds of problems, including puzzle problems. A textbook example of an application of GA's is the \textit{n-queens} problem\cite{eastridge}.
+These kind of algorithms have been proven useful in solving many kinds of problems, including puzzle problems. A textbook example of successful application of genetic algorithms in puzzle-solving problems is the \textit{n-queens} problem\cite{eastridge}.
 
 \subsection{Methodology}\label{sec:methodology}
 
 % FIXME: tá péssimo
-\subsubsection{Individuals and Population}
-Solving Eternity II with \textit{GA}'s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s', \texit{individiual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
-The initial state in our search problem is the unsolved board. It defines exactly the size and characteristics of the problem: The problem size and the set of pieces that will be present in all individuals of the population.
+\subsubsection{Chromosomes and genetic material}
+A key step of solving problems with genetic algorithms is defining the structure of an individual. Textbook examples of genetic algorithms often use individuals represented by structures as simple as bit strings or natural number arrays. For this particular application of genetic algorithms we consider that there is no advantage in encoding the board state in a bit string or number array. Therefore, we chose to use the most direct representation of a board state available to us. DETAILS ABOUT THE IMPLEMENTATION ARE IN THE PROPER SECTION.
+
+The genetic material present in each chromosome is, therefore, the placement and rotation of pieces in the board.
+
+
+%Solving Eternity II with \textit{GA}s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s, \textit{individiual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
+
+\subsubsection{Initial state and population}
+The initial state in our search problem is the board we want to solve. It defines exactly the unique characteristics of the problem: The problem size and the set of pieces that will be present in all individuals of the population.
 Our initial population of $n$ individuals is built from random shuffling of the initial state $n$ times.
 
 
@@ -136,10 +144,13 @@ The fitness function used to evaluate the quality of the boards is given by:
 \end{figure}
 
 where \textit{n\_matching\_edges} represents the number of matching edges between all pieces of the board for the current state, and \textit{total\_matching\_edges} the number of matching edges for an $n*n$ board. As such, \textit{fitness} will yield a value between $[0.0, 1.0]$, with higher values corresponding to fitter boards. A fitness of exactly $1.0$ would only be attributed to a board that is correctly solved.
+The number of matching grey edges is also accounted for in our fitness function.
 
-\subsubsection{Breeding}\label{sec:breeding}
-
-Starting out with \textit{n} random permutations of the same board, the fittest half of the population is selected for breeding, using an ?elitist? selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific rules:
+\subsubsection{Breeding}
+Starting out with \textit{n} random permutations of the same board, the fittest half of the population is selected for breeding, using an ?elitist? selection approach. These specimens are then bred and their genetic code is crossed-over according to very specific 
+	\STATE $visited \gets empty set$
+	\STATE $features \gets empty list$
+	\STATE $n_{squares} \gets problem size$rules:
 
 \begin{itemize}
 	\item If both parents have compatible features, use both features on both descendants in order to create fitter boards
@@ -150,7 +161,61 @@ Starting out with \textit{n} random permutations of the same board, the fittest 
 
 \subsection{Implementation}\label{sec:implementation}
 
+\subsubsection{State representation}\label{sec:state_representation}
+
+The two dimentional \textit{board} structure is internally represented as a single dimention array of \textit{piece} structures together with the value of the board's width (or height). Accessing the board with the two dimentional argument ($column$, $row$) is therefore equivalent to writing the one dimentional argument ($column + width * row$).
+
+
 \subsubsection{Feature Extraction}\label{sec:feature_extraction}
+
+Extracting features from the board was achieved with the following recursive algorithm.
+
+%TODO: rever algoritmo, tornar mais legivel, etc
+\begin{algorithm}
+\caption{feature extraction algorithm}
+\label{feature extraction algorithm}
+\newcommand{\algorithmicfunction}{\textbf{function}\ }
+\newcommand{\logicaland}{\textbf{and}\ }
+	\begin{algorithmic}
+
+	\STATE \algorithmicfunction getfeatures() :
+
+	\STATE $visited \gets empty set$
+	\STATE $features \gets empty list$
+	\STATE $n_{squares} \gets problem size$
+		
+	\FOR{$i \gets 1$ to $n_{squares}$}
+		\IF{$i$ is not in $visited$}
+			\STATE $newfeature \gets empty board$
+			\STATE recursefeatures($i$, $feature$, $visited$)
+			\STATE append $newfeature$ to $features$
+		\ENDIF\label{sec:implementation}
+	\ENDFOR
+	\RETURN $features$
+	\end{algorithmic}
+	
+	\begin{algorithmic}
+	\STATE \algorithmicfunction recursefeatures($i$, $feature$, $visited$) : 
+		\STATE $currentpiece \gets board[i]$
+		\STATE $feature[i] \gets currentPiece$
+		\FOR{$direction$ in $north$, $east$, $south$, $west$}
+			\STATE $neighbour \gets$ getneighbour($i$, $direction$)
+			\STATE $neighbourindex \gets$ getneighbourindex($i$, $direction$)
+			\IF{$neighbour$ exists 
+			\logicaland $feature[i]$ is empty \logicaland $neighbourindex$ not in $visited$}
+				\STATE $oppositedirection \gets$ getoppositedirection($direction$)
+				\IF{getpattern($currentpiece$, $direction$) matches getpattern($neighbour$, $oppositedirection$))}
+					\STATE{recursefeatures($neighbourindex$, $feature$, $visited$)}
+				\ENDIF
+			\ENDIF
+		\ENDFOR
+	
+
+\end{algorithmic}
+\end{algorithm}
+
+%TODO: descrever algoritmo
+
 
 \subsubsection{Eternity II Editor}\label{sec:eternity2_editor}
 
