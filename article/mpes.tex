@@ -116,6 +116,7 @@ These kind of algorithms have been proven useful in solving many kinds of proble
 
 % FIXME: tá péssimo
 \subsubsection{Individuals and Population}
+
 Solving Eternity II with \textit{GA}'s implies that we must first choose the state that will represent our known solutions in the search space. Our state, or in the context of \textit{GA}'s', \textit{individual} or \textit{chromosome} is the trivial solution to this problem: the board itself.
 The initial state in our search problem is the unsolved board. It defines exactly the size and characteristics of the problem: The problem size and the set of pieces that will be present in all individuals of the population.
 Our initial population of $n$ individuals is built from random shuffling of the initial state $n$ times.
@@ -161,9 +162,18 @@ After each reproduction each new individual suffers a series of mutations (with 
 
 \section{Results}\label{sec:results}
 
-This implementation
+This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size.
 
-(Experimental results obtained from the application of the new methodologies to the diamonds board approach)
+\subsection{Population Size}\label{sec:population_size}
+
+By testing different configurations of the initial population size it was determined the minimum and most effective number for the initial population was eight elements, as Fig. \ref{fig:population_stats}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=35mm]{images/population_stats.png}
+	\caption{Population tests with a board with 7 by 7 tiles, 6 patterns}
+	\label{fig:population_stats}
+\end{figure}
 
 \section{Conclusions}\label{sec:conclusions}
 
