@@ -5,3 +5,4 @@ article/*.log
 article/*.pdf
 article/*.bbl
 article/*.blg
+article/*.out
