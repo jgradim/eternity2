@@ -1,3 +1,4 @@
+ex
 % This is LLNCS.DEM the demonstration file of
 % the LaTeX macro package from Springer-Verlag
 % for Lecture Notes in Computer Science,
@@ -114,7 +115,9 @@ These kind of algorithms have been proven useful in solving many kinds of proble
 
 A key step of solving problems with genetic algorithms is defining the structure of an individual. Textbook examples of genetic algorithms often use individuals represented by structures as simple as bit strings or natural number arrays. For this particular application of genetic algorithms we consider that there is no advantage in encoding the board state in a bit string or number array. Therefore, we chose to use the most direct representation of a board state available to us.
 
-The genetic material present in each chromosome is, therefore, the position and rotation of each one of the pieces in the board.
+The genetic material present in each chromosome is, therefore, the position and rotation of each one of the pieces present in the board. Clusters of pieces that appear to be correctly placed on the board are the traits we want to pass on to future generations. We refer to these as \textbf{features}.
+
+
 
 \subsubsection{Initial state and population}
 
@@ -199,16 +202,22 @@ These results were obtained by solving the 7x7x6 board five consecutive times, u
   \label{fig:population_stats}
 \end{figure}
 
-\section{Conclusions and Future Work}\label{sec:conclusions}
+\section{Conclusions}\label{sec:conclusions}
 
+Although we found moderate success in solving the puzzles presented in the section X: Results  (referir?), our solution proved unfeasible when trying to solve puzzles of greater dimensions (like those in a 11x11 board). One might argue that Genetic Algorithms are better at optimizing solutions than they are at finding a particular one.
 
+In fact, the evaluation that the fitness function continually does not always point in the direction of the solution sought after, as we may reach a state where the population has a high average fitness value, appearing to be closer to the solution, when in fact it is not.
+
+Our feature extraction procedure is to blame here. Bigger features contribute more to the feature evaluation, and it's very difficult for th
+
+\subsection{Future Work}
 % ---- Bibliography ----
 \bibliographystyle{plain}
 \bibliography{mpes}
 
 \newpage
 
-\section*{Appendix A: feature extraction}\label{sec:app:feature_extraction}
+%\section*{Appendix A: feature extraction}\label{sec:app:feature_extraction}
 
 \begin{algorithm}
 \caption{feature extraction algorithm}
