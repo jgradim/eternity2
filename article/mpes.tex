@@ -54,7 +54,7 @@ Eternity II is an NP-complete edge-matching puzzle which solution has not yet be
 
 The Eternity II puzzle is an edge-matching puzzle. It consists of a 16 by 16 grid that must be completed with the respective 256 pieces. Each piece has four coloured patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed.
 
-A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle.
+A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle.\cite{unsolved}
 
 % TODO: cite http://www.prnewswire.co.uk/cgi/news/release?id=188486
 
@@ -170,7 +170,7 @@ Extracting features from the board was achieved by developing a recursive strate
 
 \section{Results}\label{sec:results}
 
-This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size.
+This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size in acceptable time\footnote{Between one and three minutes in a 2.53GHz CPU}.
 
 \subsection{Population Size}\label{sec:population_size}
 
@@ -191,13 +191,15 @@ These results were obtained by solving the 7x7x6 board five consecutive times, u
 
 \begin{figure}[H]
   \centering
-  \subfloat[7x7]{\label{fig:fitness_evolution_7x7}\includegraphics[width=70mm]{images/fitness_evolution_7x7.png}}
-  \subfloat[10x10]{\label{fig:fitness_evolution_10x10}\includegraphics[width=70mm]{images/fitness_evolution_10x10.png}}
+  \subfloat[7x7, 6 patterns]{\label{fig:fitness_evolution_7x7}\includegraphics[width=70mm]{images/fitness_evolution_7x7.png}}
+  \subfloat[10x10, 15 patterns]{\label{fig:fitness_evolution_10x10}\includegraphics[width=70mm]{images/fitness_evolution_10x10.png}}
   \hspace{40mm}
-  \subfloat[11x11]{\label{fig:fitness_evolution_11x11}\includegraphics[width=70mm]{images/fitness_evolution_11x11.png}}
-  \caption{Initial population tests with a board with 7 by 7 tiles, 6 patterns}
-  \label{fig:population_stats}
+  \subfloat[11x11, 16 patterns]{\label{fig:fitness_evolution_11x11}\includegraphics[width=70mm]{images/fitness_evolution_11x11.png}}
+  \caption{Fitness evolution}
+  \label{fig:fitness_evolution}
 \end{figure}
+
+The results were obtained by extracting the highest fitness value from all of the individuals in the population, each iteration, in order to show how the fitness evolves over generations for boards of different sizes and pattern counts.
 
 \section{Conclusions and Future Work}\label{sec:conclusions}
 
@@ -249,7 +251,7 @@ These results were obtained by solving the 7x7x6 board five consecutive times, u
       \ENDIF
     \ENDFOR
   \end{algorithmic}
-\end{algorithm}
+\end{algorithm}\label{alg:feature_extraction}
 
 \end{document}
 
