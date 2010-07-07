@@ -1,4 +1,3 @@
-ex
 % This is LLNCS.DEM the demonstration file of
 % the LaTeX macro package from Springer-Verlag
 % for Lecture Notes in Computer Science,
@@ -55,19 +54,19 @@ Eternity II is an NP-complete edge-matching puzzle which solution has not yet be
 
 The Eternity II puzzle is an edge-matching puzzle. It consists of a 16 by 16 grid that must be completed with the respective 256 pieces. Each piece has four coloured patterns on its edges. The tiles are placed on a 16x16 board and can be freely rotated before being placed.
 
-A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005. A two million US dollars prize is being offered to the first complete solution of this puzzle.
-
-% TODO: cite http://www.prnewswire.co.uk/cgi/news/release?id=188486
+A solution is found when all of the edges match their neighboring tiles' edges. The puzzle was conceived specifically so it is very difficult to solve by brute force searching methods. The puzzle was designed as a competition by Christopher Monckton in 2005.\cite{monckton} A two million US dollars prize is being offered to the first complete solution of this puzzle.\cite{unsolved}
 
 Our work was toward solving smaller versions of this puzzle - with less edge patterns and a board of smaller dimensions.
 
 We will also use an existing element to base our work upon: The \textit{Eternity II Editor} is an open-source Java-based application that allows the creation and edition of Eternity II puzzle grids. \textit{Eternity II Editor}'s features include a series of puzzle solving programs and the ability to see the program's attempt to solve the puzzle in real time. More importantly, it features a usable application interface that will allow us to extend the application with out own solving methods.
 
+In this article we feature a de
+
 \section{Problem Description}\label{sec:problem_description}
 
 \subsection{Eternity II puzzle description}\label{sec:puzzle_description}
 
-The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16  grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ {557}$ possible configurations.
+The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16 grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ {557}$ possible configurations.
 
 \begin{figure}[H]
   \centering
@@ -113,9 +112,7 @@ These kind of algorithms have been proven useful in solving many kinds of proble
 
 \subsubsection{Chromosomes and genetic material}
 
-A key step of solving problems with genetic algorithms is defining the structure of an individual. Textbook examples of genetic algorithms often use individuals represented by structures as simple as bit strings or natural number arrays. For this particular application of genetic algorithms we consider that there is no advantage in encoding the board state in a bit string or number array. Therefore, we chose to use the most direct representation of a board state available to us.
-
-The genetic material present in each chromosome is, therefore, the position and rotation of each one of the pieces present in the board. Clusters of pieces that appear to be correctly placed on the board are the traits we want to pass on to future generations. We refer to these as \textbf{features}.
+A key step of solving problems with genetic algorithms is defining the structure of an individual. Textbook examples of genetic algorithms often use individuals represented by structures as simple as bit strings or natural number arrays. For this particular application of genetic algorithms we consider that there is no advantage in encoding the board state in a bit string or number array. Therefore, we chose to use the most direct representation of a board state available to us. As such, the genetic material present in each chromosome is the position and rotation of each one of the pieces present in the board. Clusters of pieces that appear to be correctly placed on the board (with the same pattern facing each other) are the traits we want to pass on to future generations. We refer to these as \textbf{features}.
 
 
 
@@ -165,62 +162,10 @@ The two dimensional \textit{board} structure is internally represented as a sing
 
 \subsubsection{Feature Extraction}\label{sec:feature_extraction}
 
-Extracting features from the board was achieved by developing a recursive strategy, as described in Appendix A.%\nameref{sec:feature_extraction}.
-
-\subsubsection{Eternity II Editor}\label{sec:eternity2_editor}
-
-(Why are we using Eternity II Editor and how we linked the previously developed solution with it)
-
-\section{Results}\label{sec:results}
-
-This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size.
-
-\subsection{Population Size}\label{sec:population_size}
-
-By testing different configurations of the population size it was determined the minimum and most effective number for the initial population was eight elements, as Fig. \ref{fig:population_stats} shows.
-
-\begin{figure}[H]
-  \centering
-  \subfloat[Iterations]{\label{fig:pop_iterations}\includegraphics[width=40mm]{images/pop_iterations.png}}
-  \subfloat[Iterations / s]{\label{fig:pop_iterations_sec}\includegraphics[width=40mm]{images/pop_iterations_sec.png}}
-  \subfloat[Time (secs)]{\label{fig:pop_time}\includegraphics[width=40mm]{images/pop_time.png}}
-  \caption{Initial population tests with a board with 7 by 7 tiles, 6 patterns}
-  \label{fig:population_stats}
-\end{figure}
-
-These results were obtained by solving the 7x7x6 board five consecutive times, using different values for the population size (eight, twelve and sixteen, respectively). It is clear that, in this implementation, a smaller number for the population leads to better results, not requiring as many iterations (and therefore less time) to reach a valid solution.
-
-\subsection{Fitness Evolution}\label{sec:fitness_evolution}
-
-\begin{figure}[H]
-  \centering
-  \subfloat[7x7]{\label{fig:fitness_evolution_7x7}\includegraphics[width=70mm]{images/fitness_evolution_7x7.png}}
-  \subfloat[10x10]{\label{fig:fitness_evolution_10x10}\includegraphics[width=70mm]{images/fitness_evolution_10x10.png}}
-  \hspace{40mm}
-  \subfloat[11x11]{\label{fig:fitness_evolution_11x11}\includegraphics[width=70mm]{images/fitness_evolution_11x11.png}}
-  \caption{Initial population tests with a board with 7 by 7 tiles, 6 patterns}
-  \label{fig:population_stats}
-\end{figure}
-
-\section{Conclusions}\label{sec:conclusions}
-
-Although we found moderate success in solving the puzzles presented in the section X: Results  (referir?), our solution proved unfeasible when trying to solve puzzles of greater dimensions (like those in a 11x11 board). One might argue that Genetic Algorithms are better at optimizing solutions than they are at finding a particular one.
-
-In fact, the evaluation that the fitness function continually does not always point in the direction of the solution sought after, as we may reach a state where the population has a high average fitness value, appearing to be closer to the solution, when in fact it is not.
-
-Our feature extraction procedure is to blame here. Bigger features contribute more to the feature evaluation, and it's very difficult for th
-
-\subsection{Future Work}
-% ---- Bibliography ----
-\bibliographystyle{plain}
-\bibliography{mpes}
-
-\newpage
-
-%\section*{Appendix A: feature extraction}\label{sec:app:feature_extraction}
+Extracting features from the board was achieved by developing a recursive strategy.
 
 \begin{algorithm}
-\caption{feature extraction algorithm}
+\caption{Feature extraction algorithm}
 \label{feature extraction algorithm}
 \newcommand{\algorithmicfunction}{\textbf{function}\ }
 \newcommand{\logicaland}{\textbf{and}\ }
@@ -258,7 +203,71 @@ Our feature extraction procedure is to blame here. Bigger features contribute mo
       \ENDIF
     \ENDFOR
   \end{algorithmic}
-\end{algorithm}
+\end{algorithm}\label{alg:feature_extraction}
+ 
+The function \textit{getneighbour(position, direction)} returns the neighbour of the element in \textit{position} in the given \textit{direction} (if it exists). Similarly, \textit{getneighbourindex} returns the index of such neighbour.
+
+\textit{getoppositedirection(direction)} returns the opposite direction of \textit{direction} (for north returns south, etc). \textit{getpattern(piece, direction} returns the pattern of the given \textit{piece} in the given \textit{direction}.
+
+This algorithm returns a list of incomplete boards, each one with each sepparate feature that was detected.
+\subsubsection{Eternity II Editor}\label{sec:eternity2_editor}
+
+(Why are we using Eternity II Editor and how we linked the previously developed solution with it)
+
+\section{Results}\label{sec:results}
+
+This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size in acceptable time\footnote{Between one and three minutes in a 2.53GHz CPU}.
+
+\subsection{Population Size}\label{sec:population_size}
+
+By testing different configurations of the population size it was determined the minimum and most effective number for the initial population was eight elements, as Fig. \ref{fig:population_stats} shows.
+
+\begin{figure}[H]
+  \centering
+  \subfloat[Iterations]{\label{fig:pop_iterations}\includegraphics[width=40mm]{images/pop_iterations.png}}
+  \subfloat[Iterations / s]{\label{fig:pop_iterations_sec}\includegraphics[width=40mm]{images/pop_iterations_sec.png}}
+  \subfloat[Time (secs)]{\label{fig:pop_time}\includegraphics[width=40mm]{images/pop_time.png}}
+  \caption{Initial population tests with a board with 7 by 7 tiles, 6 patterns}
+  \label{fig:population_stats}
+\end{figure}
+
+These results were obtained by solving the 7x7x6 board five consecutive times, using different values for the population size (eight, twelve and sixteen, respectively). It is clear that, in this implementation, a smaller number for the population leads to better results, not requiring as many iterations (and therefore less time) to reach a valid solution.
+
+\subsection{Fitness Evolution}\label{sec:fitness_evolution}
+
+\begin{figure}[H]
+  \centering
+  \subfloat[7x7, 6 patterns]{\label{fig:fitness_evolution_7x7}\includegraphics[width=70mm]{images/fitness_evolution_7x7.png}}
+  \subfloat[10x10, 15 patterns]{\label{fig:fitness_evolution_10x10}\includegraphics[width=70mm]{images/fitness_evolution_10x10.png}}
+  \hspace{40mm}
+  \subfloat[11x11, 16 patterns]{\label{fig:fitness_evolution_11x11}\includegraphics[width=70mm]{images/fitness_evolution_11x11.png}}
+  \caption{Fitness evolution}
+  \label{fig:fitness_evolution}
+\end{figure}
+
+The results were obtained by extracting the highest fitness value from all of the individuals in the population, each iteration, in order to show how the fitness evolves over generations for boards of different sizes and pattern counts.
+
+\section{Conclusions}\label{sec:conclusions}
+
+Although we found moderate success in solving the puzzles presented in section \ref{sec:results}, our solution proved unfeasible when trying to solve puzzles of greater dimensions (like those in a 11x11 board). One might argue that Genetic Algorithms are better at optimizing solutions than they are at finding a particular one (REF?).
+
+In fact, our fitness evaluation does not always point in the direction of the solution sought after, as we may reach a state where the population has a high average fitness value, appearing to be closer to the solution, when in fact it is not nowhere near that. Our feature extraction procedure is to blame here: bigger features contribute more to the feature evaluation, and it's very difficult for these traits to leave the population as that could only happen as a stroke of luck due to our random mutations.
+
+We believe that detecting and passing on \textit{features} is a good approach when solving this problem with genetic algorithms. However the work we developed leaves much room for improvement. Section \ref{sec:conclusions_futurework} leaves some considerations regarding possible improvements.
+
+\subsection{Future Work}\label{sec:conclusions_futurework}
+
+Currently, the pieces on each board are not indexed in any particularly useful way. This means that every time we search for a particular piece, we need to iterate over an array until we find it. Indexing pieces by their particular configuration would mean an improvement from $O(n)$ to $O(1)$ on access times and should have a significant impact on the overall performance of the program.
+
+Also, we believe our solution would benefit greatly if we removed the \textit{staticness} of features that are passed on between generations. A cluster of pieces may be part of more better solutions if it could be placed on other places in the board, according to some criteria yet to be defined.
+
+
+% ---- Bibliography ----
+\bibliographystyle{plain}
+\bibliography{mpes}
+
+\newpage
+
 
 \end{document}
 
