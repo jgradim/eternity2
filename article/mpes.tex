@@ -60,7 +60,7 @@ Our work was toward solving smaller versions of this puzzle - with less edge pat
 
 We will also use an existing element to base our work upon: The \textit{Eternity II Editor} is an open-source Java-based application that allows the creation and edition of Eternity II puzzle grids. \textit{Eternity II Editor}'s features include a series of puzzle solving programs and the ability to see the program's attempt to solve the puzzle in real time. More importantly, it features a usable application interface that will allow us to extend the application with out own solving methods.
 
-In this article we feature a de
+As for the rest of the article, Section \ref{sec:problem_description} provides a brief description of the problem and the normal approaches taken when trying to solve it. Section \ref{sec:genetic_algorithms} provides a brief description of what Genetic Algorithms are and how they work. It also explains how the Eternity II puzzle can be modeled in order to approach as a Genetic Algorithm problem. Section \ref{sec:results} presents the experimental regarding the best number for the individuals in the population and the evolution of the fitness in boards of different sizes. Finally, Section \ref{sec:conclusions} presents the main conclusions taken from the development of this project and possible improvements for future work.
 
 \section{Problem Description}\label{sec:problem_description}
 
@@ -204,7 +204,7 @@ Extracting features from the board was achieved by developing a recursive strate
     \ENDFOR
   \end{algorithmic}
 \end{algorithm}\label{alg:feature_extraction}
- 
+
 The function \textit{getneighbour(position, direction)} returns the neighbour of the element in \textit{position} in the given \textit{direction} (if it exists). Similarly, \textit{getneighbourindex} returns the index of such neighbour.
 
 \textit{getoppositedirection(direction)} returns the opposite direction of \textit{direction} (for north returns south, etc). \textit{getpattern(piece, direction} returns the pattern of the given \textit{piece} in the given \textit{direction}.
@@ -257,9 +257,9 @@ Although we found moderate success in solving the puzzles presented in section \
 
 In fact, our fitness evaluation does not always point in the direction of the solution sought after, as we may reach a state where the population has a high average fitness value, appearing to be closer to the solution, when in fact it is not nowhere near that. Our feature extraction procedure is to blame here: bigger features contribute more to the feature evaluation, and it's very difficult for these traits to leave the population as that could only happen as a stroke of luck due to our random mutations.
 
-We believe that detecting and passing on \textit{features} is a good approach when solving this problem with genetic algorithms. However the work we developed leaves much room for improvement. Section \ref{sec:conclusions_futurework} leaves some considerations regarding possible improvements.
+We believe that detecting and passing on \textit{features} is a good approach when solving this problem with genetic algorithms. However the work we developed leaves much room for improvement. Section \ref{sec:future_work} leaves some considerations regarding possible improvements.
 
-\subsection{Future Work}\label{sec:conclusions_futurework}
+\subsection{Future Work}\label{sec:future_work}
 
 Currently, the pieces on each board are not indexed in any particularly useful way. This means that every time we search for a particular piece, we need to iterate over an array until we find it. Indexing pieces by their particular configuration would mean an improvement from $O(n)$ to $O(1)$ on access times and should have a significant impact on the overall performance of the program.
 
