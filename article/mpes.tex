@@ -46,8 +46,9 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-%TODO: o abstract escreve-se no fim.
-Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. This article, we will describe how it is possible to tackle this problem by using genetic algorithms.
+
+Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. Many attempts have been tried in order to solve it, by using many kinds of algorithms, such as backtracking constructive methods of swap approaches. The new approach taken describes how to model and solve reduced versions of this puzzle using Genetic Algorithms. Results are presented regarding the best numbers for population size and how the fitness of the population evolves over generations in boards of different sizes. This proved to be a feasible approach for solving reduced versions of the puzzle, although with many space for improvement.
+
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
@@ -66,7 +67,15 @@ As for the rest of the article, Section \ref{sec:problem_description} provides a
 
 \subsection{Eternity II puzzle description}\label{sec:puzzle_description}
 
-The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16 grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ {557}$ possible configurations.
+The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means placing the puzzle's 256 square pieces on a 16 by 16 grid in such a way that all of the pieces' edges match adjacent edges. The puzzle was designed to be difficult to solve by brute-force computer search, as there are roughly $1.115 * 10 ^ {557}$ possible configurations, as Fig. \ref{fig:eq:eternity2combinations} shows.
+
+\begin{figure}[H]
+  \begin{equation}
+  1 * 4! * 56! * 195! * 4195 = 1.115 * 10 ^{557}
+  \end{equation}
+  \caption{Eternity II possible configurations}
+  \label{fig:eq:eternity2combinations}
+\end{figure}
 
 \begin{figure}[H]
   \centering
@@ -87,12 +96,11 @@ We have found that the most common approaches that solve these kinds of problems
 
 As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will lead to a solved puzzle).
 
-Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process. (Explain why?)
+Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process.
 
 \subsubsection{The iterative approach}\label{sec:iterative_approach}
 
-Iterative solutions try to place the pieces progressively, usually following some kind of pattern.
-(Describe here most common patterns that can be used.)
+Iterative solutions try to place the pieces progressively, usually following some kind of pattern, such as \textit{linear} (pieces are placed one after the other, starting in a corner and ending in the oposite corner), \textit{human} (pieces are placed first in the corners, then in the borders, and so on, from borders to center), and others.
 
 \section{Solving Eternity II with Genetic Algorithms}\label{sec:genetic_algorithms}
 
@@ -220,7 +228,7 @@ The \textbf{Eternity II Editor}\footnote{\url{http://sourceforge.net/projects/et
 
 \section{Results}\label{sec:results}
 
-This implementation lead to good experimental results, being able to successfully complete boards up to 10x10 in size in acceptable time\footnote{Between one and three minutes in a 2.53GHz CPU}.
+This implementation led to good experimental results, being able to successfully complete boards up to 10x10 in size in acceptable time\footnote{Between one and three minutes in a 2.53GHz CPU}.
 
 \subsection{Population Size}\label{sec:population_size}
 
