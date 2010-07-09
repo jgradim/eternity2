@@ -47,8 +47,7 @@
 
 \begin{abstract}
 
-Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. Many attempts have been tried in order to solve it, by using many kinds of algorithms, such as backtracking constructive methods of swap approaches. The new approach taken describes how to model and solve reduced versions of this puzzle using Genetic Algorithms. Results are presented regarding the best numbers for population size and how the fitness of the population evolves over generations in boards of different sizes. This proved to be a feasible approach for solving reduced versions of the puzzle, although with many space for improvement.
-
+Eternity II is an NP-complete edge-matching puzzle which solution has not yet been discovered. Many methods have been attempted in order to solve it. This novel approach solves reduced versions of this puzzle using Genetic Algorithms. Results are presented regarding the best numbers for parameters such as population size and how the fitness of the population evolves over generations in boards of different sizes. Finally, some conclusions are drawn about the feasibility and performance of what proved to be a possible approach for solving the described puzzle.
 \end{abstract}
 %
 \section{Introduction}\label{sec:introduction}
@@ -61,7 +60,7 @@ Our work was toward solving smaller versions of this puzzle - with less edge pat
 
 We will also use an existing element to base our work upon: The \textit{Eternity II Editor} is an open-source Java-based application that allows the creation and edition of Eternity II puzzle grids. \textit{Eternity II Editor}'s features include a series of puzzle solving programs and the ability to see the program's attempt to solve the puzzle in real time. More importantly, it features a usable application interface that will allow us to extend the application with out own solving methods.
 
-As for the rest of the article, Section \ref{sec:problem_description} provides a brief description of the problem and the normal approaches taken when trying to solve it. Section \ref{sec:genetic_algorithms} provides a brief description of what Genetic Algorithms are and how they work. It also explains how the Eternity II puzzle can be modeled in order to approach as a Genetic Algorithm problem. Section \ref{sec:results} presents the experimental regarding the best number for the individuals in the population and the evolution of the fitness in boards of different sizes. Finally, Section \ref{sec:conclusions} presents the main conclusions taken from the development of this project and possible improvements for future work.
+In this arcticle, Section \ref{sec:problem_description} briefly describes the problem and  some approaches for solving it. Section \ref{sec:genetic_algorithms} provides a brief description of what Genetic Algorithms are and how they work. It also explains how we modeled the Eternity II puzzle in order to approach it as a Genetic Algorithms problem. Section \ref{sec:results} presents some experimental data regarding the best number for the individuals in the population and the evolution of the fitness function in boards of different sizes. Finally, Section \ref{sec:conclusions} presents the main conclusions taken from the development of this project and possible improvements left out for future work.
 
 \section{Problem Description}\label{sec:problem_description}
 
@@ -73,7 +72,7 @@ The Eternity II puzzle is an edge-matching puzzle. Solving the puzzle means plac
   \begin{equation}
   1 * 4! * 56! * 195! * 4195 = 1.115 * 10 ^{557}
   \end{equation}
-  \caption{Eternity II possible configurations}
+  \caption{Number of possible Eternity II board configurations.}
   \label{fig:eq:eternity2combinations}
 \end{figure}
 
@@ -94,9 +93,9 @@ We have found that the most common approaches that solve these kinds of problems
 
 \subsubsection{The swap approach}\label{sec:swap_approach}
 
-As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will lead to a solved puzzle).
+As said before, swap approaches begin by placing all the available pieces in the board, then use the swap and rotate operations to improve the board's state. There are plenty of algorithms that can achieve this, like hill-climbing, tabu search and simulated annealing. These approaches evaluate the board's state and try to find which sequence of operations will achieve the greatest score possible (which in turn will eventually lead to a solved puzzle).
 
-Evidently, the starting position of the pieces in the puzzle will also play an important part on the rest of the solving process.
+Evidently, the starting position of the pieces in the puzzle has an important impact on the solving process.
 
 \subsubsection{The iterative approach}\label{sec:iterative_approach}
 
@@ -122,7 +121,14 @@ These kind of algorithms have been proven useful in solving many kinds of proble
 
 A key step of solving problems with genetic algorithms is defining the structure of an individual. Textbook examples of genetic algorithms often use individuals represented by structures as simple as bit strings or natural number arrays. For this particular application of genetic algorithms we consider that there is no advantage in encoding the board state in a bit string or number array. Therefore, we chose to use the most direct representation of a board state available to us. As such, the genetic material present in each chromosome is the position and rotation of each one of the pieces present in the board. Clusters of pieces that appear to be correctly placed on the board (with the same pattern facing each other) are the traits we want to pass on to future generations. We refer to these as \textbf{features}.
 
-
+\begin{figure}[H]
+  \centering
+  \subfloat[Chromosome]{\includegraphics[width=45mm]{images/feature1.png}}
+  \hspace{5mm}
+  \subfloat[Feature]{\includegraphics[width=45mm]{images/feature2.png}}
+  \caption{Example of a chromosome and of one of its features}
+  \label{fig:7x7_example}
+\end{figure}
 
 \subsubsection{Initial state and population}
 
@@ -261,7 +267,7 @@ The results were obtained by extracting the highest fitness value from all of th
 
 \section{Conclusions}\label{sec:conclusions}
 
-Although we found moderate success in solving the puzzles presented in section \ref{sec:results}, our solution proved unfeasible when trying to solve puzzles of greater dimensions (like those in a 11x11 board). One might argue that Genetic Algorithms are better at optimizing solutions than they are at finding a particular one (REF?).
+Although we found moderate success in solving the puzzles presented in section \ref{sec:results}, our solution proved unfeasible when trying to solve puzzles of greater dimensions (like those in a 11x11 board). One might argue that Genetic Algorithms are better at optimizing solutions than they are at finding a particular one.
 
 In fact, our fitness evaluation does not always point in the direction of the solution sought after, as we may reach a state where the population has a high average fitness value, appearing to be closer to the solution, when in fact it is not nowhere near that. Our feature extraction procedure is to blame here: bigger features contribute more to the feature evaluation, and it's very difficult for these traits to leave the population as that could only happen as a stroke of luck due to our random mutations.
 
